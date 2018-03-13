@@ -10,7 +10,7 @@ $first_error = $last_error =  $email_error = $uid_error = $pswd_error = "";
 //if($_SERVER['submit'] == "POST")
 if(isset($_POST['submit']))
 {
-    include_once 'db.inc.php';   
+    include_once '/dbfiles/db.inc.php';
     $first = mysqli_real_escape_string($connection,$_POST['first']);
     $last = mysqli_real_escape_string($connection,$_POST['last']);
     $email = mysqli_real_escape_string($connection,$_POST['email']);
@@ -55,7 +55,7 @@ if(isset($_POST['submit']))
     {
         // $pswd_error = "Password is required";
         // $_SESSION["pswd_error"] = "Password is required";
-        header("Location: ../signup.php?signup=emptyfield");
+        header("Location: /pages/signup.php?signup=emptyfield");
         exit();
     }
     else   
@@ -64,7 +64,7 @@ if(isset($_POST['submit']))
         // checking for valid chars
         if(!preg_match("/^[a-zA-Z]*$/", $first) || !preg_match("/^[a-zA-Z]*$/", $last) )
         {
-            header("Location: ../signup.php?signup=invalid");
+            header("Location: /pages/signup.php?signup=invalid");
             exit();
         }
         else
@@ -72,7 +72,7 @@ if(isset($_POST['submit']))
             //checking for valid email
             if(!filter_var($email, FILTER_VALIDATE_EMAIL))
             {
-                header("Location: ../signup.php?signup=email");
+                header("Location: /pages/signup.php?signup=email");
                 exit();
             }
             else
@@ -85,7 +85,7 @@ if(isset($_POST['submit']))
                 //if >0 we have existing users
                 if($resultCheck > 0)
                 {
-                    header("Location: ../signup.php?signup=usertaken");
+                    header("Location: /pages/signup.php?signup=usertaken");
                     exit(); 
                 }
                 else
@@ -98,7 +98,7 @@ if(isset($_POST['submit']))
 
                     //now just run the query (insert it into the db)
                      mysqli_query($connection, $sql);
-                     header("Location: ../signup.php?signup=success");
+                     header("Location: /pages/signup.php?signup=success");
                      $success = "Welcome to Elo leaderboard system!";
                      exit();
                 }
@@ -108,6 +108,6 @@ if(isset($_POST['submit']))
 }
 else
 {
-    header("Location: ../signup.php");
+    header("Location: /pages/signup.php");
     exit();
 }

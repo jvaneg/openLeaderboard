@@ -4,7 +4,7 @@
 
 <section class="main-container">
     <div class="main-wrapper">
-        <h2>ELO Leaderboard System</h2>
+        <h2>openLeaderboard</h2>
         <?php
         if(isset($_SESSION['u_uid']))
         {

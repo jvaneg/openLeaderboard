@@ -9,7 +9,7 @@
         
         
         <!-- <form class="signup-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" >  -->
-        <form class="signup-form" action="../dbfiles/signup.inc.php" method="POST" > 
+        <form class="signup-form" action="/dbfiles/signup.inc.php" method="POST" >
             <input type="text" name="first" placeholder="Aileena" >
             <!-- <span class="error">* <?php echo $_SESSION["first_error"];?></span>
             <br><br> -->

@@ -12,7 +12,7 @@ if(isset($_POST['submit']))
 
     if(empty($uid) || empty($pswd))
     {
-        header("Location: ../index.php?login=empty");
+        header("Location: /index.php?login=empty");
         exit();
     }
     else
@@ -23,7 +23,7 @@ if(isset($_POST['submit']))
 
         if($resultCheck < 1)
         {
-            header("Location: ../index.php?login=error");
+            header("Location: /index.php?login=error");
             exit();
         }
         else
@@ -34,7 +34,7 @@ if(isset($_POST['submit']))
                 $hashedPswdCheck = password_verify($pswd, $row['user_pswd']);
                 if($hashedPswdCheck == false)
                 {
-                    header("Location: ../index.php?login=error");
+                    header("Location: /index.php?login=error");
                     exit();
                 }
                 elseif($hashedPswdCheck == true)
@@ -44,7 +44,7 @@ if(isset($_POST['submit']))
                     $_SESSION['u_last'] = $row['user_last'];
                     $_SESSION['u_email'] = $row['user_email'];
                     $_SESSION['u_uid'] = $row['user_uid'];
-                    header("Location: ../index.php?login=success");
+                    header("Location: /index.php?login=success");
                     exit();
                 }
             }
@@ -53,6 +53,8 @@ if(isset($_POST['submit']))
 }
 else
 {
-    header("Location: ../index.php?login=error");
+    header("Location: /index.php?login=error");
     exit();
 }
+
+?>
