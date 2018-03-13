@@ -1,6 +1,7 @@
 <?php
-    include_once '../header/header.php';
-    // session_start();
+    $headerPath = $_SERVER['DOCUMENT_ROOT'];
+    $headerPath .= "/header/header.php";
+    include_once($headerPath);
 ?>
 
 <section class="main-container">
@@ -36,5 +37,7 @@
 </section>
 
 <?php
-    include_once '../footer/footer.php';
+    $footerPath = $_SERVER['DOCUMENT_ROOT'];
+    $footerPath .= "/footer/footer.php";
+    include_once($footerPath);
 ?>

@@ -20,21 +20,21 @@
                         <a href="/index.php">openLeaderboard</a>
                     </li>
                     <?php
-                    		if(isset($_SESSION['u_uid']))
-                        {
+                        //if(isset($_SESSION['u_uid']))
+                        //{
                             echo    '<li>
-                        					<a href="/index.php">Profile</a>
+                        					<a href="/pages/profile.php">Profile</a>
                     						</li>
                     						<li>
-                        					<a href="/index.php">Leaderboards</a>
+                        					<a href="/pages/leaderboardSearch.php">Leaderboards</a>
                     						</li>
                     						<li>
-                       						<a href="/index.php">Users</a>
+                       						<a href="/pages/userSearch.php">Users</a>
                     						</li>
                     						<li>
-                        					<a href="/index.php">Match Submissions</a>
+                        					<a href="/pages/submitted.php">Match Submissions</a>
                     						</li>';
-                        }
+                        //}
                     ?>
                     
                 </ul>
@@ -50,15 +50,15 @@
                         else
                         {
                             echo    '<form action="/dbfiles/login.inc.php" method="POST">
-                                        <input type="text" name="uid" placeholder="Username/E-mail">
+                                        <input type="text" name="uid" placeholder="Username">
                                         <input type="password" name="pswd" placeholder="Password">
                                         <button type="submit" name="submit">Login</button>
                                     </form>
                                     <a href="/pages/signup.php">Sign up</a>';
                         }
+                        
                     ?>
                 </div>
             </div>
         </nav>
-
     </header>
