@@ -20,8 +20,8 @@
                         <a href="/index.php">openLeaderboard</a>
                     </li>
                     <?php
-                        //if(isset($_SESSION['u_uid']))
-                        //{
+                        if(isset($_SESSION['u_uid']))
+                        {
                             echo    '<li>
                         					<a href="/pages/profile.php">Profile</a>
                     						</li>
@@ -34,7 +34,7 @@
                     						<li>
                         					<a href="/pages/submitted.php">Match Submissions</a>
                     						</li>';
-                        //}
+                        }
                     ?>
                     
                 </ul>

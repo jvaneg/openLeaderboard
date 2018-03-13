@@ -10,26 +10,16 @@
         
         
         <!-- <form class="signup-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" >  -->
-        <form class="signup-form" action="/dbfiles/signup.inc.php" method="POST" >
-            <input type="text" name="first" placeholder="Aileena" >
-            <!-- <span class="error">* <?php echo $_SESSION["first_error"];?></span>
-            <br><br> -->
+        <form class="signup-form" action="../dbfiles/signup.inc.php" method="POST" >
+            <input type="text" name="first" placeholder="Aileena" required>
 
-            <input type="text" name="last" placeholder="Buttercup">
-            <!-- <span class="error">* <?php echo $_SESSION["last_error"];?></span>
-            <br><br> -->
+            <input type="text" name="last" placeholder="Buttercup" required>
 
-            <input type="text" name="email" placeholder="aileenaB@gmail.com">
-            <!-- <span class="error">* <?php echo $_SESSION["email_error"];?></span>
-            <br><br> -->
+            <input type="text" name="email" placeholder="aileenaB@gmail.com" required>
 
-            <input type="text" name="uid" placeholder="aButtercup">
-            <!-- <span class="error">* <?php echo $_SESSION["uid_error"];?></span>
-            <br><br> -->
+            <input type="text" name="uid" placeholder="aButtercup" required>
 
-            <input type="password" name="pswd" placeholder="********">
-            <!-- <span class="error">* <?php echo $_SESSION["pswd_error"];?></span>
-            <br><br> -->
+            <input type="password" name="pswd" placeholder="********" required>
 
             <button type="submit" name="submit">Sign up</button>
         </form>

@@ -1,22 +1,30 @@
 <?php
 
-    // session_start();
 
-//print_r($_POST);
 // if the user clicked on the submit buttion then process the form
 //else return to signup
 
-$first_error = $last_error =  $email_error = $uid_error = $pswd_error = "";
+// $first_error = $last_error =  $email_error = $uid_error = $pswd_error = "";
+
 //if($_SERVER['submit'] == "POST")
 if(isset($_POST['submit']))
 {
-    include_once '/dbfiles/db.inc.php';
-    $first = mysqli_real_escape_string($connection,$_POST['first']);
-    $last = mysqli_real_escape_string($connection,$_POST['last']);
-    $email = mysqli_real_escape_string($connection,$_POST['email']);
-    $uid = mysqli_real_escape_string($connection,$_POST['uid']);
-    $pswd = mysqli_real_escape_string($connection,$_POST['pswd']);
+    include_once 'db.inc.php';
+    // $first = mysqli_real_escape_string($connection,$_POST['first']);
+    // $last = mysqli_real_escape_string($connection,$_POST['last']);
+    // $email = mysqli_real_escape_string($connection,$_POST['email']);
+    // $uid = mysqli_real_escape_string($connection,$_POST['uid']);
+    // $pswd = mysqli_real_escape_string($connection,$_POST['pswd']);
 
+    $first = $_POST['first'];
+    $last = $_POST['last'];
+    $email = $_POST['email'];
+    $uid = $_POST['uid'];
+    $pswd = $_POST['pswd'];
+
+    
+    
+    
     // //checking if fields are filled?
     // if(empty($first))
     // {
@@ -50,17 +58,14 @@ if(isset($_POST['submit']))
     //     // $_SESSION["pswd_error"] = "Password is required";
     // }
 
-            //checking if fields are filled?
+    //checking if fields are filled?
     if(empty($first) || empty($last)|| empty($email) || empty($uid) || empty($pswd))
     {
-        // $pswd_error = "Password is required";
-        // $_SESSION["pswd_error"] = "Password is required";
         header("Location: ../pages/signup.php?signup=emptyfield");
         exit();
     }
     else   
     {
-        
         // checking for valid chars
         if(!preg_match("/^[a-zA-Z]*$/", $first) || !preg_match("/^[a-zA-Z]*$/", $last) )
         {
@@ -72,7 +77,7 @@ if(isset($_POST['submit']))
             //checking for valid email
             if(!filter_var($email, FILTER_VALIDATE_EMAIL))
             {
-                header("Location: ../pages/signup.php?signup=email");
+                header("Location: ../pages/signup.php?signup=invalidemail");
                 exit();
             }
             else

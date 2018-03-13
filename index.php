@@ -10,7 +10,6 @@
         {
             echo "Welcome to ELO ";
             echo $_SESSION['u_uid'];
-
         }
         ?>
     </div>
