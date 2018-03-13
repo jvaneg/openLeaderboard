@@ -137,11 +137,31 @@ header nav ul li{
 }
 
 header nav ul li a{
-    font-family: arial;
+    font-family: 'Montserrat',sans-serif;
+    text-style: bold;
     font-size: 16px;
     color: #111;
     line-height: 63px;
+    text-decoration: none;
+    text-align: center;
+    padding:4px 8px;
+    display:inline-block;
+    font-weight: bold;
     
+}
+
+header nav ul li a:hover{
+	color: red;
+   font-weight: bold;
+}
+
+header nav ul li a:after {
+	 display: block;
+    content: attr(title);
+    font-weight: bold;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
 }
 
 header .nav-login{

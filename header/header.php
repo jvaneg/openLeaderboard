@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>471Leaderboard</title>
+    <title>openLeaderboard</title>
     <link rel="stylesheet" type="text/css" href="../style/style.css">
 </head>
 <body>
@@ -17,8 +17,26 @@
             <div class="main-wrapper">
                 <ul>
                     <li>
-                        <a href="index.php">ELO</a>
+                        <a href="index.php">openLeaderboard</a>
                     </li>
+                    <?php
+                    		if(isset($_SESSION['u_uid']))
+                        {
+                            echo    '<li>
+                        					<a href="index.php">Profile</a>
+                    						</li>
+                    						<li>
+                        					<a href="index.php">Leaderboards</a>
+                    						</li>
+                    						<li>
+                       						<a href="index.php">Users</a>
+                    						</li>
+                    						<li>
+                        					<a href="index.php">Match Submissions</a>
+                    						</li>';
+                        }
+                    ?>
+                    
                 </ul>
                 <div class="nav-login">
                     <?php
