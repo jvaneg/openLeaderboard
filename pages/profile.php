@@ -51,49 +51,23 @@ else
 }
 ?>
 
-
-
 <?php
 $userid = 1; //placeholder for session stuff
 
 include($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/db.inc.php");
 
-$sql = "SELECT L.name, L.board_id, R.rating_num, SD.rank_image 
-        FROM `User` AS U, Leaderboard AS L, Competes_in AS C, Rating AS R, Skill_Division AS SD
-        WHERE U.user_id = $userid AND U.user_id = C.user_id AND
-        C.board_id = L.board_id AND L.board_id = R.board_id AND 
-        R.division_id = SD.division_id AND R.user_id = U.user_id";
-$result = mysqli_query($connection,$sql);
-$resultCheck = mysqli_num_rows($result);
-
-if($resultCheck > 0)
-{
-    echo "<h1>Leaderboards</h1>";
-    while($row = mysqli_fetch_assoc($result))
-    {
-        echo $row['name'] . " - " . $row['rating_num'] . " - " . $row['rank_image'] . "<br>";
-    }
-}
-else
-{
-    echo "no leaderboards";
-}
-?>
-
-<?php
-$userid = 1; //placeholder for session stuff
-
-include($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/db.inc.php");
-
-$sql = "SELECT UB2.l_name, UB2.board_id, UB2.user_id, UB2.name, UB2.rating_num,
-          @rank_number:=CASE WHEN @boardID <> UB2.board_id THEN 1 ELSE @rank_number+1 END AS rank,
-          @boardID:=UB2.board_id AS board_set
+$sql = "SELECT UB3.l_name, UB3.board_id, UB3.rating_num, UB3.rank, UB3.rank_image
         FROM
-        (SELECT @rank_number:= 0) s,
-        (SELECT @boardID:= 0) c,
+        (SELECT UB2.l_name, UB2.board_id, UB2.user_id, UB2.name, UB2.rating_num, UB2.rank_image,
+          @curRank := CASE WHEN @boardID <> UB2.board_id THEN 1 ELSE IF(@prevRank = UB2.rating_num, @curRank, @incRank) END AS rank,
+          @incRank := IF(@boardID <> UB2.board_id, 2, @incRank + 1),
+          @prevRank := UB2.rating_num,
+          @boardID := UB2.board_id AS board_set
+        FROM
+        (SELECT @curRank := 0, @prevRank := NULL, @incRank := 1, @boardID := 0) AS vars,
         (SELECT * 
         FROM
-        (SELECT L.name AS l_name, L.board_id, U.user_id, U.name, R.rating_num
+        (SELECT L.name AS l_name, L.board_id, U.user_id, U.name, R.rating_num, SD.rank_image
         FROM `User` AS U, Rating AS R, Competes_in AS C, Leaderboard AS L, Skill_Division AS SD
         WHERE U.user_id = C.user_id AND C.board_id = L.board_id AND
         R.board_id = L.board_id AND R.division_id = SD.division_id AND
@@ -102,7 +76,8 @@ $sql = "SELECT UB2.l_name, UB2.board_id, UB2.user_id, UB2.name, UB2.rating_num,
         (SELECT DISTINCT C2.board_id
         FROM Competes_in AS C2
         WHERE C2.user_id = $userid)) AS UB
-        ORDER BY UB.board_id, UB.rating_num DESC)AS UB2";
+        ORDER BY UB.board_id, UB.rating_num DESC)AS UB2) AS UB3
+        WHERE user_id = $userid";
 $result = mysqli_query($connection,$sql);
 $resultCheck = mysqli_num_rows($result);
 
@@ -111,7 +86,7 @@ if($resultCheck > 0)
     echo "<h1>Leaderboards</h1>";
     while($row = mysqli_fetch_assoc($result))
     {
-        echo $row['l_name'] . " - " .$row['name'] . " - " . $row['rating_num'] . " - " . $row['rank'] . "<br>";
+        echo $row['l_name'] . " - " . $row['rating_num'] . " - " . $row['rank'] . " - " . $row['rank_image'] . "<br>";
     }
 }
 else
