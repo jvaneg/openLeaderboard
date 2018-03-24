@@ -1,75 +1,28 @@
 <?php
 
-
 // if the user clicked on the submit buttion then process the form
 //else return to signup
 
-// $first_error = $last_error =  $email_error = $uid_error = $pswd_error = "";
-
-//if($_SERVER['submit'] == "POST")
-if(isset($_POST['submit']))
+if(isset($_POST['submit'])) //if($_SERVER['submit'] == "POST")
 {
     include_once 'db.inc.php';
-    // $first = mysqli_real_escape_string($connection,$_POST['first']);
-    // $last = mysqli_real_escape_string($connection,$_POST['last']);
-    // $email = mysqli_real_escape_string($connection,$_POST['email']);
-    // $uid = mysqli_real_escape_string($connection,$_POST['uid']);
-    // $pswd = mysqli_real_escape_string($connection,$_POST['pswd']);
-
-    $first = $_POST['first'];
-    $last = $_POST['last'];
+    $name = $_POST['name'];
     $email = $_POST['email'];
-    $uid = $_POST['uid'];
+    $bio = $_POST['bio'];
     $pswd = $_POST['pswd'];
 
-    
-    
-    
-    // //checking if fields are filled?
-    // if(empty($first))
-    // {
-
-    //     $first_error = "First name is required";
-    //     // $_SESSION["first_error"] = "First name is required";
-
-    //     // header("Location: ../signup.php?signup=empty");
-    //     // exit();
-    // }
-
-    // if(empty($last))
-    // {
-    //     $last_error = "Last name is required";
-    //     // $_SESSION["last_error"] = "Last name is required";
-    // }
-
-    // if(empty($email))
-    // {
-    //     $email_error = "Email is required";
-    //     // $_SESSION["email_error"] = "Email is required";
-    // }
-    // if(empty($uid))
-    // {
-    //     $uid_error = "User name is required";
-    //     // $_SESSION["uid_error"] = "User name is required";
-    // }
-    // if(empty($pswd))
-    // {
-    //     $pswd_error = "Password is required";
-    //     // $_SESSION["pswd_error"] = "Password is required";
-    // }
-
-    //checking if fields are filled?
-    if(empty($first) || empty($last)|| empty($email) || empty($uid) || empty($pswd))
+    //checking if fields are filled
+    if(empty($name) || empty($email) || empty($pswd) || empty($bio))
     {
         header("Location: ../pages/signup.php?signup=emptyfield");
         exit();
     }
     else   
     {
-        // checking for valid chars
-        if(!preg_match("/^[a-zA-Z]*$/", $first) || !preg_match("/^[a-zA-Z]*$/", $last) )
+        //checking for valid chars
+        if(!preg_match("/^[a-zA-Z0-9]+$/", $name))
         {
-            header("Location: ../pages/signup.php?signup=invalid");
+            header("Location: ../pages/signup.php?signup=invalidusername");
             exit();
         }
         else
@@ -83,11 +36,10 @@ if(isset($_POST['submit']))
             else
             {
                 //checking for existing user
-                $sql = "SELECT * FROM users WHERE user_uid = '$uid'";
+                $sql = "SELECT * FROM user WHERE user_name = '$name'";
                 $result = mysqli_query($connection, $sql);
                 $resultCheck = mysqli_num_rows($result);
                 
-                //if >0 we have existing users
                 if($resultCheck > 0)
                 {
                     header("Location: ../pages/signup.php?signup=usertaken");
@@ -95,16 +47,13 @@ if(isset($_POST['submit']))
                 }
                 else
                 {
-                    //hash the damm password
+                    //$sql = "INSERT INTO user (name, email, pswd) VALUES ('$name', '$email', '$pswd');";
+                    
                     $hashPswd = password_hash($pswd, PASSWORD_DEFAULT);
+                    $sql = "INSERT INTO user (name, email, bio, pswd) VALUES ('$name', '$email','$bio' , '$hashPswd');";
 
-                    //setup the query
-                    $sql = "INSERT INTO users (user_first, user_last, user_email, user_uid, user_pswd) VALUES ('$first', '$last', '$email', '$uid', '$hashPswd');";
-
-                    //now just run the query (insert it into the db)
                      mysqli_query($connection, $sql);
                      header("Location: ../pages/signup.php?signup=success");
-                     $success = "Welcome to Elo leaderboard system!";
                      exit();
                 }
             }

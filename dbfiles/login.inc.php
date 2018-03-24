@@ -6,21 +6,28 @@ if(isset($_POST['submit']))
 {
     include 'db.inc.php';
 
-    $uid = mysqli_real_escape_string($connection, $_POST['uid']);
-    $pswd = mysqli_real_escape_string($connection, $_POST['pswd']);
+    // $uid = mysqli_real_escape_string($connection, $_POST['uid']);
+    // $name = mysqli_real_escape_string($connection, $_POST['name']);
+    // $pswd = mysqli_real_escape_string($connection, $_POST['pswd']);
 
+    $name = $_POST['name'];
+    $pswd = $_POST['pswd'];
 
-    if(empty($uid) || empty($pswd))
+    if(empty($name) || empty($pswd))
     {
         header("Location: ../index.php?login=empty");
         exit();
     }
     else
     {
-        $sql = "SELECT * FROM users WHERE user_uid='$uid' OR user_email='$uid'";
-        $result = mysqli_query($connection,$sql);
+        //setup query
+        $nameCheck = "SELECT * FROM user WHERE name='$name'";
+
+        //perform query
+        $result = mysqli_query($connection,$nameCheck);
         $resultCheck = mysqli_num_rows($result);
 
+        //if no such user found from in the db
         if($resultCheck < 1)
         {
             header("Location: ../index.php?login=error");
@@ -30,23 +37,45 @@ if(isset($_POST['submit']))
         {
             if($row = mysqli_fetch_assoc($result))
             {
-                // check if the password entered is correct
-                $hashedPswdCheck = password_verify($pswd, $row['user_pswd']);
-                if($hashedPswdCheck == false)
+                /*
+                $pswdCheck =  "SELECT * FROM user WHERE name='$name' AND '$row[pswd]'='$pswd'";
+
+                
+                $result = mysqli_query($connection, $pswdCheck);
+                $resultCheck = mysqli_num_rows($result);
+                
+                if($resultCheck != 1)
                 {
                     header("Location: ../index.php?login=error");
                     exit();
                 }
-                elseif($hashedPswdCheck == true)
+                elseif($resultCheck == 1)
                 {
-                    $_SESSION['u_id'] = $row['user_id'];
-                    $_SESSION['u_first'] = $row['user_first'];
-                    $_SESSION['u_last'] = $row['user_last'];
-                    $_SESSION['u_email'] = $row['user_email'];
-                    $_SESSION['u_uid'] = $row['user_uid'];
+                    $_SESSION['user_name'] = $row['name'];
+                    $_SESSION['user_pswd'] = $row['pswd'];
                     header("Location: ../index.php?login=success");
                     exit();
                 }
+                */
+
+                //if you are not okay with this hashed function 
+                //then comment the whole code below and uncomment the above 
+                
+                // /*
+                $hashPswd = password_verify($pswd,$row['pswd']);
+                if($hashPswd == false)
+                {
+                    header("Location: ../index.php?login=error");
+                    exit();
+                }
+                elseif($hashPswd == true)
+                {
+                    $_SESSION['user_name'] = $row['name'];
+                    $_SESSION['user_pswd'] = $row['pswd'];
+                    header("Location: ../index.php?login=success");
+                    exit();
+                }
+                // */ 
             }
         }
     }

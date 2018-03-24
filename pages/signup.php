@@ -8,21 +8,17 @@
     <div class="main-wrapper">
         <h2>Sign Up</h2>
         
-        
         <!-- <form class="signup-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" >  -->
         <form class="signup-form" action="../dbfiles/signup.inc.php" method="POST" >
-            <input type="text" name="first" placeholder="Aileena" required>
-
-            <input type="text" name="last" placeholder="Buttercup" required>
-
-            <input type="text" name="email" placeholder="aileenaB@gmail.com" required>
-
-            <input type="text" name="uid" placeholder="aButtercup" required>
-
-            <input type="password" name="pswd" placeholder="********" required>
+            <input type="text" name="name" placeholder="Username" required> 
+            <input type="text" name="email" placeholder="E-mail" required>
+            <input type="password" name="pswd" placeholder="Password" required>
+            <textarea type="text" style="resize:none" name="bio" rows="10" cols="47" placeholder="Enter your Bio here..." tabindex="5" required></textarea>
 
             <button type="submit" name="submit">Sign up</button>
         </form>
+
+
     </div>
 </section>
 

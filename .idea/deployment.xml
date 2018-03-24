@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="openlb">
+    <serverData>
+      <paths name="openlb">
+        <serverdata>
+          <mappings>
+            <mapping deploy="openLeaderboard" local="$PROJECT_DIR$" web="/openLeaderboard" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
