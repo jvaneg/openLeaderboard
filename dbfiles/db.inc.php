@@ -4,10 +4,11 @@
 $dbServername = "localhost";
 $dbUsername = "root";
 
-//$dbPassword = "joelisgreat";
-$dbPassword = "";
+$dbPassword = "joelisgreat";
+//$dbPassword = "";
 
-$dbName = "openleaderboard";
+//$dbName = "openleaderboard";
+$dbName = "openLeaderboard";
 
 // connecting to db
 // $connection = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);

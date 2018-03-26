@@ -36,7 +36,7 @@ if(isset($_POST['submit'])) //if($_SERVER['submit'] == "POST")
             else
             {
                 //checking for existing user
-                $sql = "SELECT * FROM user WHERE user_name = '$name'";
+                $sql = "SELECT * FROM User WHERE user_name = '$name'";
                 $result = mysqli_query($connection, $sql);
                 $resultCheck = mysqli_num_rows($result);
                 
@@ -50,7 +50,7 @@ if(isset($_POST['submit'])) //if($_SERVER['submit'] == "POST")
                     //$sql = "INSERT INTO user (name, email, pswd) VALUES ('$name', '$email', '$pswd');";
                     
                     $hashPswd = password_hash($pswd, PASSWORD_DEFAULT);
-                    $sql = "INSERT INTO user (name, email, bio, pswd) VALUES ('$name', '$email','$bio' , '$hashPswd');";
+                    $sql = "INSERT INTO User (name, email, bio, pswd) VALUES ('$name', '$email','$bio' , '$hashPswd');";
 
                      mysqli_query($connection, $sql);
                      header("Location: ../pages/signup.php?signup=success");

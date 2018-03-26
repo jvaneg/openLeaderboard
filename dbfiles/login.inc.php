@@ -21,7 +21,7 @@ if(isset($_POST['submit']))
     else
     {
         //setup query
-        $nameCheck = "SELECT * FROM user WHERE name='$name'";
+        $nameCheck = "SELECT * FROM User WHERE name='$name'";
 
         //perform query
         $result = mysqli_query($connection,$nameCheck);
