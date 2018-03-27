@@ -7,15 +7,10 @@
 <h1>Submitted Matches</h1>
 
 <?php
+include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 $userid = 1; //placeholder for session stuff
 
-include($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/db.inc.php");
-
-$sql = "SELECT RS.submission_id, L.name AS l_name, RS.board_id, RS.sender_score, RS.receiver_score, U.name, RS.sender_id
-        FROM Result_Submission AS RS, User AS U, Leaderboard AS L
-        WHERE RS.receiver_id = $userid AND RS.sender_id = U.user_id AND
-        RS.board_id = L.board_id";
-$result = mysqli_query($connection,$sql);
+$result = viewPendingVerifications($userid);
 $resultCheck = mysqli_num_rows($result);
 
 if($resultCheck > 0)
@@ -36,13 +31,7 @@ else
 <?php
 $userid = 1; //placeholder for session stuff
 
-include($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/db.inc.php");
-
-$sql = "SELECT RS.submission_id, L.name AS l_name, RS.board_id, RS.sender_score, RS.receiver_score, U.name, RS.receiver_id
-        FROM Result_Submission AS RS, User AS U, Leaderboard AS L
-        WHERE RS.sender_id = $userid AND RS.receiver_id = U.user_id AND
-        RS.board_id = L.board_id";
-$result = mysqli_query($connection,$sql);
+$result = viewSubmittedResults($userid);
 $resultCheck = mysqli_num_rows($result);
 
 if($resultCheck > 0)
