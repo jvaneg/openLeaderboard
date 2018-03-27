@@ -9,7 +9,8 @@ include_once($headerPath);
 <?php
 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
-$userid = 1; //placeholder for session stuff
+
+$userid = $_GET['userid'];
 
 
 $result = viewUserNameBio($userid);
@@ -22,12 +23,11 @@ if($resultCheck > 0)
 }
 else
 {
-    echo "bad bad bad";
+    echo "bad bad bad"; //redirect to user search page
 }
 ?>
 
 <?php
-$userid = 1; //placeholder for session stuff
 
 $result = viewMemberLbs($userid);
 $resultCheck = mysqli_num_rows($result);
@@ -35,9 +35,23 @@ $resultCheck = mysqli_num_rows($result);
 if($resultCheck > 0)
 {
     echo "<h1>Leaderboards</h1>";
+
+    echo "<table border='1'>
+          <tr>
+          <th>Board</th>
+          <th>Rating</th>
+          <th>Rank</th>
+          <th>Division</th>
+          </tr>";
     while($row = mysqli_fetch_assoc($result))
     {
-        echo $row['l_name'] . " - " . $row['rating_num'] . " - " . $row['rank'] . " - " . $row['rank_image'] . "<br>";
+        //echo '<a href= "leaderboard.php?boardid='.$row[board_id].'">'.$row['l_name'].'</a>' . " - " . $row['rating_num'] . " - " . $row['rank'] . " - " . $row['rank_image'] . "<br>";
+        echo "<tr>";
+        echo "<td>" . '<a href= "leaderboard.php?boardid='.$row[board_id].'">'.$row['l_name'].'</a>' . "</td>";
+        echo "<td>" . $row['rating_num'] . "</td>";
+        echo "<td>" . $row['rank'] . "</td>";
+        echo "<td>" . '<img src="'.$row['rank_image'].'">' . "</td>";
+        echo "</tr>";
     }
 }
 else
