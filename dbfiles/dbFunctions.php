@@ -166,6 +166,26 @@ function viewSubmittedResults($userid)
 
     return $result;
 }
+
+function editUserBio($userid, $userBio)
+{
+    $connection = connectToDB();
+
+    $sql = "UPDATE User AS U
+            SET U.bio = '$userBio'
+            WHERE U.user_id = $userid";
+
+    if (mysqli_query($connection, $sql))
+    {
+        echo "Record updated successfully";
+    }
+    else
+    {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+    mysqli_close($connection);
+}
 ?>
 
 

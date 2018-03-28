@@ -4,14 +4,15 @@ $headerPath .= "/header/header.php";
 include_once($headerPath);
 ?>
 
-<h2>user page</h2>
+<h1>User Page</h1>
 
 <?php
 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
 $userid = $_GET['userid'];
-
+$userName = "";
+$userBio = "";
 
 $result = viewUserNameBio($userid);
 $resultCheck = mysqli_num_rows($result);
@@ -19,46 +20,57 @@ $resultCheck = mysqli_num_rows($result);
 if($resultCheck > 0)
 {
     $row = mysqli_fetch_assoc($result);
-    echo $row['name'] . "<br>" . $row['bio'] . "<br>";
+    $userName = $row['name'];
+    $userBio = $row['bio'];
 }
 else
 {
-    echo "bad bad bad"; //redirect to user search page
+    //redirect to user search page
+    $userName = "No name available";
+    $userBio = "No bio available";
 }
 ?>
+
+<div id="nameBio">
+    <h1><?=$userName?></h1>
+    <div id="bio">
+        <?=$userBio?>
+    </div>
+</div>
 
 <?php
-
 $result = viewMemberLbs($userid);
 $resultCheck = mysqli_num_rows($result);
+?>
 
-if($resultCheck > 0)
-{
-    echo "<h1>Leaderboards</h1>";
+<h1>Member Leaderboards</h1>
+<div id="memberLBs">
+<?php if($resultCheck > 0) { ?>
 
-    echo "<table border='1'>
-          <tr>
-          <th>Board</th>
-          <th>Rating</th>
-          <th>Rank</th>
-          <th>Division</th>
-          </tr>";
-    while($row = mysqli_fetch_assoc($result))
-    {
-        //echo '<a href= "leaderboard.php?boardid='.$row[board_id].'">'.$row['l_name'].'</a>' . " - " . $row['rating_num'] . " - " . $row['rank'] . " - " . $row['rank_image'] . "<br>";
-        echo "<tr>";
-        echo "<td>" . '<a href= "leaderboard.php?boardid='.$row[board_id].'">'.$row['l_name'].'</a>' . "</td>";
-        echo "<td>" . $row['rating_num'] . "</td>";
-        echo "<td>" . $row['rank'] . "</td>";
-        echo "<td>" . '<img src="'.$row['rank_image'].'">' . "</td>";
-        echo "</tr>";
-    }
-}
+    <table border='1'>
+        <tr>
+            <th>Board</th>
+            <th>Rank</th>
+            <th>Rating</th>
+            <th>Division</th>
+        </tr>
+        <?php while($row = mysqli_fetch_assoc($result)) { ?>
+            <tr>
+                <td><a href="leaderboard.php?boardid=<?=$row[board_id]?>"><?=$row['l_name']?></a></td>
+                <td><?=$row['rank']?></td>
+                <td><?=$row['rating_num']?></td>
+                <td><img src="<?='/images/'.$row['rank_image']?>"></td>
+            </tr>
+        <?php } ?>
+    </table>
+
+<?php }
 else
 {
-    echo "no leaderboards";
+    echo "No Leaderboards";
 }
 ?>
+</div>
 
 
 <?php
