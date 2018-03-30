@@ -41,7 +41,7 @@ else
     <div id="bioForm" style="display: none">
         <form action="/dbfiles/userEditBio.php" method="post">
             <textarea name="newBio" rows="7" cols="40" wrap="soft" maxlength="252"><?=$userBio?></textarea><br>
-            <input type="hidden" name="user_id" value="<?=$userid?>">
+            <input type="hidden" name="user_id" value="<?=$userid?>"> <!-- This is actually super bad and should be taken from session instead -->
             <input type="submit" name="submitNewBio" value="Save Bio">
         </form>
     </div>

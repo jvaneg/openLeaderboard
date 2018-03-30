@@ -12,28 +12,65 @@ $userid = 1; //placeholder for session stuff
 
 $result = viewPendingVerifications($userid);
 $resultCheck = mysqli_num_rows($result);
-
-if($resultCheck > 0)
-{
-    echo "<h1>Awaiting Verification</h1>";
-    while($row = mysqli_fetch_assoc($result))
-    {
-        echo $row['submission_id'] . " - " . $row['l_name'] . " - " . $row['name'] . " - " . $row['sender_score'] . " - " . $row['receiver_score'] . " - Verify / Reject" . "<br>";
-    }
-}
-else
-{
-    echo "no submissions awaiting verification";
-}
 ?>
+
+<h1>Awaiting Verification</h1>
+<div id="pendingVers">
+    <?php if($resultCheck > 0) { ?>
+
+        <table border='1'>
+            <tr>
+                <th>Submission id</th>
+                <th>Board</th>
+                <th>Opponent</th>
+                <th>Score</th>
+                <th>Rating Change</th>
+                <th>Verify</th>
+                <th>Reject</th>
+            </tr>
+            <?php while($row = mysqli_fetch_assoc($result)) { ?>
+                <tr>
+                    <td><?=$row['submission_id']?></td>
+                    <td><a href="leaderboard.php?boardid=<?=$row[board_id]?>"><?=$row['l_name']?></a></td>
+                    <td><a href="user.php?userid=<?=$row[sender_id]?>"><?=$row['name']?></a></td>
+                    <td><?=$row['receiver_score']?> : <?=$row['sender_score']?></td>
+                    <td><?=$row['rcvr_rat_change']?></td>
+                    <td>
+                        <div id="verifyForm">
+                            <form action="/dbfiles/userEditBio.php" method="post">
+                                <input type="hidden" name="submission_id" value="<?=$row['submission_id']?>">
+                                <input type="hidden" name="receiver_id" value="<?=$userid?>">
+                                <input type="submit" name="verifySubmission" value="Verify">
+                            </form>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="rejectForm">
+                            <form action="/dbfiles/rejectResult.php" method="post">
+                                <input type="hidden" name="submission_id" value="<?=$row['submission_id']?>">
+                                <input type="hidden" name="receiver_id" value="<?=$userid?>"> <!-- This is actually super bad and should be taken from session instead -->
+                                <input type="submit" name="rejectSubmission" value="Reject">
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            <?php } ?>
+        </table>
+
+    <?php }
+    else
+    {
+        echo "No submissions awaiting verification!";
+    }
+    ?>
+</div>
 
 
 <?php
-$userid = 1; //placeholder for session stuff
-
 $result = viewSubmittedResults($userid);
 $resultCheck = mysqli_num_rows($result);
 
+/*
 if($resultCheck > 0)
 {
     echo "<h1>Results Submitted</h1>";
@@ -46,7 +83,49 @@ else
 {
     echo "no results submitted";
 }
+*/
 ?>
+
+<h1>Submitted Results</h1>
+<div id="pendingVers">
+    <?php if($resultCheck > 0) { ?>
+
+        <table border='1'>
+            <tr>
+                <th>Submission id</th>
+                <th>Board</th>
+                <th>Opponent</th>
+                <th>Score</th>
+                <th>Rating Change</th>
+                <th>Cancel</th>
+            </tr>
+            <?php while($row = mysqli_fetch_assoc($result)) { ?>
+                <tr>
+                    <td><?=$row['submission_id']?></td>
+                    <td><a href="user.php?boardid=<?=$row[board_id]?>"><?=$row['l_name']?></a></td>
+                    <td><a href="user.php?userid=<?=$row[receiver_id]?>"><?=$row['name']?></a></td>
+                    <td><?=$row['sender_score']?> : <?=$row['receiver_score']?></td>
+                    <td><?=$row['sndr_rat_change']?></td>
+                    <td>
+                        <div id="cancelForm">
+                            <form action="/dbfiles/cancelResult.php" method="post">
+                                <input type="hidden" name="submission_id" value="<?=$row['submission_id']?>">
+                                <input type="hidden" name="sender_id" value="<?=$userid?>"> <!-- This is actually super bad and should be taken from session instead -->
+                                <input type="submit" name="cancelSubmission" value="Cancel">
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            <?php } ?>
+        </table>
+
+    <?php }
+    else
+    {
+        echo "No results submitted!";
+    }
+    ?>
+</div>
 
 <?php
     $footerPath = $_SERVER['DOCUMENT_ROOT'];

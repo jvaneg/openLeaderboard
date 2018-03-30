@@ -13,6 +13,7 @@ if(isset($_POST['submitNewBio'])) //if($_SERVER['submit'] == "POST")
     $newBio = mb_strimwidth($_POST['newBio'],0,252);
     $userid = $_POST['user_id'];
 
+    //TODO prevent sql injection stuff here
     editUserBio($userid, $newBio);
 
     header("Location: /pages/profile.php");

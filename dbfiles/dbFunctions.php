@@ -139,7 +139,7 @@ function viewPendingVerifications($userid)
 {
     $connection = connectToDB();
 
-    $sql = "SELECT RS.submission_id, L.name AS l_name, RS.board_id, RS.sender_score, RS.receiver_score, U.name, RS.sender_id
+    $sql = "SELECT RS.submission_id, L.name AS l_name, RS.board_id, RS.sender_score, RS.receiver_score, U.name, RS.sender_id, RS.rcvr_rat_change
             FROM Result_Submission AS RS, User AS U, Leaderboard AS L
             WHERE RS.receiver_id = $userid AND RS.sender_id = U.user_id AND
             RS.board_id = L.board_id";
@@ -155,7 +155,7 @@ function viewSubmittedResults($userid)
 {
     $connection = connectToDB();
 
-    $sql = "SELECT RS.submission_id, L.name AS l_name, RS.board_id, RS.sender_score, RS.receiver_score, U.name, RS.receiver_id
+    $sql = "SELECT RS.submission_id, L.name AS l_name, RS.board_id, RS.sender_score, RS.receiver_score, U.name, RS.receiver_id, RS.sndr_rat_change
             FROM Result_Submission AS RS, User AS U, Leaderboard AS L
             WHERE RS.sender_id = $userid AND RS.receiver_id = U.user_id AND
             RS.board_id = L.board_id";
@@ -174,6 +174,51 @@ function editUserBio($userid, $userBio)
     $sql = "UPDATE User AS U
             SET U.bio = '$userBio'
             WHERE U.user_id = $userid";
+
+    if (mysqli_query($connection, $sql))
+    {
+        echo "Record updated successfully";
+    }
+    else
+    {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+    mysqli_close($connection);
+}
+
+/*
+ * Note: receiverID included as a measure to prevent someone from removing matches they shouldn't be able to
+ */
+function rejectResult($submissionID, $receiverID)
+{
+    $connection = connectToDB();
+
+    $sql = "DELETE FROM Result_Submission
+ 	        WHERE submission_id = $submissionID AND receiver_id = $receiverID";
+
+    if (mysqli_query($connection, $sql))
+    {
+        echo "Record updated successfully";
+    }
+    else
+    {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+    mysqli_close($connection);
+}
+
+
+/*
+ * Note: senderID included as a measure to prevent someone from removing matches they shouldn't be able to
+ */
+function cancelResult($submissionID, $senderID)
+{
+    $connection = connectToDB();
+
+    $sql = "DELETE FROM Result_Submission
+ 	        WHERE submission_id = $submissionID AND sender_id = $senderID";
 
     if (mysqli_query($connection, $sql))
     {
