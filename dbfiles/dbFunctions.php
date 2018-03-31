@@ -13,9 +13,6 @@ function connectToDB()
     $dbUsername = "root";
 
     $dbPassword = "joelisgreat";
-    //$dbPassword = "";
-
-    //$dbName = "openleaderboard";
     $dbName = "openLeaderboard";
 
     // connecting to db
