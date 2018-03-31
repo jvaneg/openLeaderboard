@@ -37,9 +37,9 @@ $resultCheck = mysqli_num_rows($result);
                     <td><?=$row['rcvr_rat_change']?></td>
                     <td>
                         <div id="verifyForm">
-                            <form action="/dbfiles/userEditBio.php" method="post">
+                            <form action="/dbfiles/verifyResult.php" method="post">
                                 <input type="hidden" name="submission_id" value="<?=$row['submission_id']?>">
-                                <input type="hidden" name="receiver_id" value="<?=$userid?>">
+                                <input type="hidden" name="receiver_id" value="<?=$userid?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
                                 <input type="submit" name="verifySubmission" value="Verify">
                             </form>
                         </div>
@@ -48,7 +48,7 @@ $resultCheck = mysqli_num_rows($result);
                         <div id="rejectForm">
                             <form action="/dbfiles/rejectResult.php" method="post">
                                 <input type="hidden" name="submission_id" value="<?=$row['submission_id']?>">
-                                <input type="hidden" name="receiver_id" value="<?=$userid?>"> <!-- This is actually super bad and should be taken from session instead -->
+                                <input type="hidden" name="receiver_id" value="<?=$userid?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
                                 <input type="submit" name="rejectSubmission" value="Reject">
                             </form>
                         </div>
@@ -110,7 +110,7 @@ else
                         <div id="cancelForm">
                             <form action="/dbfiles/cancelResult.php" method="post">
                                 <input type="hidden" name="submission_id" value="<?=$row['submission_id']?>">
-                                <input type="hidden" name="sender_id" value="<?=$userid?>"> <!-- This is actually super bad and should be taken from session instead -->
+                                <input type="hidden" name="sender_id" value="<?=$userid?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
                                 <input type="submit" name="cancelSubmission" value="Cancel">
                             </form>
                         </div>

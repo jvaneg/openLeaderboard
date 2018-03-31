@@ -15,12 +15,12 @@ if(isset($_POST['cancelSubmission']))
 
     cancelResult($submissionID,$senderID);
 
-    header("Location: /pages/submitted.php?success=true&sub=$submissionID&rec=$senderID");
+    header("Location: /pages/submitted.php");
 
 }
 else
 {
-    header("Location: /pages/submitted.php?success=false");
+    header("Location: /pages/submitted.php");
     exit();
 }
 ?>

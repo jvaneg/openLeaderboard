@@ -231,6 +231,228 @@ function cancelResult($submissionID, $senderID)
 
     mysqli_close($connection);
 }
+
+//TODO remember to cast the stuff being used as numbers to ints
+function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderScore, $receiverScore, $sndrRatChange, $rcvrRatChange)
+{
+    $connection = connectToDB();
+
+
+    //get sender rating
+    $sql = "SELECT R.rating_num
+            FROM Rating AS R
+            WHERE R.user_id = $senderID AND R.board_id = $boardID";
+
+    $senderRatResult = mysqli_fetch_assoc(mysqli_query($connection,$sql));
+    $newSenderRating = intval($senderRatResult['rating_num']) + $sndrRatChange;
+
+
+    //get receiver rating
+    $sql = "SELECT R.rating_num
+            FROM Rating AS R
+            WHERE R.user_id = $receiverID AND R.board_id = $boardID";
+
+    $receiverRatResult = mysqli_fetch_assoc(mysqli_query($connection,$sql));
+    $newReceiverRating = intval($receiverRatResult['rating_num']) + $rcvrRatChange;
+
+
+    //update sender rating
+    $sql = "UPDATE Rating 
+		    SET rating_num = $newSenderRating
+			WHERE board_id = $boardID AND user_id = $senderID";
+
+    if (mysqli_query($connection, $sql))
+    {
+        echo "Record updated successfully";
+    }
+    else
+    {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+
+    //update receiver rating
+    $sql = "UPDATE Rating 
+		    SET rating_num = $newReceiverRating
+			WHERE board_id = $boardID AND user_id = $receiverID";
+
+    if (mysqli_query($connection, $sql))
+    {
+        echo "Record updated successfully";
+    }
+    else
+    {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+
+    //create match
+    $date = "2018-01-01"; //TODO actual date stuff
+    $sql = "INSERT INTO Game_Match (date, sender_score, sndr_rat_change, board_id, submission_id, sender_id, receiver_id, receiver_score, rcvr_rat_change)
+            VALUES('$date', $senderScore, $sndrRatChange, $boardID, $submissionID, $senderID, $receiverID, $receiverScore, $rcvrRatChange)";
+
+    if (mysqli_query($connection, $sql))
+    {
+        echo "Record updated successfully";
+    }
+    else
+    {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+
+    //delete submission
+    $sql = "DELETE FROM Result_Submission
+		    WHERE submission_id = $submissionID";
+
+    if (mysqli_query($connection, $sql))
+    {
+        echo "Record updated successfully";
+    }
+    else
+    {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+
+    mysqli_close($connection);
+}
+
+function getResultData($submissionID)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT *
+            FROM Result_Submission
+ 	        WHERE submission_id = $submissionID";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    return $result;
+}
+
+function isLbMember($userID, $boardID)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT *
+            FROM Competes_in
+ 	        WHERE board_id = $boardID AND user_id = $userID";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    return (mysqli_num_rows($result) > 0);
+}
+
+function hasLbRating($userID, $boardID)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT *
+            FROM Rating
+ 	        WHERE board_id = $boardID AND user_id = $userID";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    return (mysqli_num_rows($result) > 0);
+}
+
+function leaveLeaderboard($userID, $boardID)
+{
+    $connection = connectToDB();
+
+    $sql = "DELETE FROM Competes_in
+		    WHERE board_id = $boardID AND user_id = $userID";
+
+    if (mysqli_query($connection, $sql))
+    {
+        echo "Record updated successfully";
+    }
+    else
+    {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+    mysqli_close($connection);
+}
+
+function joinLeaderboard($userID, $boardID)
+{
+    $connection = connectToDB();
+
+    $sql = "INSERT INTO Competes_in (board_id, user_id)
+            VALUES ($boardID, $userID)";
+
+    if (mysqli_query($connection, $sql))
+    {
+        echo "Record updated successfully";
+    }
+    else
+    {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+    if(!hasLbRating($userID,$boardID))
+    {
+        $sql = "INSERT INTO Rating (board_id, user_id)
+                VALUES ($boardID, $userID)";
+
+        if (mysqli_query($connection, $sql))
+        {
+            echo "Record updated successfully";
+        }
+        else
+        {
+            echo "Error updating record: " . mysqli_error($connection);
+        }
+
+        updateSkillDivision($userID,$boardID);
+    }
+
+    mysqli_close($connection);
+}
+
+function updateSkillDivision($userID, $boardID)
+{
+    $connection = connectToDB();
+
+    //get user rating
+    $sql = "SELECT R.rating_num
+            FROM Rating AS R
+            WHERE R.user_id = $userID AND R.board_id = $boardID";
+
+    $userRating = mysqli_fetch_assoc(mysqli_query($connection,$sql))['rating_num'];
+
+    //get division data
+    $sql = "SELECT division_id
+            FROM Skill_Division
+            WHERE $userRating >= min_thresh AND $userRating <= max_thresh";
+
+    $newUserDivision = mysqli_fetch_assoc(mysqli_query($connection,$sql))['division_id'];
+
+    //update receiver rating
+    $sql = "UPDATE Rating 
+		    SET division_id = $newUserDivision
+			WHERE board_id = $boardID AND user_id = $userID";
+
+    if (mysqli_query($connection, $sql))
+    {
+        echo "Record updated successfully";
+    }
+    else
+    {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+    mysqli_close($connection);
+}
+
 ?>
 
 
