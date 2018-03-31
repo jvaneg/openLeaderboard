@@ -2,6 +2,8 @@
     $headerPath = $_SERVER['DOCUMENT_ROOT'];
     $headerPath .= "/header/header.php";
     include_once($headerPath);
+
+echo "signup.php";
 ?>
 
 <section class="main-container">
@@ -13,7 +15,7 @@
             <input type="text" name="name" placeholder="Username" required> 
             <input type="text" name="email" placeholder="E-mail" required>
             <input type="password" name="pswd" placeholder="Password" required>
-            <textarea type="text" style="resize:none" name="bio" rows="10" cols="47" placeholder="Enter your Bio here..." tabindex="5" required></textarea>
+<!--            <textarea type="text" style="resize:none" name="bio" rows="10" cols="47" placeholder="Enter your Bio here..." tabindex="5" required></textarea>-->
 
             <button type="submit" name="submit">Sign up</button>
         </form>

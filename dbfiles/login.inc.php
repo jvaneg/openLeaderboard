@@ -4,7 +4,8 @@ session_start();
 
 if(isset($_POST['submit']))
 {
-    include 'db.inc.php';
+    include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
+    $connection = connectToDB();
 
     // $uid = mysqli_real_escape_string($connection, $_POST['uid']);
     // $name = mysqli_real_escape_string($connection, $_POST['name']);
