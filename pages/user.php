@@ -10,11 +10,11 @@ include_once($headerPath);
 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
-$userid = $_GET['userid'];
+$userID = $_GET['userid'];
 $userName = "";
 $userBio = "";
 
-$result = viewUserNameBio($userid);
+$result = viewUserNameBio($userID);
 $resultCheck = mysqli_num_rows($result);
 
 if($resultCheck > 0)
@@ -39,7 +39,7 @@ else
 </div>
 
 <?php
-$result = viewMemberLbs($userid);
+$result = viewMemberLbs($userID);
 $resultCheck = mysqli_num_rows($result);
 ?>
 

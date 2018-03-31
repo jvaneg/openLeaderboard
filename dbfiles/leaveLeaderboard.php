@@ -6,10 +6,10 @@
  * Time: 11:21 PM
  */
 
+include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
+
 if(isset($_POST['leaveLb']))
 {
-    include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
-
     $boardID = $_POST['board_id'];
     $userID = $_POST['user_id'];
 

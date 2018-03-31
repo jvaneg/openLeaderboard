@@ -25,13 +25,13 @@ function connectToDB()
     return $connection;
 }
 
-function viewUserNameBio($userid)
+function viewUserNameBio($userID)
 {
     $connection = connectToDB();
 
     $sql = "SELECT `name`, `bio` 
             FROM `User` 
-            WHERE `user_id` = $userid";
+            WHERE `user_id` = $userID";
 
     $result = mysqli_query($connection,$sql);
 
@@ -40,13 +40,13 @@ function viewUserNameBio($userid)
     return $result;
 }
 
-function viewManagedLbs($userid)
+function viewManagedLbs($userID)
 {
     $connection = connectToDB();
 
     $sql = "SELECT L.name, L.board_id 
             FROM Board_Admin AS B, Leaderboard AS L 
-            WHERE B.user_id = $userid AND B.user_id = L.owner_id";
+            WHERE B.user_id = $userID AND B.user_id = L.owner_id";
 
     $result = mysqli_query($connection,$sql);
 
@@ -55,7 +55,7 @@ function viewManagedLbs($userid)
     return $result;
 }
 
-function viewMemberLbs($userid)
+function viewMemberLbs($userID)
 {
     $connection = connectToDB();
 
@@ -78,9 +78,9 @@ function viewMemberLbs($userid)
             L.board_id IN 
             (SELECT DISTINCT C2.board_id
             FROM Competes_in AS C2
-            WHERE C2.user_id = $userid)) AS UB
+            WHERE C2.user_id = $userID)) AS UB
             ORDER BY UB.board_id, UB.rating_num DESC)AS UB2) AS UB3
-            WHERE user_id = $userid";
+            WHERE user_id = $userID";
 
     $result = mysqli_query($connection,$sql);
 
@@ -89,13 +89,13 @@ function viewMemberLbs($userid)
     return $result;
 }
 
-function viewLbNameDescription($boardid)
+function viewLbNameDescription($boardID)
 {
     $connection = connectToDB();
 
     $sql = "SELECT `name`, `description` 
             FROM `Leaderboard` 
-            WHERE `board_id` = $boardid";
+            WHERE `board_id` = $boardID";
 
     $result = mysqli_query($connection,$sql);
 
@@ -104,7 +104,7 @@ function viewLbNameDescription($boardid)
     return $result;
 }
 
-function viewLbMembers($boardid)
+function viewLbMembers($boardID)
 {
     $connection = connectToDB();
 
@@ -122,7 +122,7 @@ function viewLbMembers($boardid)
             FROM `User` AS U, Rating AS R, Competes_in AS C, Leaderboard AS L, Skill_Division AS SD
             WHERE U.user_id = C.user_id AND C.board_id = L.board_id AND
             R.board_id = L.board_id AND R.division_id = SD.division_id AND
-            R.user_id = U.user_id AND L.board_id = $boardid) AS UB
+            R.user_id = U.user_id AND L.board_id = $boardID) AS UB
             ORDER BY UB.rating_num DESC)AS UB2) AS UB3";
 
     $result = mysqli_query($connection,$sql);
@@ -132,13 +132,13 @@ function viewLbMembers($boardid)
     return $result;
 }
 
-function viewPendingVerifications($userid)
+function viewPendingVerifications($userID)
 {
     $connection = connectToDB();
 
     $sql = "SELECT RS.submission_id, L.name AS l_name, RS.board_id, RS.sender_score, RS.receiver_score, U.name, RS.sender_id, RS.rcvr_rat_change
             FROM Result_Submission AS RS, User AS U, Leaderboard AS L
-            WHERE RS.receiver_id = $userid AND RS.sender_id = U.user_id AND
+            WHERE RS.receiver_id = $userID AND RS.sender_id = U.user_id AND
             RS.board_id = L.board_id";
 
     $result = mysqli_query($connection,$sql);
@@ -148,13 +148,13 @@ function viewPendingVerifications($userid)
     return $result;
 }
 
-function viewSubmittedResults($userid)
+function viewSubmittedResults($userID)
 {
     $connection = connectToDB();
 
     $sql = "SELECT RS.submission_id, L.name AS l_name, RS.board_id, RS.sender_score, RS.receiver_score, U.name, RS.receiver_id, RS.sndr_rat_change
             FROM Result_Submission AS RS, User AS U, Leaderboard AS L
-            WHERE RS.sender_id = $userid AND RS.receiver_id = U.user_id AND
+            WHERE RS.sender_id = $userID AND RS.receiver_id = U.user_id AND
             RS.board_id = L.board_id";
 
     $result = mysqli_query($connection,$sql);
@@ -164,13 +164,13 @@ function viewSubmittedResults($userid)
     return $result;
 }
 
-function editUserBio($userid, $userBio)
+function editUserBio($userID, $userBio)
 {
     $connection = connectToDB();
 
     $sql = "UPDATE User AS U
             SET U.bio = '$userBio'
-            WHERE U.user_id = $userid";
+            WHERE U.user_id = $userID";
 
     if (mysqli_query($connection, $sql))
     {

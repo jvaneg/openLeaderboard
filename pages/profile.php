@@ -11,11 +11,11 @@
 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
-$userid = 1; //temporary
+$userID = 1; //temporary
 $userName = "";
 $userBio = "";
 
-$result = viewUserNameBio($userid);
+$result = viewUserNameBio($userID);
 $resultCheck = mysqli_num_rows($result);
 
 if($resultCheck > 0)
@@ -41,7 +41,7 @@ else
     <div id="bioForm" style="display: none">
         <form action="/dbfiles/userEditBio.php" method="post">
             <textarea name="newBio" rows="7" cols="40" wrap="soft" maxlength="252"><?=$userBio?></textarea><br>
-            <input type="hidden" name="user_id" value="<?=$userid?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
+            <input type="hidden" name="user_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
             <input type="submit" name="submitNewBio" value="Save Bio">
         </form>
     </div>
@@ -50,7 +50,7 @@ else
 
 
 <?php
-$result = viewManagedLbs($userid);
+$result = viewManagedLbs($userID);
 $resultCheck = mysqli_num_rows($result);
 ?>
 
@@ -72,7 +72,7 @@ $resultCheck = mysqli_num_rows($result);
 
 <?php
 
-$result = viewMemberLbs($userid);
+$result = viewMemberLbs($userID);
 $resultCheck = mysqli_num_rows($result);
 
 ?>

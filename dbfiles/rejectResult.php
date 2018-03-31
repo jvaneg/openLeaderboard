@@ -6,10 +6,10 @@
  * Time: 11:21 PM
  */
 
+include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
+
 if(isset($_POST['rejectSubmission']))
 {
-    include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
-
     $submissionID = $_POST['submission_id'];
     $receiverID = $_POST['receiver_id'];
 
