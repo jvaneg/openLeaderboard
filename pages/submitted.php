@@ -8,9 +8,9 @@
 
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
-$userid = 1; //placeholder for session stuff
+$userID = 1; //placeholder for session stuff
 
-$result = viewPendingVerifications($userid);
+$result = viewPendingVerifications($userID);
 $resultCheck = mysqli_num_rows($result);
 ?>
 
@@ -37,9 +37,9 @@ $resultCheck = mysqli_num_rows($result);
                     <td><?=$row['rcvr_rat_change']?></td>
                     <td>
                         <div id="verifyForm">
-                            <form action="/dbfiles/userEditBio.php" method="post">
+                            <form action="/dbfiles/verifyResult.php" method="post">
                                 <input type="hidden" name="submission_id" value="<?=$row['submission_id']?>">
-                                <input type="hidden" name="receiver_id" value="<?=$userid?>">
+                                <input type="hidden" name="receiver_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
                                 <input type="submit" name="verifySubmission" value="Verify">
                             </form>
                         </div>
@@ -48,7 +48,7 @@ $resultCheck = mysqli_num_rows($result);
                         <div id="rejectForm">
                             <form action="/dbfiles/rejectResult.php" method="post">
                                 <input type="hidden" name="submission_id" value="<?=$row['submission_id']?>">
-                                <input type="hidden" name="receiver_id" value="<?=$userid?>"> <!-- This is actually super bad and should be taken from session instead -->
+                                <input type="hidden" name="receiver_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
                                 <input type="submit" name="rejectSubmission" value="Reject">
                             </form>
                         </div>
@@ -67,23 +67,8 @@ $resultCheck = mysqli_num_rows($result);
 
 
 <?php
-$result = viewSubmittedResults($userid);
+$result = viewSubmittedResults($userID);
 $resultCheck = mysqli_num_rows($result);
-
-/*
-if($resultCheck > 0)
-{
-    echo "<h1>Results Submitted</h1>";
-    while($row = mysqli_fetch_assoc($result))
-    {
-        echo $row['submission_id'] . " - " . $row['l_name'] . " - " . $row['name'] . " - " . $row['sender_score'] . " - " . $row['receiver_score'] . "<br>";
-    }
-}
-else
-{
-    echo "no results submitted";
-}
-*/
 ?>
 
 <h1>Submitted Results</h1>
@@ -110,7 +95,7 @@ else
                         <div id="cancelForm">
                             <form action="/dbfiles/cancelResult.php" method="post">
                                 <input type="hidden" name="submission_id" value="<?=$row['submission_id']?>">
-                                <input type="hidden" name="sender_id" value="<?=$userid?>"> <!-- This is actually super bad and should be taken from session instead -->
+                                <input type="hidden" name="sender_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
                                 <input type="submit" name="cancelSubmission" value="Cancel">
                             </form>
                         </div>

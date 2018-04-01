@@ -10,11 +10,12 @@ include_once($headerPath);
 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
-$boardid = $_GET['boardid'];
+$userID = 1; //placeholder for session
+$boardID = $_GET['boardid'];
 $boardName = "";
 $boardDescription = "";
 
-$result = viewLbNameDescription($boardid);
+$result = viewLbNameDescription($boardID);
 $resultCheck = mysqli_num_rows($result);
 
 if($resultCheck > 0)
@@ -38,11 +39,36 @@ else
     </div>
 </div>
 
-<h2>Join/Leave - Submit Match (these dont do anything)</h2>
+<div id="joinLeave">
+    <?php if(!isLbMember($userID, $boardID)) { ?>
+        <div id="joinForm">
+            <form action="/dbfiles/joinLeaderboard.php" method="post">
+                <input type="hidden" name="board_id" value="<?=$boardID?>">
+                <input type="hidden" name="user_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
+                <input type="submit" name="joinLb" value="Join Board">
+            </form>
+        </div>
+    <?php } else { ?>
+        <div id="leaveForm">
+            <form action="/dbfiles/leaveLeaderboard.php" method="post">
+                <input type="hidden" name="board_id" value="<?=$boardID?>">
+                <input type="hidden" name="user_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
+                <input type="submit" name="leaveLb" value="Leave Board">
+            </form>
+        </div>
+        <div id="submitMatchForm">
+            <form action="/pages/submitMatch.php" method="post">
+                <input type="hidden" name="board_id" value="<?=$boardID?>">
+                <input type="hidden" name="user_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
+                <input type="submit" name="submitMatch" value="Submit Match">
+            </form>
+        </div>
+    <?php } ?>
+</div>
 
 <?php
 
-$result = viewLbMembers($boardid);
+$result = viewLbMembers($boardID);
 $resultCheck = mysqli_num_rows($result);
 
 ?>
