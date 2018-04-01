@@ -16,7 +16,7 @@ include_once($headerPath);
 
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
-$connection = connectToDB();
+
 
 $userid = 1;
 ?>
@@ -29,12 +29,12 @@ $userid = 1;
 
     if(empty($_POST['userSearch']))
     {
-        mysqli_close($connection);
         header("Location: leaderboardSearch.php?search=empty");
         exit();
     }
     if(isset($_POST['userSearch']))
     {
+        $connection = connectToDB();
         $search = mysqli_real_escape_string($connection, $_POST['userSearch']);
         $result = viewLbName($userid, $search);
         mysqli_close($connection);
