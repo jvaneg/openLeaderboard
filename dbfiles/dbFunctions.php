@@ -40,6 +40,40 @@ function viewUserNameBio($userid)
     return $result;
 }
 
+function viewUsersInLeaderboards($userSearch)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT U.name, Count(U.user_id) AS numLBs 
+            FROM User AS U, Competes_in AS C 
+            WHERE U.user_id = C.user_id AND U.name Like '%$userSearch%'
+            GROUP BY U.name 
+            ORDER BY COUNT(C.board_id) DESC";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    return $result;
+}
+
+function viewCategories()
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT C.category_id, C.name, COUNT(L.board_id)
+            FROM Category AS C, Leaderboard AS L
+            WHERE C.category_id = L.category_id
+            GROUP BY C.category_id
+            ORDER BY COUNT(L.board_id) DESC";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    return $result;
+}
+
 function viewManagedLbs($userid)
 {
     $connection = connectToDB();
@@ -96,6 +130,22 @@ function viewLbNameDescription($boardid)
     $sql = "SELECT `name`, `description` 
             FROM `Leaderboard` 
             WHERE `board_id` = $boardid";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    return $result;
+}
+
+function viewLbName($userid, $userSearch)
+{
+    $connection = connectToDB();
+
+    $sql =  "SELECT L.name, COUNT(U.user_id) AS numUsers 
+            FROM User AS U, Competes_In AS C, Board_Admin AS B, Leaderboard AS L 
+            WHERE U.user_id = $userid AND (U.user_id = C.user_id OR U.user_id = B.user_id) AND L.name Like '%$userSearch%'
+            GROUP BY L.name";
 
     $result = mysqli_query($connection,$sql);
 
@@ -228,6 +278,9 @@ function cancelResult($submissionID, $senderID)
 
     mysqli_close($connection);
 }
+
+
+
 ?>
 
 

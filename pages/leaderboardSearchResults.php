@@ -30,35 +30,36 @@ $userid = 1;
     if(empty($_POST['userSearch']))
     {
         mysqli_close($connection);
-        header("Location: userSearch.php?search=empty");
+        header("Location: leaderboardSearch.php?search=empty");
         exit();
     }
     if(isset($_POST['userSearch']))
     {
         $search = mysqli_real_escape_string($connection, $_POST['userSearch']);
-        $result = viewUsersInLeaderboards($search);
+        $result = viewLbName($userid, $search);
         mysqli_close($connection);
+
         echo "<table border='1'>";
         echo "<col width='200'>";
         echo "<col width='200'>";
-        echo "<tr><td>Name</td><td>Number Of Leaderboards</td></tr>";
+        echo "<tr><td>Name</td><td>Number Of Users</td></tr>";
 
         while($row = mysqli_fetch_assoc($result))
         {
-//            echo "<tr><td>{$row['name']}</td><td>{$row['numLBs']}</td></tr>";
+//            echo "<tr><td>{$row['name']}</td><td>{$row['numUsers']}</td></tr>";
             echo "
             <tr>
                 <td>
-                    <a href=\"user.php\">
+                   <a href=\"leaderboard.php\">
                         <div style=\"height:100%;width:100%\">
                             {$row['name']}
                         </div>
                     </a>
                 </td>
                 <td>
-                    <a href=\"user.php\">
+                    <a href=\"leaderboard.php\">
                         <div style=\"height:100%;width:100%\">
-                            {$row['numLBs']}
+                            {$row['numUsers']}
                         </div>
                     </a>
                 </td>
@@ -68,6 +69,7 @@ $userid = 1;
         echo "</table>";
     }
     ?>
+
 
 
 </div>

@@ -117,10 +117,6 @@ body{
 
 }
 
-/* .error{
-    color: #FF0000;
-} */
-
 header nav{
     width: 100%;
     height: 60px;
@@ -284,4 +280,151 @@ header .nav-login a:hover{
 .signup-form textarea{
     font-family: arial;
     font-size: 16px;
+}
+
+.search-container {
+   padding-top: 40px;
+}
+.search-wrapper{
+    margin: 0 auto;
+    width: 1000px;
+}
+
+.search-container h2 {
+    font-family: arial;
+    font-size: 40px;
+    color: #111;
+    line-height: 50px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.leaderboard-search-container {
+
+    font-family: 'Montserrat',sans-serif;
+    background-color: #00bf00;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 500px;
+    padding: 10px;
+
+    text-align: center;
+}
+
+.leaderboard-search-container button {
+
+    /*width: 90px;*/
+    /*height: 30px;*/
+    /*margin-right: 10px;*/
+    /*border: none;*/
+    /*background-color: #f3f3f3;*/
+    /*font-family: arial;*/
+    /*font-size: 14px;*/
+    /*color: #111;*/
+    /*cursor: pointer;*/
+
+
+    width: 100px;
+    height: 35px;
+    font-size: 20px;
+    vertical-align: middle;
+    border: none;
+    cursor: pointer;
+}
+
+.leaderboard-search-container  button:hover {
+    background-color: #a0d3e8;
+}
+
+.leaderboard-search-container input {
+
+    padding: 0px 20px;
+    width: 300px;
+    height: 33px;
+    font-size: 20px;
+}
+
+.leaderboard-category-container {
+
+    text-align: center;
+
+    font-family: 'Montserrat',sans-serif;
+    background-color: #fff;
+
+    margin: auto;
+    width: 700px;
+    height: 600px;
+    padding: 10px;
+    position: relative;
+}
+
+.leaderboard-category-container button{
+
+    width: 100px;
+    height: 30px;
+    margin-left: 33px;
+    /*margin-top: 15px;*/
+    border: none;
+    background-color: #f3f3f3;
+    font-family: arial;
+    font-size: 14px;
+    color: #111;
+    cursor: pointer;
+
+    /*position: absolute;*/
+    /*bottom: auto;*/
+    /*right: 0;*/
+    /*bottom: 0;*/
+}
+
+.leaderboard-category-container button:hover{
+    background-color: #a0d3e8;
+}
+
+.leaderboard-search-result table {
+    margin: auto;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+
+}
+
+.leaderboard-search-result td, th {
+    border: 1px solid #7d0000;
+    text-align: left;
+    padding: 8px;
+}
+
+.leaderboard-search-result tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+div.leaderboard-category-container div,div {
+    margin-bottom: 30px;
+}
+
+
+
+.scrollableList {
+    overflow: auto;
+    border: 1px #dddddd solid;
+}
+.scrollableList ul {
+    border: none;
+    height: 480px;
+    vertical-align: middle;
+}
+.scrollableList ul li {
+    cursor: pointer;
+}
+
+.scrollableList ul li:hover {
+    background-color: #00bfbf;
+}
+
+.scrollableList ul li a {
+    display : block;
+    height: 40px;
+    margin-bottom: 10px;
+    /*background-color: #00fa00;*/
 }
