@@ -6,12 +6,15 @@
  * Time: 11:21 PM
  */
 
+session_start();
+
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
-if(isset($_POST['submitNewBio'])) //if($_SERVER['submit'] == "POST")
+if(isset($_POST['submitNewBio']) && isset($_SESSION['user_id'])) //if($_SERVER['submit'] == "POST")
 {
     $newBio = mb_strimwidth($_POST['newBio'],0,252);
-    $userID = $_POST['user_id'];
+    //$userID = $_POST['user_id'];
+    $userID = $_SESSION['user_id'];
 
     //TODO prevent sql injection stuff here
     editUserBio($userID, $newBio);

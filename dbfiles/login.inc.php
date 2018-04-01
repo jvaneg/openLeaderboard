@@ -71,7 +71,7 @@ if(isset($_POST['submit']))
                 }
                 elseif($hashPswd == true)
                 {
-                    $_SESSION['user_name'] = $row['name'];
+                    $_SESSION['user_id'] = $row['user_id'];
                     $_SESSION['user_pswd'] = $row['pswd'];
                     header("Location: ../index.php?login=success");
                     exit();

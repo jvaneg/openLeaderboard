@@ -4,13 +4,24 @@ $headerPath .= "/header/header.php";
 include_once($headerPath);
 ?>
 
+<?php
+if(isset($_SESSION['user_id']))
+{
+    $userID = $_SESSION['user_id'];
+    $loggedIn = true;
+}
+else
+{
+    $loggedIn = false;
+}
+?>
+
 <h2>Leaderboard Page</h2>
 
 <?php
 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
-$userID = 1; //placeholder for session
 $boardID = $_GET['boardid'];
 $boardName = "";
 $boardDescription = "";
@@ -39,12 +50,12 @@ else
     </div>
 </div>
 
+<?php if($loggedIn) { ?>
 <div id="joinLeave">
     <?php if(!isLbMember($userID, $boardID)) { ?>
         <div id="joinForm">
             <form action="/dbfiles/joinLeaderboard.php" method="post">
                 <input type="hidden" name="board_id" value="<?=$boardID?>">
-                <input type="hidden" name="user_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
                 <input type="submit" name="joinLb" value="Join Board">
             </form>
         </div>
@@ -52,19 +63,18 @@ else
         <div id="leaveForm">
             <form action="/dbfiles/leaveLeaderboard.php" method="post">
                 <input type="hidden" name="board_id" value="<?=$boardID?>">
-                <input type="hidden" name="user_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
                 <input type="submit" name="leaveLb" value="Leave Board">
             </form>
         </div>
         <div id="submitMatchForm">
             <form action="/pages/submitMatch.php" method="post">
                 <input type="hidden" name="board_id" value="<?=$boardID?>">
-                <input type="hidden" name="user_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
                 <input type="submit" name="submitMatch" value="Submit Match">
             </form>
         </div>
     <?php } ?>
 </div>
+<?php } ?>
 
 <?php
 

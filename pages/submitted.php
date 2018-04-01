@@ -4,11 +4,22 @@
     include_once($headerPath);
 ?>
 
+<?php
+if(isset($_SESSION['user_id']))
+{
+    $userID = $_SESSION['user_id'];
+}
+else
+{
+    header("Location: ../index.php");
+    exit();
+}
+?>
+
 <h1>Submitted Matches</h1>
 
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
-$userID = 1; //placeholder for session stuff
 
 $result = viewPendingVerifications($userID);
 $resultCheck = mysqli_num_rows($result);
@@ -39,7 +50,6 @@ $resultCheck = mysqli_num_rows($result);
                         <div id="verifyForm">
                             <form action="/dbfiles/verifyResult.php" method="post">
                                 <input type="hidden" name="submission_id" value="<?=$row['submission_id']?>">
-                                <input type="hidden" name="receiver_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
                                 <input type="submit" name="verifySubmission" value="Verify">
                             </form>
                         </div>
@@ -48,7 +58,6 @@ $resultCheck = mysqli_num_rows($result);
                         <div id="rejectForm">
                             <form action="/dbfiles/rejectResult.php" method="post">
                                 <input type="hidden" name="submission_id" value="<?=$row['submission_id']?>">
-                                <input type="hidden" name="receiver_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
                                 <input type="submit" name="rejectSubmission" value="Reject">
                             </form>
                         </div>
@@ -95,7 +104,6 @@ $resultCheck = mysqli_num_rows($result);
                         <div id="cancelForm">
                             <form action="/dbfiles/cancelResult.php" method="post">
                                 <input type="hidden" name="submission_id" value="<?=$row['submission_id']?>">
-                                <input type="hidden" name="sender_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
                                 <input type="submit" name="cancelSubmission" value="Cancel">
                             </form>
                         </div>
