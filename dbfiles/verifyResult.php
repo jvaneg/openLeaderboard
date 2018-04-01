@@ -6,12 +6,15 @@
  * Time: 11:21 PM
  */
 
+session_start();
+
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
-if(isset($_POST['verifySubmission']))
+if(isset($_POST['verifySubmission']) && isset($_SESSION['user_id']))
 {
     $submissionID = $_POST['submission_id'];
-    $receiverID = $_POST['receiver_id'];
+    //$receiverID = $_POST['receiver_id'];
+    $receiverID = $_SESSION['user_id'];
 
     $resultData = mysqli_fetch_assoc(getResultData($submissionID));
 

@@ -20,7 +20,7 @@
                         <a href="/index.php">openLeaderboard</a>
                     </li>
                     <?php
-                        if(isset($_SESSION['user_name']))
+                        if(isset($_SESSION['user_id']))
                         {
                             echo    '<li>
                         					<a href="/pages/profile.php">Profile</a>
@@ -41,7 +41,7 @@
                 <div class="nav-login">
                     <?php
                         // if we are logged in 
-                        if(isset($_SESSION['user_name']))
+                        if(isset($_SESSION['user_id']))
                         {
                             echo    '<form action="/dbfiles/logout.inc.php" method="POST">
                                         <button type="submit" name="submit"> Log out</button>

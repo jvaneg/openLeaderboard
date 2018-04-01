@@ -4,6 +4,17 @@
     include_once($headerPath);
 ?>
 
+<?php
+if(isset($_SESSION['user_id']))
+{
+    $userID = $_SESSION['user_id'];
+}
+else
+{
+    header("Location: ../index.php");
+    exit();
+}
+?>
 
 <h1>Profile</h1>
 
@@ -11,7 +22,6 @@
 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
-$userID = 1; //temporary
 $userName = "";
 $userBio = "";
 
@@ -41,7 +51,6 @@ else
     <div id="bioForm" style="display: none">
         <form action="/dbfiles/userEditBio.php" method="post">
             <textarea name="newBio" rows="7" cols="40" wrap="soft" maxlength="252"><?=$userBio?></textarea><br>
-            <input type="hidden" name="user_id" value="<?=$userID?>"> <!-- TODO: This is actually super bad and should be taken from session instead -->
             <input type="submit" name="submitNewBio" value="Save Bio">
         </form>
     </div>

@@ -6,12 +6,15 @@
  * Time: 11:21 PM
  */
 
+session_start();
+
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
-if(isset($_POST['leaveLb']))
+if(isset($_POST['leaveLb']) && isset($_SESSION['user_id']))
 {
     $boardID = $_POST['board_id'];
-    $userID = $_POST['user_id'];
+    //$userID = $_POST['user_id'];
+    $userID = $_SESSION['user_id'];
 
 
     leaveLeaderboard($userID, $boardID);

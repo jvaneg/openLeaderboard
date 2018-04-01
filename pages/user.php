@@ -26,6 +26,7 @@ if($resultCheck > 0)
 else
 {
     //redirect to user search page
+    header("Location: ../userSearch.php");
     $userName = "No name available";
     $userBio = "No bio available";
 }
