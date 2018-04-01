@@ -1,11 +1,10 @@
 <?php
-/**
- *
- * User: joel
- * Date: 27/03/18
- * Time: 12:46 AM
- */
 
+
+/**
+ * Purpose: Connects to the database, returns connection variable
+ * @return mysqli
+ */
 function connectToDB()
 {
     // setting up vars for db
@@ -25,6 +24,14 @@ function connectToDB()
     return $connection;
 }
 
+
+/**
+ * Purpose: Retrieves the name and bio of the specified user
+ *          Returns in the form:
+ *          name, description
+ * @param $userID
+ * @return bool|mysqli_result
+ */
 function viewUserNameBio($userID)
 {
     $connection = connectToDB();
@@ -76,6 +83,13 @@ function viewCategories()
 }
 
 
+/**
+ * Purpose: Returns the names and ids of all leaderboards managed by the specified user
+ *          Return format:
+ *          name, board_id
+ * @param $userID
+ * @return bool|mysqli_result
+ */
 function viewManagedLbs($userID)
 {
     $connection = connectToDB();
@@ -91,6 +105,15 @@ function viewManagedLbs($userID)
     return $result;
 }
 
+
+/**
+ * Purpose: Retrieves some info about every leaderboard the specified user is a member of, including name,
+ *          rank, rating, and division
+ *          Return format:
+ *          l_name, board_id, rating_num, rank, rank_image
+ * @param $userID
+ * @return bool|mysqli_result
+ */
 function viewMemberLbs($userID)
 {
     $connection = connectToDB();
@@ -125,6 +148,14 @@ function viewMemberLbs($userID)
     return $result;
 }
 
+
+/**
+ * Purpose: Retrieves the name and description of the specified leaderboard
+ *          Returns in the form:
+ *          name, description
+ * @param $boardID
+ * @return bool|mysqli_result
+ */
 function viewLbNameDescription($boardID)
 {
     $connection = connectToDB();
@@ -139,6 +170,7 @@ function viewLbNameDescription($boardID)
 
     return $result;
 }
+
 
 function viewLbName($userid, $userSearch)
 {
@@ -156,6 +188,13 @@ function viewLbName($userid, $userSearch)
     return $result;
 }
 
+/**
+ * Purpose: Retrieves all the members of the specified leaderboard, ranked by rating and skipping rank on ties
+ *          Returns in the form:
+ *          name, user_id, rating_num, rank, rank_image
+ * @param $boardID
+ * @return bool|mysqli_result
+ */
 function viewLbMembers($boardID)
 {
     $connection = connectToDB();
@@ -184,6 +223,14 @@ function viewLbMembers($boardID)
     return $result;
 }
 
+
+/**
+ * Purpose: Returns all results requests submitted to the specified user
+ *          Returns in the form:
+ *          submission_id, l_name, board_id, sender_score, receiver_score, name, sender_id, rcvr_rat_change
+ * @param $userID
+ * @return bool|mysqli_result
+ */
 function viewPendingVerifications($userID)
 {
     $connection = connectToDB();
@@ -200,6 +247,14 @@ function viewPendingVerifications($userID)
     return $result;
 }
 
+
+/**
+ * Purpose: Returns all results requests submitted by the specified user
+ *          Returns in the form:
+ *          submission_id, l_name, board_id, sender_score, receiver_score, name, receiver_id, sndr_rat_change
+ * @param $userID
+ * @return bool|mysqli_result
+ */
 function viewSubmittedResults($userID)
 {
     $connection = connectToDB();
@@ -216,6 +271,12 @@ function viewSubmittedResults($userID)
     return $result;
 }
 
+
+/**
+ * Purpose: Edits the specified user's bio to be the specified bio string
+ * @param $userID
+ * @param $userBio
+ */
 function editUserBio($userID, $userBio)
 {
     $connection = connectToDB();
@@ -236,8 +297,12 @@ function editUserBio($userID, $userBio)
     mysqli_close($connection);
 }
 
-/*
+
+/**
+ * Purpose: Removes a result submitted to the specified user from the database
  * Note: receiverID included as a measure to prevent someone from removing matches they shouldn't be able to
+ * @param $submissionID
+ * @param $receiverID
  */
 function rejectResult($submissionID, $receiverID)
 {
@@ -259,8 +324,11 @@ function rejectResult($submissionID, $receiverID)
 }
 
 
-/*
+/**
+ * Purpose: Removes a result submitted by the specified user from the database
  * Note: senderID included as a measure to prevent someone from removing matches they shouldn't be able to
+ * @param $submissionID
+ * @param $senderID
  */
 function cancelResult($submissionID, $senderID)
 {
@@ -282,8 +350,27 @@ function cancelResult($submissionID, $senderID)
 }
 
 
-
-//TODO remember to cast the stuff being used as numbers to ints
+/**
+ * Purpose: Verfies a result submitted to the specified user
+ * Process:
+ *  - get sender rating
+ *  - calculate new sender rating
+ *  - get receiver rating
+ *  - calculate new receiver rating
+ *  - update sender rating
+ *  - update receiver rating
+ *  - create match entry in the db from the submission info
+ *  - delete the submission from the db
+ * Note: convert the inputs to intvals before passing them to this function if they're strings
+ * @param $submissionID
+ * @param $senderID
+ * @param $receiverID
+ * @param $boardID
+ * @param $senderScore
+ * @param $receiverScore
+ * @param $sndrRatChange
+ * @param $rcvrRatChange
+ */
 function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderScore, $receiverScore, $sndrRatChange, $rcvrRatChange)
 {
     $connection = connectToDB();
@@ -338,7 +425,7 @@ function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderSc
 
 
     //create match
-    $date = "2018-01-01"; //TODO actual date stuff
+    $date = date("Y-m-d");
     $sql = "INSERT INTO Game_Match (date, sender_score, sndr_rat_change, board_id, submission_id, sender_id, receiver_id, receiver_score, rcvr_rat_change)
             VALUES('$date', $senderScore, $sndrRatChange, $boardID, $submissionID, $senderID, $receiverID, $receiverScore, $rcvrRatChange)";
 
@@ -369,6 +456,11 @@ function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderSc
     mysqli_close($connection);
 }
 
+/**
+ * Purpose: Gets all the data of a specified result submission from the db
+ * @param $submissionID
+ * @return bool|mysqli_result
+ */
 function getResultData($submissionID)
 {
     $connection = connectToDB();
@@ -384,6 +476,13 @@ function getResultData($submissionID)
     return $result;
 }
 
+
+/**
+ * Purpose: Checks whether or not a specified user is a member of a specified leaderboard
+ * @param $userID
+ * @param $boardID
+ * @return bool
+ */
 function isLbMember($userID, $boardID)
 {
     $connection = connectToDB();
@@ -399,6 +498,15 @@ function isLbMember($userID, $boardID)
     return (mysqli_num_rows($result) > 0);
 }
 
+
+/**
+ * Purpose: Checks if a specified user has a rating on a specified leaderboard yet
+ * Note: This is used mainly for users rejoining leaderboards they've left, letting us
+ *       maintain their stats
+ * @param $userID
+ * @param $boardID
+ * @return bool
+ */
 function hasLbRating($userID, $boardID)
 {
     $connection = connectToDB();
@@ -414,6 +522,12 @@ function hasLbRating($userID, $boardID)
     return (mysqli_num_rows($result) > 0);
 }
 
+
+/**
+ * Purpose: Removes the specified user from the specified leaderboard
+ * @param $userID
+ * @param $boardID
+ */
 function leaveLeaderboard($userID, $boardID)
 {
     $connection = connectToDB();
@@ -433,6 +547,12 @@ function leaveLeaderboard($userID, $boardID)
     mysqli_close($connection);
 }
 
+
+/**
+ * Purpose: Adds the specified user to the specified leaderboard
+ * @param $userID
+ * @param $boardID
+ */
 function joinLeaderboard($userID, $boardID)
 {
     $connection = connectToDB();
@@ -469,6 +589,13 @@ function joinLeaderboard($userID, $boardID)
     mysqli_close($connection);
 }
 
+
+/**
+ * Purpose: Updates the specified user's skill division (rank image) on the specified leaderboard
+ * Note: Used after their rating updates
+ * @param $userID
+ * @param $boardID
+ */
 function updateSkillDivision($userID, $boardID)
 {
     $connection = connectToDB();
