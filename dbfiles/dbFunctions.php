@@ -178,7 +178,7 @@ function viewLbName($userid, $userSearch)
 
     $sql =  "SELECT L.name, COUNT(U.user_id) AS numUsers 
             FROM User AS U, Competes_In AS C, Board_Admin AS B, Leaderboard AS L 
-            WHERE U.user_id = $userid AND (U.user_id = C.user_id OR U.user_id = B.user_id) AND L.name Like '%$userSearch%'
+            WHERE U.user_id = $userid AND L.name Like '%$userSearch%'
             GROUP BY L.name";
 
     $result = mysqli_query($connection,$sql);

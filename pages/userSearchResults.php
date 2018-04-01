@@ -29,11 +29,12 @@ $userid = 1;
 
     if(empty($_POST['userSearch']))
     {
-        mysqli_close($connection);
+
         header("Location: userSearch.php?search=empty");
+        mysqli_close($connection);
         exit();
     }
-    if(isset($_POST['userSearch']))
+    if(isset($_POST['searchUsers'])) //if(isset($_POST['userSearch']))
     {
         $search = mysqli_real_escape_string($connection, $_POST['userSearch']);
         $result = viewUsersInLeaderboards($search);
@@ -49,6 +50,7 @@ $userid = 1;
             echo "
             <tr>
                 <td>
+                
                     <a href=\"user.php\">
                         <div style=\"height:100%;width:100%\">
                             {$row['name']}
