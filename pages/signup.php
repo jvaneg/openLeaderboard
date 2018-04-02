@@ -2,34 +2,36 @@
     $headerPath = $_SERVER['DOCUMENT_ROOT'];
     $headerPath .= "/header/header.php";
     include_once($headerPath);
-
 ?>
 
 <section class="main-container">
     <div class="main-wrapper">
         <h2>Sign Up</h2>
-        
         <!-- <form class="signup-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" >  -->
-
 
         <form class="signup-form" action="../dbfiles/signup.inc.php" method="POST" >
             <?php
             if(isset($_GET['name'])){
-                $nm = $_GET['name'];
-                echo '<input type="text" name="name" placeholder="Username" required value=".$nm.">';
+                echo '<input type="text" name="name" placeholder="Username" value="'.$_GET['name'].'">';
             }
             else
             {
                 echo '<input type="text" name="name" placeholder="Username" required>';
             }
+
+            if(isset($_GET['email'])){
+                echo '<input type="text" name="email" placeholder="E-mail" value="'.$_GET['email'].'">';
+            }
+            else
+            {
+                echo '<input type="text" name="email" placeholder="E-mail" required>';
+            }
             ?>
-<!--            <input type="text" name="name" placeholder="Username" required>-->
-            <input type="text" name="email" placeholder="E-mail" required>
+
             <input type="password" name="pswd" placeholder="Password" required>
             <button type="submit" name="submit">Sign up</button>
         </form>
         <?php
-
 
         if(!isset($_GET['signup'])){
             exit();
@@ -53,15 +55,9 @@
                 echo "<p class ='error'> Username Taken</p>";
                 exit();
             }
-
         }
         ?>
-
     </div>
-
-
-
-
 </section>
 
 <?php

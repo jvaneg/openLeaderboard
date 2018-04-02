@@ -17,7 +17,7 @@ if(isset($_POST['submit'])) //if($_SERVER['submit'] == "POST")
     //checking if fields are filled
     if(empty($name) || empty($email) || empty($pswd))
     {
-        header("Location: ../pages/signup.php?signup=emptyfield");
+        header("Location: /pages/signup.php?signup=emptyfield");
         exit();
     }
     else
@@ -25,7 +25,7 @@ if(isset($_POST['submit'])) //if($_SERVER['submit'] == "POST")
         //checking for valid chars
         if(!preg_match("/^[a-zA-Z0-9]+$/", $name))
         {
-            header("Location: ../pages/signup.php?signup=invalidusername&name=$name&email=$email");
+            header("Location: /pages/signup.php?signup=invalidusername&name=$name&email=$email");
             exit();
         }
         else
@@ -33,7 +33,7 @@ if(isset($_POST['submit'])) //if($_SERVER['submit'] == "POST")
             //checking for valid email
             if(!filter_var($email, FILTER_VALIDATE_EMAIL))
             {
-                header("Location: ../pages/signup.php?signup=invalidemail");
+                header("Location: /pages/signup.php?signup=invalidemail&name=$name&email=$email");
                 exit();
             }
             else
@@ -44,18 +44,31 @@ if(isset($_POST['submit'])) //if($_SERVER['submit'] == "POST")
 
                 if($resultCheck > 0)
                 {
-                    header("Location: ../pages/signup.php?signup=usertaken");
+                    header("Location: /pages/signup.php?signup=usertaken&name=$name&email=$email");
                     exit();
                 }
                 else
                 {
                     addNewUser($name, $email, $pswd);
-                    $_SESSION['user_id'] = $name;
-                    $_SESSION['user_pswd'] = $pswd;
-                    $_SESSION['user_pswd'] = $email;
 
-                    header("Location: /index.php?signup=success");
-                    exit();
+                    //To check if this new user was actually added to the DB
+                    $result = checkUserInDB($name);
+                    $resultCheck = mysqli_num_rows($result);
+
+                    if($resultCheck > 1)
+                    {
+                        header("Location: /pages/signup.php?signup=error&name=$name&email=$email");
+                        exit();
+                    }
+                    else
+                    {
+                        $row = mysqli_fetch_assoc($result);
+                        $userId = $row['user_id'];
+                        $_SESSION['user_id'] = $userId;
+                        header("Location: /index.php?signup=success");
+                        exit();
+                    }
+
                 }
             }
         }

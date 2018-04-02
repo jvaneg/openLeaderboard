@@ -76,7 +76,7 @@ function searchUsersByName($searchTerm)
 
 
 /**
- * Purpose: Returns related information of loging in user if it exists
+ * Purpose: Returns related information of the user if it exists
  *          Return format:
  *          user_id, name, email, bio, pswd
  * @param $userInput
