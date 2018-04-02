@@ -65,7 +65,7 @@ if(isset($_POST['submit'])) //if($_SERVER['submit'] == "POST")
                         $row = mysqli_fetch_assoc($result);
                         $userId = $row['user_id'];
                         $_SESSION['user_id'] = $userId;
-                        header("Location: /index.php?signup=success");
+                        header("Location: /pages/profile.php");
                         exit();
                     }
 

@@ -18,6 +18,7 @@ if(isset($_POST['rejectSubmission']) && isset($_SESSION['user_id']))
     rejectResult($submissionID,$receiverID);
 
     header("Location: /pages/submitted.php");
+    exit();
 }
 else
 {

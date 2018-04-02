@@ -17,7 +17,7 @@ if(isset($_POST['submit']))
 
     if(empty($name) || empty($pswd))
     {
-        header("Location: ../index.php?login=empty");
+        header("Location: /index.php?login=empty");
         exit();
     }
     else
@@ -28,7 +28,7 @@ if(isset($_POST['submit']))
         //if no such user found from in the db
         if($resultCheck < 1)
         {
-            header("Location: ../index.php?login=error");
+            header("Location: /index.php?login=error");
             exit();
         }
         else
@@ -63,14 +63,13 @@ if(isset($_POST['submit']))
                 $hashPswd = password_verify($pswd,$row['pswd']);
                 if($hashPswd == false)
                 {
-                    header("Location: ../index.php?login=error");
+                    header("Location: /index.php?login=error");
                     exit();
                 }
                 elseif($hashPswd == true)
                 {
                     $_SESSION['user_id'] = $row['user_id'];
-                    $_SESSION['user_pswd'] = $row['pswd'];
-                    header("Location: ../index.php?login=success");
+                    header("Location: /pages/profile.php");
                     exit();
                 }
                 // */ 

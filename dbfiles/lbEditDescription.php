@@ -20,6 +20,7 @@ if(isset($_POST['submitNewDesc']) && isset($_SESSION['user_id']))
     editLbDescription($userID, $boardID, $newDesc);
 
     header("Location: /pages/leaderboard.php?boardid=$boardID");
+    exit();
 }
 else
 {

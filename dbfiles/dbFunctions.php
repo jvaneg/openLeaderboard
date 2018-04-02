@@ -225,7 +225,15 @@ function addNewUser($name, $email, $pswd)
     $sql = "INSERT INTO User (name, email, pswd) 
             VALUES ('$name', '$email', '$hashPswd')";
 
-    mysqli_query($connection, $sql);
+    if (mysqli_query($connection, $sql))
+    {
+        echo "Record updated successfully";
+    }
+    else
+    {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
     mysqli_close($connection);
 }
 

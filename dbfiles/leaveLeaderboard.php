@@ -18,6 +18,7 @@ if(isset($_POST['leaveLb']) && isset($_SESSION['user_id']))
     leaveLeaderboard($userID, $boardID);
 
     header("Location: /pages/leaderboard.php?boardid=$boardID");
+    exit();
 }
 else
 {

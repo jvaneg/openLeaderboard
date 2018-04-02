@@ -18,6 +18,7 @@ if(isset($_POST['joinLb']) && isset($_SESSION['user_id']))
     joinLeaderboard($userID, $boardID);
 
     header("Location: /pages/leaderboard.php?boardid=$boardID");
+    exit();
 }
 else
 {

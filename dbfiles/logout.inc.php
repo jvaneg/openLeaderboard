@@ -11,5 +11,5 @@ if(isset($_POST['submit']))
     session_destroy();
 
     // Once user logs out they must be redirected to the main page.
-    header("Location: ../index.php");
+    header("Location: /index.php");
 }

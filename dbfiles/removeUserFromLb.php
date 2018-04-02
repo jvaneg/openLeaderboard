@@ -18,7 +18,8 @@ if(isset($_POST['removeUser']) && isset($_SESSION['user_id']))
 
     removeUserFromLb($adminID, $userID, $boardID);
 
-    header("Location: /pages/leaderboard.php?boardid=$boardID&success=true");
+    header("Location: /pages/leaderboard.php?boardid=$boardID");
+    exit();
 }
 else
 {

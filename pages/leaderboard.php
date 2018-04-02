@@ -8,7 +8,6 @@ include_once($headerPath);
 if(isset($_SESSION['user_id']))
 {
     $userID = $_SESSION['user_id'];
-    //$userID = 1;
     $loggedIn = true;
 }
 else
@@ -41,6 +40,7 @@ else
     header("Location: /pages/leaderboardSearch.php");
     $boardName = "No board name available";
     $boardDescription = "No description available";
+    exit();
 }
 ?>
 

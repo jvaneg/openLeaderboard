@@ -6,16 +6,6 @@ include_once($headerPath);
 
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
-
-//$userid = -1;
-
-//$result = viewUsersInLeaderboards();
-//$resultCheck = mysqli_num_rows($result);
-
-//if($resultCheck > 1)
-//{
-//    $row = mysqli_fetch_assoc($result);
-//}
 ?>
 
 

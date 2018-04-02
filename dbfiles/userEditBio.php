@@ -19,6 +19,7 @@ if(isset($_POST['submitNewBio']) && isset($_SESSION['user_id']))
     editUserBio($userID, $newBio);
 
     header("Location: /pages/profile.php");
+    exit();
 }
 else
 {

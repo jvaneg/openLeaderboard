@@ -18,6 +18,7 @@ if(isset($_POST['cancelSubmission']) && isset($_SESSION['user_id']))
     cancelResult($submissionID,$senderID);
 
     header("Location: /pages/submitted.php");
+    exit();
 }
 else
 {

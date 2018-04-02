@@ -30,10 +30,12 @@ if(isset($_POST['submitNewLeaderboard']) && isset($_SESSION['user_id']))
     if($boardID != -1)
     {
         header("Location: /pages/leaderboard.php?boardid=$boardID");
+        exit();
     }
     else
     {
         header("Location: /pages/createLeaderboard.php&success=false");
+        exit();
     }
 }
 else

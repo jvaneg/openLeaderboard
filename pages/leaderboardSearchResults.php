@@ -13,7 +13,6 @@ include_once($headerPath);
 ?>
 
 
-
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 

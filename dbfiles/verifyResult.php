@@ -32,13 +32,9 @@ if(isset($_POST['verifySubmission']) && isset($_SESSION['user_id']))
         updateSkillDivision($receiverID, $boardID);
         updateSkillDivision($senderID,$boardID);
     }
-    else
-    {
-        header("Location: /pages/submitted.php");
-        exit();
-    }
 
     header("Location: /pages/submitted.php");
+    exit();
 }
 else
 {

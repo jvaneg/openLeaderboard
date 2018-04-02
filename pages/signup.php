@@ -40,7 +40,7 @@
         {
             $signupCheck = $_GET['signup'];
             if($signupCheck == "emptyfield"){ //lol
-                echo "<p class ='error'>you pleab, fill in the stuff</p>";
+                echo "<p class ='error'>All Fields Required</p>";
                 exit();
             }
             else if($signupCheck == "invalidusername"){
