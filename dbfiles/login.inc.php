@@ -5,11 +5,12 @@ session_start();
 if(isset($_POST['submit']))
 {
     include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
-    $connection = connectToDB();
 
+    // $connection = connectToDB();
     // $uid = mysqli_real_escape_string($connection, $_POST['uid']);
     // $name = mysqli_real_escape_string($connection, $_POST['name']);
     // $pswd = mysqli_real_escape_string($connection, $_POST['pswd']);
+    // mysqli_close($connection);
 
     $name = $_POST['name'];
     $pswd = $_POST['pswd'];
@@ -21,11 +22,7 @@ if(isset($_POST['submit']))
     }
     else
     {
-        //setup query
-        $nameCheck = "SELECT * FROM User WHERE name='$name'";
-
-        //perform query
-        $result = mysqli_query($connection,$nameCheck);
+        $result  = checkUserInDB($name);
         $resultCheck = mysqli_num_rows($result);
 
         //if no such user found from in the db
@@ -52,7 +49,7 @@ if(isset($_POST['submit']))
                 }
                 elseif($resultCheck == 1)
                 {
-                    $_SESSION['user_name'] = $row['name'];
+                    $_SESSION['user_id'] = $row['user_id']; //$_SESSION['user_name'] = $row['name'];
                     $_SESSION['user_pswd'] = $row['pswd'];
                     header("Location: ../index.php?login=success");
                     exit();

@@ -8,22 +8,20 @@
 if(isset($_POST['submit'])) //if($_SERVER['submit'] == "POST")
 {
     include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
-    $connection = connectToDB();
-    if($connection->connect_errno)
+//    $connection = connectToDB();
+//    if($connection->connect_errno)
+//    {
+//        header("Location: ../pages/signup.php?signup=connerror");
+//        exit();
+//    }
+//    else
     {
-        header("Location: ../pages/signup.php?signup=connerror");
-        exit();
-    }
-    else
-    {
-
         $name = $_POST['name'];
         $email = $_POST['email'];
-        //$bio = $_POST['bio'];
         $pswd = $_POST['pswd'];
 
         //checking if fields are filled
-        if(empty($name) || empty($email) || empty($pswd))// || empty($bio))
+        if(empty($name) || empty($email) || empty($pswd))
         {
             header("Location: ../pages/signup.php?signup=emptyfield");
             exit();
@@ -47,8 +45,7 @@ if(isset($_POST['submit'])) //if($_SERVER['submit'] == "POST")
                 else
                 {
                     //checking for existing user
-                    $sql = "SELECT * FROM User WHERE user_name = '$name'";
-                    $result = mysqli_query($connection, $sql);
+                    $result = checkUserInDB($name);
                     $resultCheck = mysqli_num_rows($result);
 
                     if($resultCheck > 0)
@@ -58,12 +55,8 @@ if(isset($_POST['submit'])) //if($_SERVER['submit'] == "POST")
                     }
                     else
                     {
-                        $hashPswd = password_hash($pswd, PASSWORD_DEFAULT);
-                        //$sql = "INSERT INTO User (name, email, bio, pswd) VALUES ('$name', '$email','$bio' , '$hashPswd');";
-                        $sql = "INSERT INTO User (name, email, pswd) VALUES ('$name', '$email', '$hashPswd');";
-
-                        mysqli_query($connection, $sql);
-                        header("Location: ../pages/signup.php?signup=success");
+                        addNewUser($name, $email, $pswd);
+                        header("Location: /index.php?signup=success");
                         exit();
                     }
                 }
