@@ -16,7 +16,6 @@ include_once($headerPath);
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
 ?>
-
 <div class="leaderboard-search-result">
     <h1>Result for <?php echo $_GET['userSearchTerm']; ?></h1>
 
@@ -35,24 +34,21 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
         $resultCheck = mysqli_num_rows($result);
 
         if($resultCheck > 0) { ?>
-
-        <table border='1'>
-            <tr>
-                <td>Name</td>
-                <td>Number of Boards</td>
-            </tr>
-
-            <?php while($row = mysqli_fetch_assoc($result)) { ?>
+            <table border='1'>
                 <tr>
-                    <td><a href="user.php?userid=<?=$row['user_id']?>"><?=$row['name']?></a></td>
-                    <td><?=$row['numLBs']?></td>
+                    <td>Name</td>
+                    <td>Number of Boards</td>
                 </tr>
-            <?php } ?>
-        </table>
-
+                <?php while($row = mysqli_fetch_assoc($result)) { ?>
+                    <tr>
+                        <td><a href="user.php?userid=<?=$row['user_id']?>"><?=$row['name']?></a></td>
+                        <td><?=$row['numLBs']?></td>
+                    </tr>
+                <?php } ?>
+            </table>
         <?php } ?>
-    <?php } ?>
 
+    <?php } ?>
 </div>
 
 <?php

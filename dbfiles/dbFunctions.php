@@ -211,6 +211,29 @@ function viewLbNameDescription($boardID)
 
 
 /**
+ * Purpose: Returns all the leaderboards and number of players in that category
+ *          Return format:
+ *          name, numUsers
+ * @param $categoryID
+ * @return bool|mysqli_result
+ */
+function viewLBByCategory($categoryID)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT L.name, L.board_id, COUNT(C.user_id) AS numUsers
+            FROM Leaderboard AS L, Competes_in AS C
+            WHERE L.category_id = $categoryID AND L.board_id = C.board_id
+            GROUP BY C.board_id
+            ORDER BY COUNT(C.user_id) DESC";
+
+    $result = mysqli_query($connection, $sql);
+    mysqli_close($connection);
+    return $result;
+}
+
+
+/**
  * Purpose: Adds a new user to the data base
  *
  * @param $name
@@ -249,6 +272,7 @@ function searchLbsByName($searchTerm)
 {
     $connection = connectToDB();
 
+    //this escapes any special characters
     $searchTerm = mysqli_real_escape_string($connection, $searchTerm); //TODO ask arsh what this is for
 
     $sql =  "SELECT L.name, L.board_id, COUNT(C.user_id) AS numUsers 

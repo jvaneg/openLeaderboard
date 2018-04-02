@@ -35,31 +35,6 @@ if(isset($_POST['submit']))
         {
             if($row = mysqli_fetch_assoc($result))
             {
-                /*
-                $pswdCheck =  "SELECT * FROM user WHERE name='$name' AND '$row[pswd]'='$pswd'";
-
-                
-                $result = mysqli_query($connection, $pswdCheck);
-                $resultCheck = mysqli_num_rows($result);
-                
-                if($resultCheck != 1)
-                {
-                    header("Location: ../index.php?login=error");
-                    exit();
-                }
-                elseif($resultCheck == 1)
-                {
-                    $_SESSION['user_id'] = $row['user_id']; //$_SESSION['user_name'] = $row['name'];
-                    $_SESSION['user_pswd'] = $row['pswd'];
-                    header("Location: ../index.php?login=success");
-                    exit();
-                }
-                */
-
-                //if you are not okay with this hashed function 
-                //then comment the whole code below and uncomment the above 
-                
-                // /*
                 $hashPswd = password_verify($pswd,$row['pswd']);
                 if($hashPswd == false)
                 {
@@ -72,7 +47,6 @@ if(isset($_POST['submit']))
                     header("Location: /pages/profile.php");
                     exit();
                 }
-                // */ 
             }
         }
     }
