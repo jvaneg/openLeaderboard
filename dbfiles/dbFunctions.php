@@ -213,7 +213,7 @@ function viewLbNameDescription($boardID)
 /**
  * Purpose: Returns all the leaderboards and number of players in that category
  *          Return format:
- *          name, numUsers
+ *          name, board_id (for LB page), numUsers
  * @param $categoryID
  * @return bool|mysqli_result
  */
