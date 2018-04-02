@@ -57,7 +57,7 @@ $resultCheck = mysqli_num_rows($result);
         </tr>
         <?php while($row = mysqli_fetch_assoc($result)) { ?>
             <tr>
-                <td><a href="leaderboard.php?boardid=<?=$row[board_id]?>"><?=$row['l_name']?></a></td>
+                <td><a href="leaderboard.php?boardid=<?=$row['board_id']?>"><?=$row['l_name']?></a></td>
                 <td><?=$row['rank']?></td>
                 <td><?=$row['rating_num']?></td>
                 <td><img src="<?='/images/'.$row['rank_image']?>"></td>

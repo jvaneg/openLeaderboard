@@ -17,60 +17,45 @@ include_once($headerPath);
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
-
-$userid = 1;
 ?>
 
-
 <div class="leaderboard-search-result">
-    <h1>Result for <?php echo $_POST['userSearch']; ?></h1>
+    <h1>Results for <?php echo $_GET['lbSearchTerm']; ?></h1>
 
     <?php
 
-    if(empty($_POST['userSearch']))
+    if(empty($_GET['lbSearchTerm']))
     {
+
         header("Location: leaderboardSearch.php?search=empty");
         exit();
     }
-    if(isset($_POST['userSearch']))
+    if(isset($_GET['lbSearchTerm']))
     {
-        $connection = connectToDB();
-        $search = mysqli_real_escape_string($connection, $_POST['userSearch']);
-        $result = viewLbName($userid, $search);
-        mysqli_close($connection);
+        $search = $_GET['lbSearchTerm'];
+        $result = searchLbsByName($search);
+        $resultCheck = mysqli_num_rows($result);
 
-        echo "<table border='1'>";
-        echo "<col width='200'>";
-        echo "<col width='200'>";
-        echo "<tr><td>Name</td><td>Number Of Users</td></tr>";
+        if($resultCheck > 0) { ?>
 
-        while($row = mysqli_fetch_assoc($result))
-        {
-//            echo "<tr><td>{$row['name']}</td><td>{$row['numUsers']}</td></tr>";
-            echo "
-            <tr>
-                <td>
-                   <a href=\"leaderboard.php\">
-                        <div style=\"height:100%;width:100%\">
-                            {$row['name']}
-                        </div>
-                    </a>
-                </td>
-                <td>
-                    <a href=\"leaderboard.php\">
-                        <div style=\"height:100%;width:100%\">
-                            {$row['numUsers']}
-                        </div>
-                    </a>
-                </td>
-            </tr>";
-        }
+            <table border='1'>
+                <tr>
+                    <td>Name</td>
+                    <td>Number of Users</td>
+                </tr>
 
-        echo "</table>";
-    }
-    ?>
+                <?php while($row = mysqli_fetch_assoc($result)) { ?>
+                    <tr>
+                        <td><a href="leaderboard.php?boardid=<?=$row['board_id']?>"><?=$row['name']?></a></td>
+                        <td><?=$row['numUsers']?></td>
+                    </tr>
+                <?php } ?>
+            </table>
 
-
+        <?php } else {
+            echo "No results found!";
+        } ?>
+    <?php } ?>
 
 </div>
 

@@ -26,8 +26,8 @@ if($resultCheck > 0)
 
 <div class="leaderboard-search-container">
 
-    <form action="leaderboardSearchResults.php" method="POST">
-        <input type="text" name="userSearch" placeholder="Search">
+    <form action="leaderboardSearchResults.php" method="GET">
+        <input type="text" name="lbSearchTerm" placeholder="Search">
         <button type="submit" name="searchLeaderboard"> Search</button><br>
     </form>
 </div>

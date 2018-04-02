@@ -48,15 +48,24 @@ function viewUserNameBio($userID)
 }
 
 
-function viewUsersInLeaderboards($userSearch)
+/**
+ * Purpose: Searches the user list for user names that contain the specified string (case sensitive)
+ *          Return format:
+ *          name, user_id, numLBs
+ * @param $searchTerm
+ * @return bool|mysqli_result
+ */
+function searchUsersByName($searchTerm)
 {
     $connection = connectToDB();
 
-    $sql = "SELECT U.name, Count(U.user_id) AS numLBs 
+    $searchTerm = mysqli_real_escape_string($connection, $searchTerm); //TODO ask arsh what this is for
+
+    $sql = "SELECT U.name, U.user_id, Count(C.user_id) AS numLBs 
             FROM User AS U, Competes_in AS C 
-            WHERE U.user_id = C.user_id AND U.name Like '%$userSearch%'
+            WHERE U.name Like '%$searchTerm%' AND U.user_id = C.user_id
             GROUP BY U.name 
-            ORDER BY COUNT(C.board_id) DESC";
+            ORDER BY COUNT(C.user_id) DESC";
 
     $result = mysqli_query($connection,$sql);
 
@@ -64,6 +73,7 @@ function viewUsersInLeaderboards($userSearch)
 
     return $result;
 }
+
 
 function viewCategories()
 {
@@ -172,13 +182,22 @@ function viewLbNameDescription($boardID)
 }
 
 
-function viewLbName($userid, $userSearch)
+/**
+ * Purpose: Searches the leaderboard list for board names that contain the specified string (case sensitive)
+ *          Return format:
+ *          name, board_id, numUsers
+ * @param $searchTerm
+ * @return bool|mysqli_result
+ */
+function searchLbsByName($searchTerm)
 {
     $connection = connectToDB();
 
-    $sql =  "SELECT L.name, COUNT(U.user_id) AS numUsers 
-            FROM User AS U, Competes_In AS C, Board_Admin AS B, Leaderboard AS L 
-            WHERE U.user_id = $userid AND L.name Like '%$userSearch%'
+    $searchTerm = mysqli_real_escape_string($connection, $searchTerm); //TODO ask arsh what this is for
+
+    $sql =  "SELECT L.name, L.board_id, COUNT(C.user_id) AS numUsers 
+            FROM Competes_in AS C, Leaderboard AS L 
+            WHERE L.name Like '%$searchTerm%' AND L.board_id = C.board_id
             GROUP BY L.name";
 
     $result = mysqli_query($connection,$sql);
@@ -187,6 +206,7 @@ function viewLbName($userid, $userSearch)
 
     return $result;
 }
+
 
 /**
  * Purpose: Retrieves all the members of the specified leaderboard, ranked by rating and skipping rank on ties
@@ -284,6 +304,34 @@ function editUserBio($userID, $userBio)
     $sql = "UPDATE User AS U
             SET U.bio = '$userBio'
             WHERE U.user_id = $userID";
+
+    if (mysqli_query($connection, $sql))
+    {
+        echo "Record updated successfully";
+    }
+    else
+    {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+    mysqli_close($connection);
+}
+
+
+/**
+ * Purpose: Edits the specified user's bio to be the specified bio string
+ * Note: userID included so that users who aren't the lb owner can't modify things
+ * @param $userID
+ * @param $boardID
+ * @param $lbDesc
+ */
+function editLbDescription($userID, $boardID, $lbDesc)
+{
+    $connection = connectToDB();
+
+    $sql = "UPDATE Leaderboard AS L
+            SET L.description = '$lbDesc'
+            WHERE L.owner_id = $userID AND L.board_id = $boardID";
 
     if (mysqli_query($connection, $sql))
     {
@@ -500,6 +548,28 @@ function isLbMember($userID, $boardID)
 
 
 /**
+ * Purpose: Checks whether or not a specified user is the admin of a specified leaderboard
+ * @param $userID
+ * @param $boardID
+ * @return bool
+ */
+function isLbAdmin($userID, $boardID)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT *
+            FROM Leaderboard
+ 	        WHERE board_id = $boardID AND owner_id = $userID";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    return (mysqli_num_rows($result) > 0);
+}
+
+
+/**
  * Purpose: Checks if a specified user has a rating on a specified leaderboard yet
  * Note: This is used mainly for users rejoining leaderboards they've left, letting us
  *       maintain their stats
@@ -626,6 +696,33 @@ function updateSkillDivision($userID, $boardID)
     else
     {
         echo "Error updating record: " . mysqli_error($connection);
+    }
+
+    mysqli_close($connection);
+}
+
+
+/**
+ * Purpose: Removes a specified user from a specified leaderboard
+ *          Only works if the specified admin is an admin of the leaderboard
+ * @param $adminID
+ * @param $userID
+ * @param $boardID
+ */
+function removeUserFromLb($adminID, $userID, $boardID)
+{
+    $connection = connectToDB();
+
+    if(isLbAdmin($adminID,$boardID))
+    {
+        $sql = "DELETE FROM Competes_in
+                WHERE board_id = $boardID AND user_id = $userID";
+
+        if (mysqli_query($connection, $sql)) {
+            echo "Record updated successfully";
+        } else {
+            echo "Error updating record: " . mysqli_error($connection);
+        }
     }
 
     mysqli_close($connection);

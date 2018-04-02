@@ -21,14 +21,14 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
 <section class="search-container">
     <div class="search-wrapper">
-        <h2>User Search </h2>
+        <h2>User Search</h2>
     </div>
 </section>
 
 <div class="leaderboard-search-container">
-    <form action="userSearchResults.php" method="POST">
-        <input type="text" name="userSearch" placeholder="Search">
-        <button type="submit" name="searchUsers"> Search</button><br>
+    <form action="userSearchResults.php" method="GET">
+        <input type="text" name="userSearchTerm" placeholder="Search">
+        <button type="submit" name="searchUsers">Search</button><br>
     </form>
 </div>
 
