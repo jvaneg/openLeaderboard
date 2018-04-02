@@ -10,17 +10,58 @@
         <h2>Sign Up</h2>
         
         <!-- <form class="signup-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" >  -->
+
+
         <form class="signup-form" action="../dbfiles/signup.inc.php" method="POST" >
-            <input type="text" name="name" placeholder="Username" required> 
+            <?php
+            if(isset($_GET['name'])){
+                $nm = $_GET['name'];
+                echo '<input type="text" name="name" placeholder="Username" required value=".$nm.">';
+            }
+            else
+            {
+                echo '<input type="text" name="name" placeholder="Username" required>';
+            }
+            ?>
+<!--            <input type="text" name="name" placeholder="Username" required>-->
             <input type="text" name="email" placeholder="E-mail" required>
             <input type="password" name="pswd" placeholder="Password" required>
-<!--            <textarea type="text" style="resize:none" name="bio" rows="10" cols="47" placeholder="Enter your Bio here..." tabindex="5" required></textarea>-->
-
             <button type="submit" name="submit">Sign up</button>
         </form>
+        <?php
 
+
+        if(!isset($_GET['signup'])){
+            exit();
+        }
+        else
+        {
+            $signupCheck = $_GET['signup'];
+            if($signupCheck == "emptyfield"){ //lol
+                echo "<p class ='error'>you pleab, fill in the stuff</p>";
+                exit();
+            }
+            else if($signupCheck == "invalidusername"){
+                echo "<p class ='error'> Invalid Username</p>";
+                exit();
+            }
+            else if($signupCheck == "invalidemail"){
+                echo "<p class ='error'> Invalid Email</p>";
+                exit();
+            }
+            else if($signupCheck == "usertaken"){
+                echo "<p class ='error'> Username Taken</p>";
+                exit();
+            }
+
+        }
+        ?>
 
     </div>
+
+
+
+
 </section>
 
 <?php

@@ -428,3 +428,13 @@ div.leaderboard-category-container div,div {
     margin-bottom: 10px;
     /*background-color: #00fa00;*/
 }
+
+p.error {
+    text-align: center;
+    font-family: arial;
+    font-size: 16px;
+    /*background-color: #bf0000;*/
+    color: #bf0000;
+    width: content-box;
+    padding: 20px;
+}

@@ -223,7 +223,7 @@ function addNewUser($name, $email, $pswd)
     $hashPswd = password_hash($pswd, PASSWORD_DEFAULT);
 
     $sql = "INSERT INTO User (name, email, pswd) 
-            VALUES ('$name', '$email', '$hashPswd');";
+            VALUES ('$name', '$email', '$hashPswd')";
 
     mysqli_query($connection, $sql);
     mysqli_close($connection);
