@@ -13,14 +13,12 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 if(isset($_POST['submitNewBio']) && isset($_SESSION['user_id']))
 {
     $newBio = mb_strimwidth($_POST['newBio'],0,252);
-    //$userID = $_POST['user_id'];
     $userID = $_SESSION['user_id'];
 
     //TODO prevent sql injection stuff here
     editUserBio($userID, $newBio);
 
     header("Location: /pages/profile.php");
-
 }
 else
 {

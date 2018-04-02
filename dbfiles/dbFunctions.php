@@ -618,6 +618,27 @@ function isLbAdmin($userID, $boardID)
 
 
 /**
+ * Purpose: Checks whether or not a specified user is a site administrator
+ * @param $userID
+ * @return bool
+ */
+function isSiteAdmin($userID)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT *
+            FROM Site_Admin
+ 	        WHERE user_id = $userID";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    return (mysqli_num_rows($result) > 0);
+}
+
+
+/**
  * Purpose: Checks if a specified user has a rating on a specified leaderboard yet
  * Note: This is used mainly for users rejoining leaderboards they've left, letting us
  *       maintain their stats
@@ -775,6 +796,131 @@ function removeUserFromLb($adminID, $userID, $boardID)
 
     mysqli_close($connection);
 }
+
+
+/**
+ * Purpose: Checks if a specified leaderboard name already exists in the database
+ * @param $lbName
+ * @return bool
+ */
+function lbNameTaken($lbName)
+{
+    $connection = connectToDB();
+
+    $sql = "DELETE FROM Leaderboard
+            WHERE name = '$lbName'";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    return (mysqli_num_rows($result) > 0);
+}
+
+
+/**
+ * Purpose: Returns the category id of a specified category name
+ *          If there is no associated category, returns -1
+ * @param $categoryName
+ * @return int
+ */
+function getCategoryIDByName($categoryName)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT category_id
+            FROM Category
+            WHERE name = '$categoryName'";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    if($row = mysqli_fetch_assoc($result))
+    {
+        return $row['category_id'];
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+
+/**
+ * Purpose: Returns the board id of a specified board name
+ *          If there is no associated board, returns -1
+ * @param $boardName
+ * @return int
+ */
+function getBoardIDByName($boardName)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT board_id
+            FROM Leaderboard
+            WHERE name = '$boardName'";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    if($row = mysqli_fetch_assoc($result))
+    {
+        return $row['board_id'];
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+
+/**
+ * Purpose: Adds a new leaderboard to the database
+ *          Returns the new board's id, or -1 if there was a failure creating it
+ * @param $name
+ * @param $description
+ * @param $categoryID
+ * @param $userID
+ * @return int
+ */
+function addLeaderboard($name, $description, $categoryID, $userID)
+{
+    $connection = connectToDB();
+
+    //add user to beard admins
+    $sql = "INSERT INTO Board_Admin
+            VALUES($userID)";
+
+    if (mysqli_query($connection, $sql)) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+    //create new leaderboard
+    $sql = "INSERT INTO Leaderboard (name, description, category_id, owner_id)
+            VALUES('$name', '$description', $categoryID, $userID)";
+
+    if (mysqli_query($connection, $sql)) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+    $boardID = getBoardIDByName($name);
+
+    if($boardID != -1)
+    {
+        joinLeaderboard($userID, $boardID);
+    }
+
+    mysqli_close($connection);
+
+    return $boardID;
+}
+
 ?>
 
 

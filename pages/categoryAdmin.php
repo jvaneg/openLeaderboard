@@ -4,7 +4,7 @@ $headerPath .= "/header/header.php";
 include_once($headerPath);
 ?>
 
-    <h2>Leaderboard Admin Page</h2>
+    <h2>Category Admin Page</h2>
 
 <?php
 $footerPath = $_SERVER['DOCUMENT_ROOT'];

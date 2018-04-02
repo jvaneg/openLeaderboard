@@ -26,7 +26,7 @@ function addListItem() {
 
     if(inputText.value != "")
     {
-        var link = "leaderboardCategory.php";
+        var link = "category.php";
         var li, a, text;
 
         li = document.createElement('li');
@@ -44,5 +44,5 @@ function addListItem() {
 function addLink()
 {
     // var a = document.getElementById(event.srcElement.id);
-    // a.href = "leaderboardCategory.php";
+    // a.href = "category.php";
 }

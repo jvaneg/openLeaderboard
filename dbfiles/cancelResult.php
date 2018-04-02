@@ -13,13 +13,11 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 if(isset($_POST['cancelSubmission']) && isset($_SESSION['user_id']))
 {
     $submissionID = $_POST['submission_id'];
-    //$senderID = $_POST['sender_id'];
     $senderID = $_SESSION['user_id'];
 
     cancelResult($submissionID,$senderID);
 
     header("Location: /pages/submitted.php");
-
 }
 else
 {
