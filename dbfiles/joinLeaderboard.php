@@ -13,15 +13,11 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 if(isset($_POST['joinLb']) && isset($_SESSION['user_id']))
 {
     $boardID = $_POST['board_id'];
-    //$userID = $_POST['user_id'];
     $userID = $_SESSION['user_id'];
-
 
     joinLeaderboard($userID, $boardID);
 
-
     header("Location: /pages/leaderboard.php?boardid=$boardID");
-
 }
 else
 {

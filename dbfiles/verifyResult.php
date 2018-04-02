@@ -13,7 +13,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 if(isset($_POST['verifySubmission']) && isset($_SESSION['user_id']))
 {
     $submissionID = $_POST['submission_id'];
-    //$receiverID = $_POST['receiver_id'];
     $receiverID = $_SESSION['user_id'];
 
     $resultData = mysqli_fetch_assoc(getResultData($submissionID));
@@ -25,7 +24,6 @@ if(isset($_POST['verifySubmission']) && isset($_SESSION['user_id']))
     $receiverScore = $resultData['receiver_score'];
     $sndrRatChange = intval($resultData['sndr_rat_change']);
     $rcvrRatChange = intval($resultData['rcvr_rat_change']);
-
 
     if($receiverID == $resultReceiverID)
     {
@@ -41,7 +39,6 @@ if(isset($_POST['verifySubmission']) && isset($_SESSION['user_id']))
     }
 
     header("Location: /pages/submitted.php");
-
 }
 else
 {
