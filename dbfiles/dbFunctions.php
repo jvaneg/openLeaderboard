@@ -18,7 +18,7 @@ function connectToDB()
     $connection = new mysqli($dbServername, $dbUsername, $dbPassword, $dbName);
 
     if ($connection->connect_error) {
-        die("Connection failed [check db.inc.php?]: " . $connection->connect_error);
+        die("Connection failed [check dbFunction?]: " . $connection->connect_error);
     }
 
     return $connection;
@@ -75,6 +75,34 @@ function searchUsersByName($searchTerm)
 }
 
 
+/**
+ * Purpose: Returns related information of loging in user if it exists
+ *          Return format:
+ *          user_id, name, email, bio, pswd
+ * @param $userInput
+ * @return bool|mysqli_result
+ */
+function checkUserInDB($userInput)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT * 
+            FROM User 
+            WHERE name = '$userInput'";
+
+    $result = mysqli_query($connection,$sql);
+    mysqli_close($connection);
+
+    return $result;
+}
+
+
+/**
+ * Purpose: Returns the category ids, names and number of categories which exist
+ *          Return format:
+ *          category_id, name, numBoardId
+ * @return bool|mysqli_result
+ */
 function viewCategories()
 {
     $connection = connectToDB();
@@ -179,6 +207,26 @@ function viewLbNameDescription($boardID)
     mysqli_close($connection);
 
     return $result;
+}
+
+
+/**
+ * Purpose: Adds a new user to the data base
+ *
+ * @param $name
+ * @param $email
+ * @param $pswd
+ */
+function addNewUser($name, $email, $pswd)
+{
+    $connection = connectToDB();
+    $hashPswd = password_hash($pswd, PASSWORD_DEFAULT);
+
+    $sql = "INSERT INTO User (name, email, pswd) 
+            VALUES ('$name', '$email', '$hashPswd');";
+
+    mysqli_query($connection, $sql);
+    mysqli_close($connection);
 }
 
 

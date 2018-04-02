@@ -3,7 +3,6 @@
     $headerPath .= "/header/header.php";
     include_once($headerPath);
 
-echo "signup.php";
 ?>
 
 <section class="main-container">
