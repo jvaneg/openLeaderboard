@@ -34,7 +34,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
 <div>
     <?php if($loggedIn) { ?>
-        <form action="/pages/createLeaderboard.php">
+        <form action="/pages/createLeaderboard.php" method="POST">
             <button type="submit" name="createLeaderboard">Create New Leaderboard</button>
         </form>
     <?php } ?>
@@ -44,7 +44,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
     <div name="categoryTitle">
         <h1>View by Category</h1>
         <?php if($loggedIn && isSiteAdmin($userID)) { ?>
-            <form action="/pages/categoryAdmin.php">
+            <form action="/pages/categoryAdmin.php" method="POST">
                 <button type="submit" name="manageCategories">Manage Categories</button>
             </form>
         <?php } ?>
