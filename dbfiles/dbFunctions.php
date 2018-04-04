@@ -400,7 +400,7 @@ function editUserBio($userID, $userBio)
 
 
 /**
- * Purpose: Edits the specified user's bio to be the specified bio string
+ * Purpose: Edits the specified leaderboard's description to be the specified description string
  * Note: userID included so that users who aren't the lb owner can't modify things
  * @param $userID
  * @param $boardID
@@ -1106,6 +1106,57 @@ function createMatchSubmission($boardID, $senderID, $senderScore, $receiverID, $
         echo "Record updated successfully";
     } else {
         echo "Error updating record: " . mysqli_error($connection);
+    }
+
+    mysqli_close($connection);
+}
+
+
+/**
+ * Purpose: Retrieves the name and description of the specified category
+ *          Returns in the form:
+ *          name, description
+ * @param $categoryID
+ * @return bool|mysqli_result
+ */
+function viewCatNameDescription($categoryID)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT `name`, `description` 
+            FROM `Category` 
+            WHERE `category_id` = $categoryID";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    return $result;
+}
+
+
+/**
+ * Purpose: Edits the specified category's description to be the specified description string
+ * Note: userID included so that users who aren't a site admin can't modify things
+ * @param $userID
+ * @param $categoryID
+ * @param $catDesc
+ */
+function editCatDescription($userID, $categoryID, $catDesc)
+{
+    $connection = connectToDB();
+
+    if(isSiteAdmin($userID))
+    {
+        $sql = "UPDATE Category AS C
+                SET C.description = '$catDesc'
+                WHERE  C.category_id = $categoryID";
+
+        if (mysqli_query($connection, $sql)) {
+            echo "Record updated successfully";
+        } else {
+            echo "Error updating record: " . mysqli_error($connection);
+        }
     }
 
     mysqli_close($connection);
