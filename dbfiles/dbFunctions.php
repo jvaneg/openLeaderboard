@@ -1,5 +1,6 @@
 <?php
 
+require_once($_SERVER['DOCUMENT_ROOT'] . "/lib/Rating/Rating.php");
 
 /**
  * Purpose: Connects to the database, returns connection variable
@@ -976,6 +977,35 @@ function getBoardIDByName($boardName)
 
 
 /**
+ * Purpose: Returns the user id of a specified user name
+ *          If there is no associated board, returns -1
+ * @param $userName
+ * @return int
+ */
+function getUserIDByName($userName)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT * 
+            FROM User 
+            WHERE name = '$userName'";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    if($row = mysqli_fetch_assoc($result))
+    {
+        return $row['user_id'];
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+
+/**
  * Purpose: Adds a new leaderboard to the database
  *          Returns the new board's id, or -1 if there was a failure creating it
  * @param $name
@@ -1018,6 +1048,67 @@ function addLeaderboard($name, $description, $categoryID, $userID)
     mysqli_close($connection);
 
     return $boardID;
+}
+
+
+/**
+ * Purpose: calculates rating changes and adds a new submission to the database
+ * @param $boardID
+ * @param $senderID
+ * @param $senderScore
+ * @param $receiverID
+ * @param $receiverScore
+ */
+function createMatchSubmission($boardID, $senderID, $senderScore, $receiverID, $receiverScore)
+{
+    $connection = connectToDB();
+
+    //get sender rating
+    $sql = "SELECT R.rating_num
+            FROM Rating AS R
+            WHERE R.user_id = $senderID AND R.board_id = $boardID";
+
+    $senderRating = intval(mysqli_fetch_assoc(mysqli_query($connection,$sql))['rating_num']);
+
+
+    //get receiver rating
+    $sql = "SELECT R.rating_num
+            FROM Rating AS R
+            WHERE R.user_id = $receiverID AND R.board_id = $boardID";
+
+    $receiverRating = intval(mysqli_fetch_assoc(mysqli_query($connection,$sql))['rating_num']);
+
+    //calculate rating changes //TODO do this but good
+    if($senderScore == $receiverScore)
+    {
+        $rating = new \Rating\Rating($senderRating, $receiverRating, \Rating\Rating::DRAW, \Rating\Rating::DRAW);
+    }
+    elseif($senderScore > $receiverScore)
+    {
+        $rating = new \Rating\Rating($senderRating, $receiverRating, \Rating\Rating::WIN, \Rating\Rating::LOST);
+    }
+    else
+    {
+        $rating = new \Rating\Rating($senderRating, $receiverRating, \Rating\Rating::LOST, \Rating\Rating::WIN);
+    }
+
+    $ratResults = $rating->getNewRatings();
+
+    $sndrRatChange = $ratResults['a'] - $senderRating;
+    $rcvrRatChange = $ratResults['b'] - $receiverRating;
+
+
+    //add submission to db
+    $sql = "INSERT INTO `Result_Submission`(`sender_id`, `receiver_id`, `board_id`, `sender_score`, `receiver_score`, `sndr_rat_change`, `rcvr_rat_change`) 
+            VALUES ($senderID,$receiverID,$boardID,$senderScore,$receiverScore,$sndrRatChange,$rcvrRatChange)";
+
+    if (mysqli_query($connection, $sql)) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . mysqli_error($connection);
+    }
+
+    mysqli_close($connection);
 }
 
 ?>

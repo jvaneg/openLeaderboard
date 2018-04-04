@@ -24,8 +24,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
 <div id="newLbForm">
     <form action="/dbfiles/createNewLb.php" method="post">
-        <input type="text" name="newLbName" placeholder="Leaderboard name"><br>
-        <input list="categories" name="newLbCategory" placeholder="Leaderboard category"><br>
+        <input type="text" name="newLbName" placeholder="Leaderboard name" required="true"><br>
+        <input list="categories" name="newLbCategory" placeholder="Leaderboard category" required="true"><br>
         <textarea name="newLbDesc" rows="7" cols="40" wrap="soft" maxlength="252" placeholder="Leaderboard description..."></textarea><br>
         <input type="submit" name="submitNewLeaderboard" value="Create Leaderboard">
     </form>

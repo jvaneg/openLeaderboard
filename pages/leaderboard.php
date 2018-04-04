@@ -80,14 +80,33 @@ else
                 </form>
             </div>
             <div id="submitMatchForm">
-                <form action="/pages/submitMatch.php" method="post">
-                    <input type="hidden" name="board_id" value="<?=$boardID?>">
-                    <input type="submit" name="submitMatch" value="Submit Match">
-                </form>
+                <button onclick="toggleElement('submitModal')">Submit Match</button>
             </div>
         <?php } ?>
     </div>
 <?php } ?>
+
+<!-- Submit match modal box -->
+<div id="submitModal" class="modal" style="display: none">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span onclick="toggleElement('submitModal')" class="close">&times;</span>
+        <h1>Submit Match</h1>
+        <div id="submitForm">
+            <form action="/dbfiles/submitMatch.php" method="post">
+                <p>Opponent</p>
+                <input list="userNames" name="opponentName" placeholder="Opponent's name" required="true"><br>
+                <p>Score</p>
+                <input type="number" name="senderScore" placeholder="Yours" required="true" min="0" step="1">
+                <input type="number" name="receiverScore" placeholder="Theirs" required="true" min="0" step="1"><br>
+                <input type="hidden" name="boardID" value="<?=$boardID?>">
+                <input type="submit" name="submitResultButton" value="Submit Match Result">
+            </form>
+        </div>
+    </div>
+
+</div>
 
 <?php
 
@@ -143,7 +162,23 @@ $resultCheck = mysqli_num_rows($result);
     ?>
 </div>
 
+<datalist id="userNames">
+    <?php mysqli_data_seek($result,0); ?>
+    <?php while($row = mysqli_fetch_assoc($result)){ ?>
+        <option value="<?=$row['name']?>">
+    <?php }?>
+</datalist>
+
 <script src="/js/utilityFunctions.js"></script>
+<script>
+    var modal = document.getElementById('submitModal');
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 
 <?php
 $footerPath = $_SERVER['DOCUMENT_ROOT'];
