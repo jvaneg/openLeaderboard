@@ -148,7 +148,7 @@ function viewManagedLbs($userID)
  * Purpose: Retrieves some info about every leaderboard the specified user is a member of, including name,
  *          rank, rating, and division
  *          Return format:
- *          l_name, board_id, rating_num, rank, rank_image
+ *          l_name, board_id, rating_num, rank, rank_image, wins, losses
  * @param $userID
  * @return bool|mysqli_result
  */
@@ -156,9 +156,9 @@ function viewMemberLbs($userID)
 {
     $connection = connectToDB();
 
-    $sql = "SELECT UB3.l_name, UB3.board_id, UB3.rating_num, UB3.rank, UB3.rank_image
+    $sql = "SELECT UB3.l_name, UB3.board_id, UB3.rating_num, UB3.rank, UB3.rank_image, UB3.wins, UB3.losses
             FROM
-            (SELECT UB2.l_name, UB2.board_id, UB2.user_id, UB2.name, UB2.rating_num, UB2.rank_image,
+            (SELECT UB2.l_name, UB2.board_id, UB2.user_id, UB2.name, UB2.rating_num, UB2.rank_image, UB2.wins, UB2.losses,
               @curRank := CASE WHEN @boardID <> UB2.board_id THEN 1 ELSE IF(@prevRank = UB2.rating_num, @curRank, @incRank) END AS rank,
               @incRank := IF(@boardID <> UB2.board_id, 2, @incRank + 1),
               @prevRank := UB2.rating_num,
@@ -167,7 +167,7 @@ function viewMemberLbs($userID)
             (SELECT @curRank := 0, @prevRank := NULL, @incRank := 1, @boardID := 0) AS vars,
             (SELECT * 
             FROM
-            (SELECT L.name AS l_name, L.board_id, U.user_id, U.name, R.rating_num, SD.rank_image
+            (SELECT L.name AS l_name, L.board_id, U.user_id, U.name, R.rating_num, SD.rank_image, R.wins, R.losses
             FROM `User` AS U, Rating AS R, Competes_in AS C, Leaderboard AS L, Skill_Division AS SD
             WHERE U.user_id = C.user_id AND C.board_id = L.board_id AND
             R.board_id = L.board_id AND R.division_id = SD.division_id AND
@@ -291,7 +291,7 @@ function searchLbsByName($searchTerm)
 /**
  * Purpose: Retrieves all the members of the specified leaderboard, ranked by rating and skipping rank on ties
  *          Returns in the form:
- *          name, user_id, rating_num, rank, rank_image
+ *          name, user_id, rating_num, rank, rank_image, wins, losses
  * @param $boardID
  * @return bool|mysqli_result
  */
@@ -299,9 +299,9 @@ function viewLbMembers($boardID)
 {
     $connection = connectToDB();
 
-    $sql = "SELECT UB3.name, UB3.user_id, UB3.rating_num, UB3.rank, UB3.rank_image
+    $sql = "SELECT UB3.name, UB3.user_id, UB3.rating_num, UB3.rank, UB3.rank_image, UB3.wins, UB3.losses
             FROM
-            (SELECT UB2.user_id, UB2.name, UB2.rating_num, UB2.rank_image,
+            (SELECT UB2.user_id, UB2.name, UB2.rating_num, UB2.rank_image, UB2.wins, UB2.losses,
               @curRank := IF(@prevRank = UB2.rating_num, @curRank, @incRank) AS rank,
               @incRank := @incRank + 1,
               @prevRank := UB2.rating_num
@@ -309,7 +309,7 @@ function viewLbMembers($boardID)
             (SELECT @curRank := 0, @prevRank := NULL, @incRank := 1) AS vars,
             (SELECT * 
             FROM
-            (SELECT U.user_id, U.name, R.rating_num, SD.rank_image
+            (SELECT U.user_id, U.name, R.rating_num, SD.rank_image, R.wins, R.losses
             FROM `User` AS U, Rating AS R, Competes_in AS C, Leaderboard AS L, Skill_Division AS SD
             WHERE U.user_id = C.user_id AND C.board_id = L.board_id AND
             R.board_id = L.board_id AND R.division_id = SD.division_id AND
@@ -481,12 +481,13 @@ function cancelResult($submissionID, $senderID)
 /**
  * Purpose: Verfies a result submitted to the specified user
  * Process:
- *  - get sender rating
+ *  - get sender rating, wins, losses
  *  - calculate new sender rating
- *  - get receiver rating
+ *  - get receiver rating, wins, losses
  *  - calculate new receiver rating
- *  - update sender rating
- *  - update receiver rating
+ *  - calculate new sender and receiver wins and losses
+ *  - update sender rating, wins, losses
+ *  - update receiver rating, wins, losses
  *  - create match entry in the db from the submission info
  *  - delete the submission from the db
  * Note: convert the inputs to intvals before passing them to this function if they're strings
@@ -504,8 +505,8 @@ function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderSc
     $connection = connectToDB();
 
 
-    //get sender rating
-    $sql = "SELECT R.rating_num
+    //get sender rating, wins, and losses
+    $sql = "SELECT R.rating_num, R.wins, R.losses
             FROM Rating AS R
             WHERE R.user_id = $senderID AND R.board_id = $boardID";
 
@@ -514,7 +515,7 @@ function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderSc
 
 
     //get receiver rating
-    $sql = "SELECT R.rating_num
+    $sql = "SELECT R.rating_num, R.wins, R.losses
             FROM Rating AS R
             WHERE R.user_id = $receiverID AND R.board_id = $boardID";
 
@@ -522,9 +523,74 @@ function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderSc
     $newReceiverRating = intval($receiverRatResult['rating_num']) + $rcvrRatChange;
 
 
+    //calculate new sndr and rcvr wins and losses //TODO should probably just put who won in the submission and avoid this mess lol
+    if(($sndrRatChange == $rcvrRatChange) && ($sndrRatChange == 0))
+    {
+        //both win
+        $sndrNewWins = intval($senderRatResult['wins']) + 1;
+        $sndrNewLosses = intval($senderRatResult['losses']);
+        $rcvrNewWins = intval($receiverRatResult['wins']) + 1;
+        $rcvrNewLosses = intval($receiverRatResult['losses']);
+    }
+    else if($sndrRatChange == 0)
+    {
+        if($rcvrRatChange > 0)
+        {
+            //receiver wins
+            $sndrNewLosses = intval($senderRatResult['losses']) + 1;
+            $sndrNewWins = intval($senderRatResult['wins']);
+            $rcvrNewLosses = intval($receiverRatResult['losses']);
+            $rcvrNewWins = intval($receiverRatResult['losses']) + 1;
+        }
+        else
+        {
+            //sender wins
+            $sndrNewWins = intval($senderRatResult['wins']) + 1;
+            $sndrNewLosses = intval($senderRatResult['losses']);
+            $rcvrNewWins = intval($receiverRatResult['wins']);
+            $rcvrNewLosses = intval($receiverRatResult['losses']) + 1;
+        }
+    }
+    else if($rcvrRatChange == 0)
+    {
+        if($sndrRatChange > 0)
+        {
+            //sender wins
+            $sndrNewWins = intval($senderRatResult['wins']) + 1;
+            $sndrNewLosses = intval($senderRatResult['losses']);
+            $rcvrNewWins = intval($receiverRatResult['wins']);
+            $rcvrNewLosses = intval($receiverRatResult['losses']) + 1;
+        }
+        else
+        {
+            //receiver wins
+            $sndrNewLosses = intval($senderRatResult['losses']) + 1;
+            $sndrNewWins = intval($senderRatResult['wins']);
+            $rcvrNewLosses = intval($receiverRatResult['losses']);
+            $rcvrNewWins = intval($receiverRatResult['losses']) + 1;
+        }
+    }
+    else if($sndrRatChange > 0)
+    {
+        //sender wins
+        $sndrNewWins = intval($senderRatResult['wins']) + 1;
+        $sndrNewLosses = intval($senderRatResult['losses']);
+        $rcvrNewWins = intval($receiverRatResult['wins']);
+        $rcvrNewLosses = intval($receiverRatResult['losses']) + 1;
+    }
+    else
+    {
+        //receiver wins
+        $sndrNewLosses = intval($senderRatResult['losses']) + 1;
+        $sndrNewWins = intval($senderRatResult['wins']);
+        $rcvrNewLosses = intval($receiverRatResult['losses']);
+        $rcvrNewWins = intval($receiverRatResult['losses']) + 1;
+    }
+
+
     //update sender rating
     $sql = "UPDATE Rating 
-		    SET rating_num = $newSenderRating
+		    SET rating_num = $newSenderRating, wins = $sndrNewWins, losses = $sndrNewLosses
 			WHERE board_id = $boardID AND user_id = $senderID";
 
     if (mysqli_query($connection, $sql))
@@ -539,7 +605,7 @@ function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderSc
 
     //update receiver rating
     $sql = "UPDATE Rating 
-		    SET rating_num = $newReceiverRating
+		    SET rating_num = $newReceiverRating, wins = $rcvrNewWins, losses = $rcvrNewLosses
 			WHERE board_id = $boardID AND user_id = $receiverID";
 
     if (mysqli_query($connection, $sql))
@@ -583,6 +649,7 @@ function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderSc
 
     mysqli_close($connection);
 }
+
 
 /**
  * Purpose: Gets all the data of a specified result submission from the db

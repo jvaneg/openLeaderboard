@@ -95,6 +95,8 @@ $resultCheck = mysqli_num_rows($result);
                 <th>Rank</th>
                 <th>Rating</th>
                 <th>Division</th>
+                <th>Wins</th>
+                <th>Losses</th>
             </tr>
             <?php while($row = mysqli_fetch_assoc($result)) { ?>
                 <tr>
@@ -102,6 +104,8 @@ $resultCheck = mysqli_num_rows($result);
                     <td><?=$row['rank']?></td>
                     <td><?=$row['rating_num']?></td>
                     <td><img src="<?='/images/'.$row['rank_image']?>"></td>
+                    <td><?=$row['wins']?></td>
+                    <td><?=$row['losses']?></td>
                 </tr>
             <?php } ?>
         </table>

@@ -106,6 +106,8 @@ $resultCheck = mysqli_num_rows($result);
                 <th>User</th>
                 <th>Rating</th>
                 <th>Division</th>
+                <th>Wins</th>
+                <th>Losses</th>
                 <?php if($loggedIn && isLbAdmin($userID, $boardID)) { ?>
                     <th>Remove</th>
                 <?php } ?>
@@ -116,6 +118,8 @@ $resultCheck = mysqli_num_rows($result);
                     <td><a href="user.php?userid=<?=$row['user_id']?>"><?=$row['name']?></a></td>
                     <td><?=$row['rating_num']?></td>
                     <td><img src="<?='/images/'.$row['rank_image']?>"></td>
+                    <td><?=$row['wins']?></td>
+                    <td><?=$row['losses']?></td>
                     <?php if($loggedIn && isLbAdmin($userID, $boardID)) { ?>
                         <td>
                             <div id="removeForm">
