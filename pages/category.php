@@ -71,8 +71,8 @@ else
 
         <table border='1'>
             <tr>
-                <td>Name</td>
-                <td>Number of Users</td>
+                <th>Name</th>
+                <th>Number of Users</th>
             </tr>
             <?php while($row = mysqli_fetch_assoc($result)) { ?>
                 <tr>

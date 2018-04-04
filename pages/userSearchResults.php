@@ -14,10 +14,15 @@ include_once($headerPath);
 
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
-
 ?>
+
+<!--<div class="result-title"> </div>-->
+
+<section class="search-container">
+    <div class="search-wrapper"><h2>Result for <?php echo $_GET['userSearchTerm']; ?></h2></div>
+</section>
+
 <div class="leaderboard-search-result">
-    <h1>Result for <?php echo $_GET['userSearchTerm']; ?></h1>
 
     <?php
 
@@ -36,8 +41,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
         if($resultCheck > 0) { ?>
             <table border='1'>
                 <tr>
-                    <td>Name</td>
-                    <td>Number of Boards</td>
+                    <th>Name</th>
+                    <th>Number of Boards</th>
                 </tr>
                 <?php while($row = mysqli_fetch_assoc($result)) { ?>
                     <tr>

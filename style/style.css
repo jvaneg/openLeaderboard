@@ -82,7 +82,7 @@ abbr[title], dfn[title] {
     cursor:help;
 }
 
-table {
+table #list{
     border-collapse:collapse;
     border-spacing:0;
 }
@@ -105,15 +105,24 @@ input, select {
 
 .main-wrapper{
     margin: 0 auto;
-    width: 1000px;
+    /*width: 1000px;*/
+    width: 80%;
 }
 
 a{
     text-decoration: none;
 }
 
+a{
+    color: #111;
+}
+
+a:hover{
+    color: #60a3bc;
+}
+
 body{
-    background-color: #ccc;
+    background-color: whitesmoke;
 
 }
 
@@ -134,7 +143,7 @@ header nav ul li{
 }
 
 header nav ul li a{
-    font-family: 'Montserrat',sans-serif;
+    font-family: 'Roboto', sans-serif;
     text-style: bold;
     font-size: 16px;
     color: #111;
@@ -144,7 +153,6 @@ header nav ul li a{
     padding:4px 8px;
     display:inline-block;
     font-weight: bold;
-    
 }
 
 header nav ul li a:hover{
@@ -179,7 +187,8 @@ header .nav-login form input{
     border: none;
     background-color: #ccc;
 
-    font-family: arial;
+    /*font-family: arial;*/
+    font-family: 'Roboto', sans-serif;
     font-size: 14px;
     color: #111;
     line-height: 30px;
@@ -193,7 +202,8 @@ header .nav-login form button{
     border: none;
     background-color: #f3f3f3;
 
-    font-family: arial;
+    /*font-family: arial;*/
+    font-family: 'Roboto', sans-serif;
     font-size: 14px;
     color: #111;
     cursor: pointer;
@@ -213,23 +223,25 @@ header .nav-login a{
     text-align: center;
     background-color: #f3f3f3; 
 
-    font-family: arial;
+    /*font-family: arial;*/
+    font-family: 'Roboto', sans-serif;
     font-size: 14px;
     color: #111;
     line-height: 30px;
-
     cursor: pointer;
 }
 
 header .nav-login a:hover{
     background-color: #ccc;
 }
+
 .main-container{
     padding-top: 40px;
 }
 
 .main-container h2{
-    font-family: arial;
+    /*font-family: arial;*/
+    font-family: 'Roboto', sans-serif;
     font-size: 40px;
     color: #111;
     line-height: 50px;
@@ -239,7 +251,6 @@ header .nav-login a:hover{
 
 .signup-form{
     width: 400px;
-    /* margin: 0 auto; */
     margin: auto;
     padding-top: 30px;
     box-shadow: 0px 0px 10px grey;
@@ -253,7 +264,8 @@ header .nav-login a:hover{
     margin-bottom: 4px;
     border: none;
     background-color: #fff;
-    font-family: arial;
+    /*font-family: arial;*/
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
     color: #111;
     line-height: 40px;
@@ -268,7 +280,8 @@ header .nav-login a:hover{
     height: 40px;
     border: none;
     background-color: #222;
-    font-family: arial;
+    /*font-family: arial;*/
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
     color: #fff;
     cursor: pointer;
@@ -277,21 +290,26 @@ header .nav-login a:hover{
 .signup-form button:hover{
     background-color: #111;
 }
+
 .signup-form textarea{
-    font-family: arial;
+    /*font-family: arial;*/
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
 }
 
 .search-container {
-   padding-top: 40px;
+    padding-top: 40px;
+    margin-bottom: 40px;
 }
+
 .search-wrapper{
     margin: 0 auto;
     width: 1000px;
 }
 
 .search-container h2 {
-    font-family: arial;
+    /*font-family: arial;*/
+    font-family: 'Roboto', sans-serif;
     font-size: 40px;
     color: #111;
     line-height: 50px;
@@ -300,12 +318,10 @@ header .nav-login a:hover{
 }
 
 .leaderboard-search-container {
-
-    font-family: 'Montserrat',sans-serif;
+    /*font-family: 'Montserrat',sans-serif;*/
+    font-family: 'Roboto', sans-serif;
     background-color: #00bf00;
-    margin: auto;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin: 40px auto;
     width: 500px;
     padding: 10px;
 
@@ -313,18 +329,6 @@ header .nav-login a:hover{
 }
 
 .leaderboard-search-container button {
-
-    /*width: 90px;*/
-    /*height: 30px;*/
-    /*margin-right: 10px;*/
-    /*border: none;*/
-    /*background-color: #f3f3f3;*/
-    /*font-family: arial;*/
-    /*font-size: 14px;*/
-    /*color: #111;*/
-    /*cursor: pointer;*/
-
-
     width: 100px;
     height: 35px;
     font-size: 20px;
@@ -349,7 +353,8 @@ header .nav-login a:hover{
 
     text-align: center;
 
-    font-family: 'Montserrat',sans-serif;
+    /*font-family: 'Montserrat',sans-serif;*/
+    font-family: 'Roboto', sans-serif;
     background-color: #fff;
 
     margin: auto;
@@ -364,10 +369,10 @@ header .nav-login a:hover{
     width: 100px;
     height: 30px;
     margin-left: 33px;
-    /*margin-top: 15px;*/
     border: none;
     background-color: #f3f3f3;
-    font-family: arial;
+    /*font-family: arial;*/
+    font-family: 'Roboto', sans-serif;
     font-size: 14px;
     color: #111;
     cursor: pointer;
@@ -382,17 +387,26 @@ header .nav-login a:hover{
     background-color: #a0d3e8;
 }
 
-.leaderboard-search-result table {
-    margin: auto;
-    font-family: arial, sans-serif;
+table{
     border-collapse: collapse;
-
+    width: auto;
+    margin: auto;
+    table-layout: auto;
+    font-family: 'Roboto', sans-serif;
 }
 
-.leaderboard-search-result td, th {
-    border: 1px solid #7d0000;
-    text-align: left;
-    padding: 8px;
+table td, th{
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+table th, td {
+    padding: 15px;
+}
+
+th{
+    background-color: #38ada9;
+    color: white;
 }
 
 .leaderboard-search-result tr:nth-child(even) {
@@ -403,17 +417,22 @@ div.leaderboard-category-container div,div {
     margin-bottom: 30px;
 }
 
-
+.result-title{
+    font-family: 'Roboto', sans-serif;
+    font-size: 40px;
+}
 
 .scrollableList {
     overflow: auto;
     border: 1px #dddddd solid;
 }
+
 .scrollableList ul {
     border: none;
     height: 480px;
     vertical-align: middle;
 }
+
 .scrollableList ul li {
     cursor: pointer;
 }
@@ -431,7 +450,8 @@ div.leaderboard-category-container div,div {
 
 p.error {
     text-align: center;
-    font-family: arial;
+    /*font-family: arial;*/
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
     /*background-color: #bf0000;*/
     color: #bf0000;

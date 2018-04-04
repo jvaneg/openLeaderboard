@@ -50,10 +50,11 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
         <?php } ?>
     </div>
 
-    <div> <!--class="scrollableList"-->
-
+    <div>
         <?php $categories = viewCategories(); ?>
-        <ul id="list"><!--onclick="addLink()" size="6" multiple="multiple"-->
+
+        <!--        TODO maybe change this to a table (so we can have the same table layout as the rest of the tables)? you should still have the same functionalities  -->
+        <ul id="list">
             <?php while($row = mysqli_fetch_assoc($categories)){ ?>
                 <li>
                     <a href="category.php?categoryid=<?=$row['category_id']?>"><?=$row['name']?></a>
@@ -62,35 +63,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
             <?php }?>
         </ul>
     </div>
-
-
-<!-- TODO probably just remove all this
-    <input type="text" id="txt"<?php if($resultCheck <= 0) {?>
-        style = "display: none;"<?php
-    }?>>
-
-    <button onclick="addListItem()" type="submit" name="addCat"
-        <?php if($resultCheck <= 0) {?>
-            style = "display: none;"<?php
-        }?>> Add </button>
-
-
-    <button type="submit" name="editCat"
-        <?php if($resultCheck <= 0) {?>
-            style = "display: none;"<?php
-        }
-        ?>> Edit </button>
-
-    <button onclick="deleteListItem()" type="submit" name="removeCat"
-        <?php if($resultCheck <= 0) {?>
-            style = "display: none;"<?php
-        }
-        ?>> Remove</button>
-
-//-->
-
-
-    <script src="/js/cateScript.js"></script>
 </div>
 
 <?php

@@ -18,8 +18,12 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
 ?>
 
+<section class="search-container">
+    <div class="search-wrapper"><h2>Results for <?php echo $_GET['lbSearchTerm']; ?></h2></div>
+</section>
+
 <div class="leaderboard-search-result">
-    <h1>Results for <?php echo $_GET['lbSearchTerm']; ?></h1>
+
 
     <?php
 
@@ -39,8 +43,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 
             <table border='1'>
                 <tr>
-                    <td>Name</td>
-                    <td>Number of Users</td>
+                    <th>Name</th>
+                    <th>Number of Users</th>
                 </tr>
 
                 <?php while($row = mysqli_fetch_assoc($result)) { ?>
