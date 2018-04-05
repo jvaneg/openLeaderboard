@@ -40,7 +40,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
     <?php } ?>
 </div>
 
-<div> <!--class="leaderboard-category-container" -->
+<div class="leaderboard-category-container"> <!--class="leaderboard-category-container" -->
     <div name="categoryTitle">
         <h1>View by Category</h1>
         <?php if($loggedIn && isSiteAdmin($userID)) { ?>

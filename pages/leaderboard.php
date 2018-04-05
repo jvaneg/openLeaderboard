@@ -96,7 +96,10 @@ else
     <!-- Modal content -->
     <div class="modal-content">
         <span onclick="toggleElement('submitModal')" class="close">&times;</span>
-        <h1>Submit Match</h1>
+<!--        <h1>Submit Match</h1>-->
+        <section class="modal-content-container">
+            <div class="modal-content-wrapper"><h2>Submit Match</h2></div>
+        </section>
         <div id="submitForm">
             <form action="/dbfiles/submitMatch.php" method="post">
                 <p>Opponent</p>
@@ -118,7 +121,8 @@ $resultCheck = mysqli_num_rows($result);
 
 ?>
 
-<h1>Leaderboard</h1>
+<!--<h1>Leaderboard</h1>-->
+
 <div id="lbMembers">
     <?php if($resultCheck > 0) { ?>
 

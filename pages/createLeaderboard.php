@@ -20,7 +20,10 @@ else
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
 ?>
 
-<h2>Create New Leaderboard</h2>
+<!--<h2>Create New Leaderboard</h2>-->
+    <section class="search-container">
+        <div class="search-wrapper"><h2>Create New Leaderboard</h2></div>
+    </section>
 
 <div id="newLbForm">
     <form action="/dbfiles/createNewLb.php" method="post">
