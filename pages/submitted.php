@@ -16,7 +16,11 @@ else
 }
 ?>
 
-<h1>Submitted Matches</h1>
+<!--<h1>Submitted Matches</h1>-->
+<section class="search-container">
+    <div class="search-wrapper"><h2>Submitted Matches</h2></div>
+</section>
+
 
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");

@@ -16,7 +16,11 @@ else
 }
 ?>
 
-<h2>Leaderboard Page</h2>
+<!--<h2>Leaderboard Page</h2>-->
+<section class="search-container">
+    <div class="search-wrapper"><h2>Leaderboard Page</h2></div>
+</section>
+
 
 <?php
 
@@ -105,7 +109,6 @@ else
             </form>
         </div>
     </div>
-
 </div>
 
 <?php

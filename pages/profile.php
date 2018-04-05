@@ -16,8 +16,10 @@ else
 }
 ?>
 
-<h1>Profile</h1>
-
+<!--<h1>Profile</h1>-->
+<section class="search-container">
+    <div class="search-wrapper"><h2>Profile</h2></div>
+</section>
 <?php
 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
@@ -68,7 +70,7 @@ $resultCheck = mysqli_num_rows($result);
     <?php if($resultCheck > 0) { ?>
         <ul>
             <?php while($row = mysqli_fetch_assoc($result)) { ?>
-                <li><a href="leaderboard.php?boardid=<?=$row[board_id]?>"><?=$row['name']?></a></li>
+                <li><a href="leaderboard.php?boardid=<?=$row['board_id']?>"><?=$row['name']?></a></li>
             <?php } ?>
         </ul>
     <?php }
@@ -100,7 +102,7 @@ $resultCheck = mysqli_num_rows($result);
             </tr>
             <?php while($row = mysqli_fetch_assoc($result)) { ?>
                 <tr>
-                    <td><a href="leaderboard.php?boardid=<?=$row[board_id]?>"><?=$row['l_name']?></a></td>
+                    <td><a href="leaderboard.php?boardid=<?=$row['board_id']?>"><?=$row['l_name']?></a></td>
                     <td><?=$row['rank']?></td>
                     <td><?=$row['rating_num']?></td>
                     <td><img src="<?='/images/'.$row['rank_image']?>"></td>
