@@ -530,6 +530,8 @@ input[name="joinLb"]:active{
 input[name="leaveLb"]{
     height: 35px;
     font-size: 20px;
+    margin-right: 50px;
+    /*margin-left: 20px;*/
     vertical-align: middle;
     border: none;
     cursor: pointer;
@@ -550,7 +552,7 @@ input[name="submitNewDesc"]{
     vertical-align: middle;
     border: none;
     cursor: pointer;
-    margin-bottom: 30px;
+    /*margin-bottom: 30px;*/
 }
 
 input[name="submitNewDesc"]:hover{
@@ -614,19 +616,21 @@ input[name="submitResultButton"]:active{
 }
 
 #joinForm{
-    float: left;
+    /*float: left;*/
 }
 #leaveForm{
     float: left;
+
 }
 
 #joinLeave{
-    margin: 0px 0px 0px 20%;
-    display: inline-block;
+    /*margin: 0px 0px 0px 20%;*/
+    /*display: inline-block;*/
+    margin: 0 0 0 725px;
 }
 #lbMembers table{
     /*margin: auto;*/
-    margin-top: -130px;
+    /*margin-top: -130px;*/
 }
 
 

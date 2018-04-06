@@ -4,7 +4,10 @@ $headerPath .= "/header/header.php";
 include_once($headerPath);
 ?>
 
-<h1>User Page</h1>
+
+<section class="search-container">
+    <div class="search-wrapper"><h2>User</h2></div>
+</section>
 
 <?php
 
@@ -34,6 +37,7 @@ else
 ?>
 
 <div id="nameBio">
+
     <h1><?=$userName?></h1>
     <div id="bio">
         <?=$userBio?>
