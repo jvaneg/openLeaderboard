@@ -907,7 +907,8 @@ function lbNameTaken($lbName)
 {
     $connection = connectToDB();
 
-    $sql = "DELETE FROM Leaderboard
+    $sql = "SELECT *
+            FROM Leaderboard
             WHERE name = '$lbName'";
 
     $result = mysqli_query($connection,$sql);

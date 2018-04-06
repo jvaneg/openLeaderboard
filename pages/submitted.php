@@ -46,8 +46,8 @@ $resultCheck = mysqli_num_rows($result);
             <?php while($row = mysqli_fetch_assoc($result)) { ?>
                 <tr>
                     <td><?=$row['submission_id']?></td>
-                    <td><a href="leaderboard.php?boardid=<?=$row[board_id]?>"><?=$row['l_name']?></a></td>
-                    <td><a href="user.php?userid=<?=$row[sender_id]?>"><?=$row['name']?></a></td>
+                    <td><a href="leaderboard.php?boardid=<?=$row['board_id']?>"><?=$row['l_name']?></a></td>
+                    <td><a href="user.php?userid=<?=$row['sender_id']?>"><?=$row['name']?></a></td>
                     <td><?=$row['receiver_score']?> : <?=$row['sender_score']?></td>
                     <td><?=$row['rcvr_rat_change']?></td>
                     <td>
@@ -100,8 +100,8 @@ $resultCheck = mysqli_num_rows($result);
             <?php while($row = mysqli_fetch_assoc($result)) { ?>
                 <tr>
                     <td><?=$row['submission_id']?></td>
-                    <td><a href="leaderboard.php?boardid=<?=$row[board_id]?>"><?=$row['l_name']?></a></td>
-                    <td><a href="user.php?userid=<?=$row[receiver_id]?>"><?=$row['name']?></a></td>
+                    <td><a href="leaderboard.php?boardid=<?=$row['board_id']?>"><?=$row['l_name']?></a></td>
+                    <td><a href="user.php?userid=<?=$row['receiver_id']?>"><?=$row['name']?></a></td>
                     <td><?=$row['sender_score']?> : <?=$row['receiver_score']?></td>
                     <td><?=$row['sndr_rat_change']?></td>
                     <td>
