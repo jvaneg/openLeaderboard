@@ -29,7 +29,7 @@ $result = viewPendingVerifications($userID);
 $resultCheck = mysqli_num_rows($result);
 ?>
 
-<h1>Awaiting Verification</h1>
+<h1 class="table-heading">Awaiting Verification</h1>
 <div id="pendingVers">
     <?php if($resultCheck > 0) { ?>
 
@@ -73,7 +73,7 @@ $resultCheck = mysqli_num_rows($result);
     <?php }
     else
     {
-        echo "No submissions awaiting verification!";
+        echo "<h2>No submissions awaiting verification!</h2>";
     }
     ?>
 </div>
@@ -84,7 +84,7 @@ $result = viewSubmittedResults($userID);
 $resultCheck = mysqli_num_rows($result);
 ?>
 
-<h1>Submitted Results</h1>
+<h1 class="table-heading">Submitted Results</h1>
 <div id="pendingVers">
     <?php if($resultCheck > 0) { ?>
 
@@ -119,7 +119,7 @@ $resultCheck = mysqli_num_rows($result);
     <?php }
     else
     {
-        echo "No results submitted!";
+        echo "<h2>No results submitted!</h2>";
     }
     ?>
 </div>

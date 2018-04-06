@@ -66,7 +66,7 @@ $resultCheck = mysqli_num_rows($result);
 ?>
 
 <div id="managedLbs">
-    <h1>Managed Leaderboards</h1>
+    <h1 class="table-heading">Managed Leaderboards</h1>
     <?php if($resultCheck > 0) { ?>
         <ul>
             <?php while($row = mysqli_fetch_assoc($result)) { ?>
@@ -76,7 +76,7 @@ $resultCheck = mysqli_num_rows($result);
     <?php }
     else
     {
-        echo "No Managed Leaderboards";
+        echo "<h2>No Managed Leaderboards</h2>";
     }
     ?>
 </div>
@@ -87,7 +87,7 @@ $result = viewMemberLbs($userID);
 $resultCheck = mysqli_num_rows($result);
 
 ?>
-<h1>Member Leaderboards</h1>
+<h1 class="table-heading">Member Leaderboards</h1>
 <div id="memberLBs">
     <?php if($resultCheck > 0) { ?>
 

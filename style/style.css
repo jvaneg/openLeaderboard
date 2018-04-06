@@ -154,16 +154,18 @@ header nav ul li{
 
 header nav ul li a{
     font-family: 'Roboto', sans-serif;
-    text-style: bold;
+    /*text-style: bold;*/
     font-size: 16px;
     /*color: #111;*/
     color: white;
-    line-height: 63px;
+    line-height: 60px;
     text-decoration: none;
     text-align: center;
-    padding:4px 8px;
+    padding:0px 8px;
     display:inline-block;
     /*font-weight: bold;*/
+
+
 }
 
 header nav ul li a:hover{
@@ -242,13 +244,20 @@ header .nav-login a:hover{
 
 .main-container h2{
     font-family: 'Roboto', sans-serif;
-    font-size: 40px;
+    font-size: 90px;
     color: #111;
     line-height: 50px;
     text-align: center;
     margin-bottom: 10px;
+    opacity: 1;
 }
 
+#showcase{
+    opacity: 0.5;
+    background-image: url("/images/game.jpg");
+    height: 100vh;
+    text-align: center;
+}
 .signup-form{
     width: 400px;
     margin: auto;
@@ -654,6 +663,7 @@ input[name="submitResultButton"]:active{
 
 #submitForm p{
     font-size: 20px;
+    margin-bottom: 3px;
 }
 input[name="opponentName"]{
    margin-bottom: 20px;
@@ -713,3 +723,89 @@ input[name="submitNewLeaderboard"]:active{
     background-color: #0a3d62;
 }
 /***************NEW LEADERBOARD******END******************************/
+
+/***************USER******START***************************************/
+#nameBio{
+    font-family: 'Roboto', sans-serif;
+    padding-top: 40px;
+    margin-bottom: 60px;
+    text-align: center;
+
+}
+#nameBio h1{
+    font-size: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.table-heading{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+/***************USER******END*****************************************/
+
+/***************PROFILE******START************************************/
+#managedLbs{
+    margin-bottom: 100px;
+}
+
+#managedLbs h2{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-size: 14px;
+}
+
+    /*submitNewBio*/
+input[name="submitNewBio"]{
+    height: 35px;
+    font-size: 20px;
+    vertical-align: middle;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+input[name="submitNewBio"]:hover{
+    background-color: #a0d3e8;
+}
+
+input[name="submitNewBio"]:active{
+    background-color: #0a3d62;
+}
+
+#nameBio #bio button{
+    margin-top: 88px;
+}
+/***************PROFILE******END**************************************/
+
+/***************SUBMITTED******START**********************************/
+#pendingVers{
+    margin-bottom: 80px;
+}
+#pendingVers h2{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-size: 14px;
+}
+
+    /*cancelSubmission*/
+input[name="cancelSubmission"]{
+    height: 35px;
+    font-size: 20px;
+    vertical-align: middle;
+    /*border: 1px solid #079992;*/
+    border: none;
+    background-color: #82ccdd;
+    cursor: pointer;
+}
+
+input[name="cancelSubmission"]:hover{
+    background-color: #a0d3e8;
+}
+
+input[name="cancelSubmission"]:active{
+    background-color: #0a3d62;
+}
+/***************SUBMITTED******END************************************/

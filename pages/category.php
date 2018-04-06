@@ -41,7 +41,9 @@ else
     exit();
 }
 ?>
-
+    <section class="search-container">
+        <div class="search-wrapper"><h2>Category</h2></div>
+    </section>
 <div id="nameDescription">
     <h1><?=$categoryName?></h1>
     <div id="description">

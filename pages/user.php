@@ -5,9 +5,9 @@ include_once($headerPath);
 ?>
 
 
-<section class="search-container">
-    <div class="search-wrapper"><h2>User</h2></div>
-</section>
+<!--<section class="search-container">-->
+<!--    <div class="search-wrapper"><h2>User</h2></div>-->
+<!--</section>-->
 
 <?php
 
@@ -49,7 +49,8 @@ $result = viewMemberLbs($userID);
 $resultCheck = mysqli_num_rows($result);
 ?>
 
-<h1>Member Leaderboards</h1>
+<h1 class="table-heading">Member Leaderboards</h1>
+
 <div id="memberLBs">
 <?php if($resultCheck > 0) { ?>
 
