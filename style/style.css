@@ -642,6 +642,19 @@ input[name="submitResultButton"]:active{
     /*margin-top: -130px;*/
 }
 
+#lbMembers{
+    font-family: 'Roboto', sans-serif;
+    padding-top: 5px;
+    margin-bottom: 60px;
+    text-align: center;
+
+}
+#lbMembers h1{
+    font-size: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 
 .modal-content-container {
     padding-top: 30px;
@@ -757,6 +770,24 @@ input[name="submitNewLeaderboard"]:active{
     font-size: 14px;
 }
 
+#managedList li{
+    list-style: none;
+    margin: 10px 0px;
+}
+
+#memberLBs{
+    font-family: 'Roboto', sans-serif;
+    padding-top: 5px;
+    margin-bottom: 60px;
+    text-align: center;
+
+}
+#memberLBs h2{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-size: 14px;
+}
+
     /*submitNewBio*/
 input[name="submitNewBio"]{
     height: 35px;
@@ -789,6 +820,45 @@ input[name="submitNewBio"]:active{
     text-align: center;
     font-size: 14px;
 }
+
+/*rejectSubmission*/
+input[name="rejectSubmission"]{
+    height: 35px;
+    font-size: 20px;
+    vertical-align: middle;
+    /*border: 1px solid #079992;*/
+    border: none;
+    background-color: #82ccdd;
+    cursor: pointer;
+}
+
+input[name="rejectSubmission"]:hover{
+    background-color: #a0d3e8;
+}
+
+input[name="rejectSubmission"]:active{
+    background-color: #0a3d62;
+}
+
+/*verifySubmission*/
+input[name="verifySubmission"]{
+    height: 35px;
+    font-size: 20px;
+    vertical-align: middle;
+    /*border: 1px solid #079992;*/
+    border: none;
+    background-color: #82ccdd;
+    cursor: pointer;
+}
+
+input[name="verifySubmission"]:hover{
+    background-color: #a0d3e8;
+}
+
+input[name="verifySubmission"]:active{
+    background-color: #0a3d62;
+}
+
 
     /*cancelSubmission*/
 input[name="cancelSubmission"]{

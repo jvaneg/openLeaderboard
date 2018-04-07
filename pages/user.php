@@ -49,7 +49,7 @@ $result = viewMemberLbs($userID);
 $resultCheck = mysqli_num_rows($result);
 ?>
 
-<h1 class="table-heading">Member Leaderboards</h1>
+<h1 class="table-heading">Leaderboards</h1>
 
 <div id="memberLBs">
 <?php if($resultCheck > 0) { ?>
@@ -78,7 +78,7 @@ $resultCheck = mysqli_num_rows($result);
 <?php }
 else
 {
-    echo "No Leaderboards";
+    echo "<h2>No leaderboards yet!</h2>";
 }
 ?>
 </div>

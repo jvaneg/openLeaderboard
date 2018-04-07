@@ -65,10 +65,10 @@ $result = viewManagedLbs($userID);
 $resultCheck = mysqli_num_rows($result);
 ?>
 
-<div id="managedLbs">
+<div id="managedLbs" class="leaderboard-category-container">
     <h1 class="table-heading">Managed Leaderboards</h1>
     <?php if($resultCheck > 0) { ?>
-        <ul>
+        <ul id="managedList">
             <?php while($row = mysqli_fetch_assoc($result)) { ?>
                 <li><a href="leaderboard.php?boardid=<?=$row['board_id']?>"><?=$row['name']?></a></li>
             <?php } ?>
@@ -76,7 +76,7 @@ $resultCheck = mysqli_num_rows($result);
     <?php }
     else
     {
-        echo "<h2>No Managed Leaderboards</h2>";
+        echo "<h2>No managed leaderboards yet!</h2>";
     }
     ?>
 </div>
@@ -87,7 +87,7 @@ $result = viewMemberLbs($userID);
 $resultCheck = mysqli_num_rows($result);
 
 ?>
-<h1 class="table-heading">Member Leaderboards</h1>
+<h1 class="table-heading">Leaderboards</h1>
 <div id="memberLBs">
     <?php if($resultCheck > 0) { ?>
 
@@ -115,7 +115,7 @@ $resultCheck = mysqli_num_rows($result);
     <?php }
     else
     {
-        echo "No Leaderboards";
+        echo "<h2>No leaderboards yet!</h2>";
     }
     ?>
 </div>
