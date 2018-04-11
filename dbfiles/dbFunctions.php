@@ -108,11 +108,9 @@ function viewCategories()
 {
     $connection = connectToDB();
 
-    $sql = "SELECT C.category_id, C.name, COUNT(L.board_id)
-            FROM Category AS C, Leaderboard AS L
-            WHERE C.category_id = L.category_id
-            GROUP BY C.category_id
-            ORDER BY COUNT(L.board_id) DESC";
+    $sql = "SELECT C.category_id, C.name
+            FROM Category AS C
+            ORDER BY C.name ASC";
 
     $result = mysqli_query($connection,$sql);
 
@@ -898,6 +896,25 @@ function removeUserFromLb($adminID, $userID, $boardID)
 }
 
 
+function removeCategoryFromDb($adminID, $categoryID)
+{
+    $connection = connectToDB();
+
+    if(isSiteAdmin($adminID))
+    {
+        $sql = "DELETE FROM category
+                WHERE category_id = $categoryID";
+
+        if (mysqli_query($connection, $sql)) {
+            echo "Record updated successfully";
+        } else {
+            echo "Error updating record: " . mysqli_error($connection);
+        }
+    }
+
+    mysqli_close($connection);
+}
+
 /**
  * Purpose: Checks if a specified leaderboard name already exists in the database
  * @param $lbName
@@ -907,7 +924,7 @@ function lbNameTaken($lbName)
 {
     $connection = connectToDB();
 
-    $sql = "DELETE FROM Leaderboard
+    $sql = "SELECT FROM Leaderboard
             WHERE name = '$lbName'";
 
     $result = mysqli_query($connection,$sql);
@@ -917,6 +934,19 @@ function lbNameTaken($lbName)
     return (mysqli_num_rows($result) > 0);
 }
 
+function categoryNameTaken($categoryName)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT FROM Category
+            WHERE name = '$categoryName'";
+
+    $result = mysqli_query($connection,$sql);
+
+    mysqli_close($connection);
+
+    return (mysqli_num_rows($result) > 0);
+}
 
 /**
  * Purpose: Returns the category id of a specified category name
@@ -1160,6 +1190,36 @@ function editCatDescription($userID, $categoryID, $catDesc)
     }
 
     mysqli_close($connection);
+}
+
+/**
+ * Purpose: Adds a new category into the site's database
+ * Note: userID included so that users who aren't a site admin can't modify things
+ * @param $userID
+ * @param $name
+ * @param $description
+ */
+function addCategory($userID, $name, $description)
+{
+    $connection = connectToDB();
+
+    if(isSiteAdmin($userID))
+    {
+        $sql = "INSERT INTO Category(description, name)
+                VALUES('$description', '$name')";
+
+        if (mysqli_query($connection, $sql)) {
+            echo "Record updated successfully";
+        } else {
+            echo "Error updating record: " . mysqli_error($connection);
+        }
+    }
+
+    $categoryID = getCategoryIDByName($name);
+
+    mysqli_close($connection);
+
+    return $categoryID;
 }
 
 ?>

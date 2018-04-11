@@ -665,12 +665,38 @@ input[name="opponentName"]{
 button[name="createLeaderboard"]{
     display: block;
     /*margin: 0 auto;*/
-    margin: 0px auto 50px auto;
+    margin: 0px auto 20px auto;
+}
+
+button[name="createCategory"]{
+    display: block;
+    /*margin: 0 auto;*/
+    margin: 0px auto 20px auto;
 }
 
 #lbMembers{
     margin-top: 30px;
 }
+
+/*removeUser*/
+input[name="removeCategory"]{
+    height: 35px;
+    font-size: 16px;
+    vertical-align: middle;
+    /*border: 1px solid #079992;*/
+    border: none;
+    background-color: #82ccdd;
+    cursor: pointer;
+}
+
+input[name="removeCategory"]:hover{
+    background-color: #a0d3e8;
+}
+
+input[name="removeCategory"]:active{
+    background-color: #0a3d62;
+}
+
 /***************LEADERBOARD SEARCH******END****************************/
 
 /***************NEW LEADERBOARD******START****************************/
@@ -709,3 +735,35 @@ input[name="submitNewLeaderboard"]:active{
     background-color: #0a3d62;
 }
 /***************NEW LEADERBOARD******END******************************/
+
+/***************NEW CATEGORY******START*******************************/
+#newCategoryForm{
+    position: absolute;
+    display: inline-block;
+    margin: 0 45%;
+}
+
+
+input[name="newCategoryName"]{
+    margin-bottom: 20px;
+    width: 300px;
+}
+
+
+input[name="submitNewLeaderboard"]{
+    height: 35px;
+    font-size: 20px;
+    vertical-align: middle;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+input[name="submitNewLeaderboard"]:hover{
+    background-color: #a0d3e8;
+}
+
+input[name="submitNewLeaderboard"]:active{
+    background-color: #0a3d62;
+}
+/***************NEW CATEGORY******END******************************/

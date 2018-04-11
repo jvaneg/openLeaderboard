@@ -37,33 +37,52 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/dbfiles/dbFunctions.php");
         <form action="/pages/createLeaderboard.php" method="POST">
             <button type="submit" name="createLeaderboard">Create New Leaderboard</button>
         </form>
+        <?php if(isSiteAdmin($userID)) { ?>
+            <form action="/pages/createCategory.php" method="POST">
+                <button type="submit" name="createCategory">Create New Category</button>
+            </form>
+        <?php } ?>
     <?php } ?>
 </div>
 
-<div class="leaderboard-category-container"> <!--class="leaderboard-category-container" -->
-    <div name="categoryTitle">
-        <h1>View by Category</h1>
-        <?php if($loggedIn && isSiteAdmin($userID)) { ?>
-            <form action="/pages/categoryAdmin.php" method="POST">
-                <button type="submit" name="manageCategories">Manage Categories</button>
-            </form>
-        <?php } ?>
-    </div>
 
-    <div>
-        <?php $categories = viewCategories(); ?>
+<?php
 
-        <!--        TODO maybe change this to a table (so we can have the same table layout as the rest of the tables)? you should still have the same functionalities  -->
-        <ul id="list">
-            <?php while($row = mysqli_fetch_assoc($categories)){ ?>
-                <li>
-                    <a href="category.php?categoryid=<?=$row['category_id']?>"><?=$row['name']?></a>
-                </li>
+$categories = viewCategories();
 
-            <?php }?>
-        </ul>
-    </div>
+?>
+
+<div id="leaderboardCategories">
+    <?php if(mysqli_num_rows($categories) > 0) { ?>
 </div>
+
+    <table border='1'>
+        <tr>
+            <th>Category</th>
+            <?php if(isSiteAdmin($userID)) { ?>
+                <th>Options</th>
+            <?php } ?>
+        </tr>
+        <?php while($row = mysqli_fetch_assoc($categories)) { ?>
+            <tr>
+                <td><a href="category.php?categoryid=<?=$row['category_id']?>"><?=$row['name']?></a></td>
+                <?php if(isSiteAdmin($userID)) { ?>
+                    <td>
+<!--                        TODO add CSS for the remove button-->
+                        <div id="removeForm">
+                            <form action="/dbfiles/removeCategoryFromDb.php" method="POST">
+                                <input type="hidden" name="category_id" value="<?=$row['category_id']?>">
+                                <input type="hidden" name="user_id" value="<?=$userID?>">
+                                <input type="submit" name="removeCategory" value="Remove">
+                            </form>
+                        </div>
+                    </td>
+                <?php } ?>
+            </tr>
+        <?php } ?>
+    </table>
+<?php } ?>
+
 
 <?php
     $footerPath = $_SERVER['DOCUMENT_ROOT'];
