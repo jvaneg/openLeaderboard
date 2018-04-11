@@ -902,7 +902,7 @@ function removeCategoryFromDb($adminID, $categoryID)
 
     if(isSiteAdmin($adminID))
     {
-        $sql = "DELETE FROM category
+        $sql = "DELETE FROM Category
                 WHERE category_id = $categoryID";
 
         if (mysqli_query($connection, $sql)) {
