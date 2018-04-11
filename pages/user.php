@@ -83,6 +83,63 @@ else
 ?>
 </div>
 
+<?php
+
+$matchResults = findMatchesByUser($userID);
+$matchResultCheck = mysqli_num_rows($matchResults);
+
+?>
+
+<h1 class="table-heading">Recent Matches</h1>
+<!--Div id is same as above table so we don't need to copy CSS and im lazy-->
+<div id="memberLBs">
+    <?php if($matchResultCheck > 0)
+    {
+        $count = 0;
+        ?>
+
+        <table border='1'>
+            <tr>
+                <th>Date</th>
+                <th>Board</th>
+                <th>Opponent</th>
+                <th>Score</th>
+            </tr>
+            <?php
+            while($row = mysqli_fetch_assoc($matchResults)) {
+                $boardName = mysqli_fetch_assoc(getLeaderboardNameById($row['board_id']));
+                if($row['sender_id'] == $userID)
+                {
+                    $opponentID = $row['receiver_id'];
+                    $score = $row['sender_score'] . "-" . $row['receiver_score'];
+                }
+                else
+                {
+                    $opponentID = $row['sender_id'];
+                    $score = $row['receiver_score'] . "-" . $row['sender_score'];
+                }
+                $opponentName = mysqli_fetch_assoc(getUsernameByID($opponentID));
+                ?>
+                <tr>
+                    <td><?=$row['date']?></td>
+                    <td><a href="leaderboard.php?boardid=<?=$row['board_id']?>"><?=$boardName['name']?></a></td>
+                    <td><a href="user.php?userid=<?=$opponentID?>"><?=$opponentName['name']?></a></td>
+                    <td><?=$score?></td>
+                </tr>
+                <?php
+                $count++;
+                if($count > 9)
+                    break;
+            } ?>
+        </table>
+    <?php }
+    else
+    {
+        echo "<h2>No matches yet!</h2>";
+    }
+    ?>
+</div>
+
 
 <?php
 $footerPath = $_SERVER['DOCUMENT_ROOT'];
