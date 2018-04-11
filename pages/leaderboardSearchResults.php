@@ -1,12 +1,4 @@
 <?php
-/**
- * User: arsh
- * Date: 2018-03-30
- * Time: 6:51 PM
- */
-?>
-
-<?php
 $headerPath = $_SERVER['DOCUMENT_ROOT'];
 $headerPath .= "/header/header.php";
 include_once($headerPath);
