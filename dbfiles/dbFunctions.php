@@ -249,11 +249,11 @@ function addNewUser($name, $email, $pswd)
 
     if (mysqli_query($connection, $sql))
     {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     }
     else
     {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
     mysqli_close($connection);
@@ -386,11 +386,11 @@ function editUserBio($userID, $userBio)
 
     if (mysqli_query($connection, $sql))
     {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     }
     else
     {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
     mysqli_close($connection);
@@ -414,11 +414,11 @@ function editLbDescription($userID, $boardID, $lbDesc)
 
     if (mysqli_query($connection, $sql))
     {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     }
     else
     {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
     mysqli_close($connection);
@@ -440,11 +440,11 @@ function rejectResult($submissionID, $receiverID)
 
     if (mysqli_query($connection, $sql))
     {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     }
     else
     {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
     mysqli_close($connection);
@@ -466,11 +466,11 @@ function cancelResult($submissionID, $senderID)
 
     if (mysqli_query($connection, $sql))
     {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     }
     else
     {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
     mysqli_close($connection);
@@ -594,11 +594,11 @@ function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderSc
 
     if (mysqli_query($connection, $sql))
     {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     }
     else
     {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
 
@@ -609,11 +609,11 @@ function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderSc
 
     if (mysqli_query($connection, $sql))
     {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     }
     else
     {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
 
@@ -624,11 +624,11 @@ function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderSc
 
     if (mysqli_query($connection, $sql))
     {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     }
     else
     {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
 
@@ -638,11 +638,11 @@ function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderSc
 
     if (mysqli_query($connection, $sql))
     {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     }
     else
     {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
 
@@ -774,11 +774,11 @@ function leaveLeaderboard($userID, $boardID)
 
     if (mysqli_query($connection, $sql))
     {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     }
     else
     {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
     mysqli_close($connection);
@@ -799,11 +799,11 @@ function joinLeaderboard($userID, $boardID)
 
     if (mysqli_query($connection, $sql))
     {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     }
     else
     {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
     if(!hasLbRating($userID,$boardID))
@@ -813,11 +813,11 @@ function joinLeaderboard($userID, $boardID)
 
         if (mysqli_query($connection, $sql))
         {
-            echo "Record updated successfully";
+            ////echo "Record updated successfully";
         }
         else
         {
-            echo "Error updating record: " . mysqli_error($connection);
+            //echo "Error updating record: " . mysqli_error($connection);
         }
 
         updateSkillDivision($userID,$boardID);
@@ -858,11 +858,11 @@ function updateSkillDivision($userID, $boardID)
 
     if (mysqli_query($connection, $sql))
     {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     }
     else
     {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
     mysqli_close($connection);
@@ -886,9 +886,9 @@ function removeUserFromLb($adminID, $userID, $boardID)
                 WHERE board_id = $boardID AND user_id = $userID";
 
         if (mysqli_query($connection, $sql)) {
-            echo "Record updated successfully";
+            ////echo "Record updated successfully";
         } else {
-            echo "Error updating record: " . mysqli_error($connection);
+            //echo "Error updating record: " . mysqli_error($connection);
         }
     }
 
@@ -906,9 +906,9 @@ function removeCategoryFromDb($adminID, $categoryID)
                 WHERE category_id = $categoryID";
 
         if (mysqli_query($connection, $sql)) {
-            echo "Record updated successfully";
+            ////echo "Record updated successfully";
         } else {
-            echo "Error updating record: " . mysqli_error($connection);
+            //echo "Error updating record: " . mysqli_error($connection);
         }
     }
 
@@ -924,7 +924,8 @@ function lbNameTaken($lbName)
 {
     $connection = connectToDB();
 
-    $sql = "SELECT FROM Leaderboard
+    $sql = "SELECT *
+            FROM Leaderboard
             WHERE name = '$lbName'";
 
     $result = mysqli_query($connection,$sql);
@@ -938,7 +939,8 @@ function categoryNameTaken($categoryName)
 {
     $connection = connectToDB();
 
-    $sql = "SELECT FROM Category
+    $sql = "SELECT *
+            FROM Category
             WHERE name = '$categoryName'";
 
     $result = mysqli_query($connection,$sql);
@@ -1053,9 +1055,9 @@ function addLeaderboard($name, $description, $categoryID, $userID)
             VALUES($userID)";
 
     if (mysqli_query($connection, $sql)) {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     } else {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
     //create new leaderboard
@@ -1063,9 +1065,9 @@ function addLeaderboard($name, $description, $categoryID, $userID)
             VALUES('$name', '$description', $categoryID, $userID)";
 
     if (mysqli_query($connection, $sql)) {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     } else {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
     $boardID = getBoardIDByName($name);
@@ -1133,9 +1135,9 @@ function createMatchSubmission($boardID, $senderID, $senderScore, $receiverID, $
             VALUES ($senderID,$receiverID,$boardID,$senderScore,$receiverScore,$sndrRatChange,$rcvrRatChange)";
 
     if (mysqli_query($connection, $sql)) {
-        echo "Record updated successfully";
+        ////echo "Record updated successfully";
     } else {
-        echo "Error updating record: " . mysqli_error($connection);
+        //echo "Error updating record: " . mysqli_error($connection);
     }
 
     mysqli_close($connection);
@@ -1183,9 +1185,9 @@ function editCatDescription($userID, $categoryID, $catDesc)
                 WHERE  C.category_id = $categoryID";
 
         if (mysqli_query($connection, $sql)) {
-            echo "Record updated successfully";
+            ////echo "Record updated successfully";
         } else {
-            echo "Error updating record: " . mysqli_error($connection);
+            //echo "Error updating record: " . mysqli_error($connection);
         }
     }
 
@@ -1209,9 +1211,9 @@ function addCategory($userID, $name, $description)
                 VALUES('$description', '$name')";
 
         if (mysqli_query($connection, $sql)) {
-            echo "Record updated successfully";
+            ////echo "Record updated successfully";
         } else {
-            echo "Error updating record: " . mysqli_error($connection);
+            //echo "Error updating record: " . mysqli_error($connection);
         }
     }
 
