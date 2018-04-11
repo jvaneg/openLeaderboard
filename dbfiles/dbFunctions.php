@@ -1221,5 +1221,53 @@ function addCategory($userID, $name, $description)
 
     return $categoryID;
 }
+function findMatchesByUser($userID)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT * 
+              FROM game_match as M
+                WHERE M.sender_id = '$userID' OR 
+                      M.receiver_id = '$userID'
+                    ORDER BY M.date DESC";
+
+
+    $result = mysqli_query($connection, $sql);
+
+    mysqli_close($connection);
+
+    return $result;
+}
+
+function getLeaderboardNameById($boardID)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT name
+                FROM leaderboard
+                    WHERE board_id = '$boardID'";
+
+    $result = mysqli_query($connection, $sql);
+
+    mysqli_close($connection);
+
+    return $result;
+}
+
+function getUsernameByID($userID)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT U.name
+                FROM user as U
+                    WHERE user_id = '$userID'";
+
+    $result = mysqli_query($connection, $sql);
+
+    mysqli_close($connection);
+
+    return $result;
+}
+
 
 ?>
