@@ -4,7 +4,10 @@ $headerPath .= "/header/header.php";
 include_once($headerPath);
 ?>
 
-<h1>User Page</h1>
+
+<!--<section class="search-container">-->
+<!--    <div class="search-wrapper"><h2>User</h2></div>-->
+<!--</section>-->
 
 <?php
 
@@ -34,6 +37,7 @@ else
 ?>
 
 <div id="nameBio">
+
     <h1><?=$userName?></h1>
     <div id="bio">
         <?=$userBio?>
@@ -45,7 +49,8 @@ $result = viewMemberLbs($userID);
 $resultCheck = mysqli_num_rows($result);
 ?>
 
-<h1>Member Leaderboards</h1>
+<h1 class="table-heading">Leaderboards</h1>
+
 <div id="memberLBs">
 <?php if($resultCheck > 0) { ?>
 
@@ -73,7 +78,7 @@ $resultCheck = mysqli_num_rows($result);
 <?php }
 else
 {
-    echo "No Leaderboards";
+    echo "<h2>No leaderboards yet!</h2>";
 }
 ?>
 </div>

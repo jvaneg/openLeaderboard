@@ -154,16 +154,18 @@ header nav ul li{
 
 header nav ul li a{
     font-family: 'Roboto', sans-serif;
-    text-style: bold;
+    /*text-style: bold;*/
     font-size: 16px;
     /*color: #111;*/
     color: white;
-    line-height: 63px;
+    line-height: 60px;
     text-decoration: none;
     text-align: center;
-    padding:4px 8px;
+    padding:0px 8px;
     display:inline-block;
     /*font-weight: bold;*/
+
+
 }
 
 header nav ul li a:hover{
@@ -242,13 +244,20 @@ header .nav-login a:hover{
 
 .main-container h2{
     font-family: 'Roboto', sans-serif;
-    font-size: 40px;
+    font-size: 90px;
     color: #111;
     line-height: 50px;
     text-align: center;
     margin-bottom: 10px;
+    opacity: 1;
 }
 
+#showcase{
+    opacity: 0.5;
+    background-image: url("/images/game.jpg");
+    height: 100vh;
+    text-align: center;
+}
 .signup-form{
     width: 400px;
     margin: auto;
@@ -530,6 +539,8 @@ input[name="joinLb"]:active{
 input[name="leaveLb"]{
     height: 35px;
     font-size: 20px;
+    margin-right: 50px;
+    /*margin-left: 20px;*/
     vertical-align: middle;
     border: none;
     cursor: pointer;
@@ -550,7 +561,7 @@ input[name="submitNewDesc"]{
     vertical-align: middle;
     border: none;
     cursor: pointer;
-    margin-bottom: 30px;
+    /*margin-bottom: 30px;*/
 }
 
 input[name="submitNewDesc"]:hover{
@@ -614,19 +625,34 @@ input[name="submitResultButton"]:active{
 }
 
 #joinForm{
-    float: left;
+    /*float: left;*/
 }
 #leaveForm{
     float: left;
+
 }
 
 #joinLeave{
-    margin: 0px 0px 0px 20%;
-    display: inline-block;
+    /*margin: 0px 0px 0px 20%;*/
+    /*display: inline-block;*/
+    margin: 0 0 0 725px;
 }
 #lbMembers table{
     /*margin: auto;*/
-    margin-top: -130px;
+    /*margin-top: -130px;*/
+}
+
+#lbMembers{
+    font-family: 'Roboto', sans-serif;
+    padding-top: 5px;
+    margin-bottom: 60px;
+    text-align: center;
+
+}
+#lbMembers h1{
+    font-size: 25px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 
@@ -650,6 +676,7 @@ input[name="submitResultButton"]:active{
 
 #submitForm p{
     font-size: 20px;
+    margin-bottom: 3px;
 }
 input[name="opponentName"]{
    margin-bottom: 20px;
@@ -665,38 +692,12 @@ input[name="opponentName"]{
 button[name="createLeaderboard"]{
     display: block;
     /*margin: 0 auto;*/
-    margin: 0px auto 20px auto;
-}
-
-button[name="createCategory"]{
-    display: block;
-    /*margin: 0 auto;*/
-    margin: 0px auto 20px auto;
+    margin: 0px auto 50px auto;
 }
 
 #lbMembers{
     margin-top: 30px;
 }
-
-/*removeUser*/
-input[name="removeCategory"]{
-    height: 35px;
-    font-size: 16px;
-    vertical-align: middle;
-    /*border: 1px solid #079992;*/
-    border: none;
-    background-color: #82ccdd;
-    cursor: pointer;
-}
-
-input[name="removeCategory"]:hover{
-    background-color: #a0d3e8;
-}
-
-input[name="removeCategory"]:active{
-    background-color: #0a3d62;
-}
-
 /***************LEADERBOARD SEARCH******END****************************/
 
 /***************NEW LEADERBOARD******START****************************/
@@ -736,21 +737,59 @@ input[name="submitNewLeaderboard"]:active{
 }
 /***************NEW LEADERBOARD******END******************************/
 
-/***************NEW CATEGORY******START*******************************/
-#newCategoryForm{
-    position: absolute;
-    display: inline-block;
-    margin: 0 45%;
+/***************USER******START***************************************/
+#nameBio{
+    font-family: 'Roboto', sans-serif;
+    padding-top: 40px;
+    margin-bottom: 60px;
+    text-align: center;
+
 }
-
-
-input[name="newCategoryName"]{
+#nameBio h1{
+    font-size: 25px;
     margin-bottom: 20px;
-    width: 300px;
+    text-align: center;
 }
 
+.table-heading{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+/***************USER******END*****************************************/
 
-input[name="submitNewLeaderboard"]{
+/***************PROFILE******START************************************/
+#managedLbs{
+    margin-bottom: 100px;
+}
+
+#managedLbs h2{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-size: 14px;
+}
+
+#managedList li{
+    list-style: none;
+    margin: 10px 0px;
+}
+
+#memberLBs{
+    font-family: 'Roboto', sans-serif;
+    padding-top: 5px;
+    margin-bottom: 60px;
+    text-align: center;
+
+}
+#memberLBs h2{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-size: 14px;
+}
+
+    /*submitNewBio*/
+input[name="submitNewBio"]{
     height: 35px;
     font-size: 20px;
     vertical-align: middle;
@@ -759,11 +798,84 @@ input[name="submitNewLeaderboard"]{
     cursor: pointer;
 }
 
-input[name="submitNewLeaderboard"]:hover{
+input[name="submitNewBio"]:hover{
     background-color: #a0d3e8;
 }
 
-input[name="submitNewLeaderboard"]:active{
+input[name="submitNewBio"]:active{
     background-color: #0a3d62;
 }
-/***************NEW CATEGORY******END******************************/
+
+#nameBio #bio button{
+    margin-top: 88px;
+}
+/***************PROFILE******END**************************************/
+
+/***************SUBMITTED******START**********************************/
+#pendingVers{
+    margin-bottom: 80px;
+}
+#pendingVers h2{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-size: 14px;
+}
+
+/*rejectSubmission*/
+input[name="rejectSubmission"]{
+    height: 35px;
+    font-size: 20px;
+    vertical-align: middle;
+    /*border: 1px solid #079992;*/
+    border: none;
+    background-color: #82ccdd;
+    cursor: pointer;
+}
+
+input[name="rejectSubmission"]:hover{
+    background-color: #a0d3e8;
+}
+
+input[name="rejectSubmission"]:active{
+    background-color: #0a3d62;
+}
+
+/*verifySubmission*/
+input[name="verifySubmission"]{
+    height: 35px;
+    font-size: 20px;
+    vertical-align: middle;
+    /*border: 1px solid #079992;*/
+    border: none;
+    background-color: #82ccdd;
+    cursor: pointer;
+}
+
+input[name="verifySubmission"]:hover{
+    background-color: #a0d3e8;
+}
+
+input[name="verifySubmission"]:active{
+    background-color: #0a3d62;
+}
+
+
+    /*cancelSubmission*/
+input[name="cancelSubmission"]{
+    height: 35px;
+    font-size: 20px;
+    vertical-align: middle;
+    /*border: 1px solid #079992;*/
+    border: none;
+    background-color: #82ccdd;
+    cursor: pointer;
+}
+
+input[name="cancelSubmission"]:hover{
+    background-color: #a0d3e8;
+}
+
+input[name="cancelSubmission"]:active{
+    background-color: #0a3d62;
+}
+/***************SUBMITTED******END************************************/

@@ -29,7 +29,7 @@ $result = viewPendingVerifications($userID);
 $resultCheck = mysqli_num_rows($result);
 ?>
 
-<h1>Awaiting Verification</h1>
+<h1 class="table-heading">Awaiting Verification</h1>
 <div id="pendingVers">
     <?php if($resultCheck > 0) { ?>
 
@@ -46,8 +46,8 @@ $resultCheck = mysqli_num_rows($result);
             <?php while($row = mysqli_fetch_assoc($result)) { ?>
                 <tr>
                     <td><?=$row['submission_id']?></td>
-                    <td><a href="leaderboard.php?boardid=<?=$row[board_id]?>"><?=$row['l_name']?></a></td>
-                    <td><a href="user.php?userid=<?=$row[sender_id]?>"><?=$row['name']?></a></td>
+                    <td><a href="leaderboard.php?boardid=<?=$row['board_id']?>"><?=$row['l_name']?></a></td>
+                    <td><a href="user.php?userid=<?=$row['sender_id']?>"><?=$row['name']?></a></td>
                     <td><?=$row['receiver_score']?> : <?=$row['sender_score']?></td>
                     <td><?=$row['rcvr_rat_change']?></td>
                     <td>
@@ -73,7 +73,7 @@ $resultCheck = mysqli_num_rows($result);
     <?php }
     else
     {
-        echo "No submissions awaiting verification!";
+        echo "<h2>No submissions awaiting verification!</h2>";
     }
     ?>
 </div>
@@ -84,7 +84,7 @@ $result = viewSubmittedResults($userID);
 $resultCheck = mysqli_num_rows($result);
 ?>
 
-<h1>Submitted Results</h1>
+<h1 class="table-heading">Submitted Results</h1>
 <div id="pendingVers">
     <?php if($resultCheck > 0) { ?>
 
@@ -100,8 +100,8 @@ $resultCheck = mysqli_num_rows($result);
             <?php while($row = mysqli_fetch_assoc($result)) { ?>
                 <tr>
                     <td><?=$row['submission_id']?></td>
-                    <td><a href="leaderboard.php?boardid=<?=$row[board_id]?>"><?=$row['l_name']?></a></td>
-                    <td><a href="user.php?userid=<?=$row[receiver_id]?>"><?=$row['name']?></a></td>
+                    <td><a href="leaderboard.php?boardid=<?=$row['board_id']?>"><?=$row['l_name']?></a></td>
+                    <td><a href="user.php?userid=<?=$row['receiver_id']?>"><?=$row['name']?></a></td>
                     <td><?=$row['sender_score']?> : <?=$row['receiver_score']?></td>
                     <td><?=$row['sndr_rat_change']?></td>
                     <td>
@@ -119,7 +119,7 @@ $resultCheck = mysqli_num_rows($result);
     <?php }
     else
     {
-        echo "No results submitted!";
+        echo "<h2>No results submitted!</h2>";
     }
     ?>
 </div>

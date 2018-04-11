@@ -18,7 +18,7 @@ else
 
 <!--<h2>Leaderboard Page</h2>-->
 <section class="search-container">
-    <div class="search-wrapper"><h2>Leaderboard Page</h2></div>
+    <div class="search-wrapper"><h2>Leaderboard</h2></div>
 </section>
 
 
@@ -164,7 +164,7 @@ $resultCheck = mysqli_num_rows($result);
     <?php }
     else
     {
-        echo "No members yet!";
+        echo "<h1>No members yet!</h1>";
     }
     ?>
 </div>
