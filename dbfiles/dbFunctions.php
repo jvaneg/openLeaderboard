@@ -895,7 +895,11 @@ function removeUserFromLb($adminID, $userID, $boardID)
     mysqli_close($connection);
 }
 
-
+/**
+ * Purpose: Removes a specified category from the db
+ * @param $adminID
+ * @param $categoryID
+ */
 function removeCategoryFromDb($adminID, $categoryID)
 {
     $connection = connectToDB();
@@ -914,6 +918,7 @@ function removeCategoryFromDb($adminID, $categoryID)
 
     mysqli_close($connection);
 }
+
 
 /**
  * Purpose: Checks if a specified leaderboard name already exists in the database
@@ -935,6 +940,12 @@ function lbNameTaken($lbName)
     return (mysqli_num_rows($result) > 0);
 }
 
+
+/**
+ * Purpose: Checks if a specified category name already exists in the database
+ * @param $categoryName
+ * @return bool
+ */
 function categoryNameTaken($categoryName)
 {
     $connection = connectToDB();
@@ -949,6 +960,7 @@ function categoryNameTaken($categoryName)
 
     return (mysqli_num_rows($result) > 0);
 }
+
 
 /**
  * Purpose: Returns the category id of a specified category name
@@ -1194,12 +1206,14 @@ function editCatDescription($userID, $categoryID, $catDesc)
     mysqli_close($connection);
 }
 
+
 /**
  * Purpose: Adds a new category into the site's database
  * Note: userID included so that users who aren't a site admin can't modify things
  * @param $userID
  * @param $name
  * @param $description
+ * @return int
  */
 function addCategory($userID, $name, $description)
 {
@@ -1223,12 +1237,19 @@ function addCategory($userID, $name, $description)
 
     return $categoryID;
 }
+
+
+/**
+ * Purpose: finds all matches belonging to a specified user
+ * @param $userID
+ * @return bool|mysqli_result
+ */
 function findMatchesByUser($userID)
 {
     $connection = connectToDB();
 
     $sql = "SELECT * 
-              FROM game_match as M
+              FROM Game_Match as M
                 WHERE M.sender_id = '$userID' OR 
                       M.receiver_id = '$userID'
                     ORDER BY M.date DESC";
@@ -1241,12 +1262,18 @@ function findMatchesByUser($userID)
     return $result;
 }
 
+
+/**
+ * Purpose: gets a leaderboard's name from its id
+ * @param $boardID
+ * @return bool|mysqli_result
+ */
 function getLeaderboardNameById($boardID)
 {
     $connection = connectToDB();
 
     $sql = "SELECT name
-                FROM leaderboard
+                FROM Leaderboard
                     WHERE board_id = '$boardID'";
 
     $result = mysqli_query($connection, $sql);
@@ -1256,12 +1283,18 @@ function getLeaderboardNameById($boardID)
     return $result;
 }
 
+
+/**
+ * Purpose: gets a user's name from their id
+ * @param $userID
+ * @return bool|mysqli_result
+ */
 function getUsernameByID($userID)
 {
     $connection = connectToDB();
 
     $sql = "SELECT U.name
-                FROM user as U
+                FROM User as U
                     WHERE user_id = '$userID'";
 
     $result = mysqli_query($connection, $sql);
@@ -1271,14 +1304,20 @@ function getUsernameByID($userID)
     return $result;
 }
 
+
+/**
+ * Purpose: returns match data for a specified board id
+ * @param $boardID
+ * @return bool|mysqli_result
+ */
 function findMatchesByBoard($boardID)
 {
     $connection = connectToDB();
 
     $sql = "SELECT * 
-              FROM game_match as M
-                WHERE M.board_id = '$boardID' 
-                    ORDER BY M.date DESC";
+            FROM Game_Match as M
+            WHERE M.board_id = '$boardID' 
+            ORDER BY M.date DESC";
 
     $result = mysqli_query($connection, $sql);
 
