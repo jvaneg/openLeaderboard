@@ -1271,5 +1271,20 @@ function getUsernameByID($userID)
     return $result;
 }
 
+function findMatchesByBoard($boardID)
+{
+    $connection = connectToDB();
+
+    $sql = "SELECT * 
+              FROM game_match as M
+                WHERE M.board_id = '$boardID' 
+                    ORDER BY M.date DESC";
+
+    $result = mysqli_query($connection, $sql);
+
+    mysqli_close($connection);
+
+    return $result;
+}
 
 ?>

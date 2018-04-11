@@ -176,6 +176,56 @@ $resultCheck = mysqli_num_rows($result);
     <?php }?>
 </datalist>
 
+<?php
+
+$matchResults = findMatchesByBoard($boardID);
+$matchResultCheck = mysqli_num_rows($matchResults);
+
+?>
+
+<h1 class="table-heading">Recent Matches</h1>
+<!--Div id is same as above table so we don't need to copy CSS and im lazy-->
+<div id="memberLBs">
+    <?php if($matchResultCheck > 0)
+    {
+        $count = 0;
+        ?>
+
+        <table border='1'>
+            <tr>
+                <th>Date</th>
+                <th>Player 1</th>
+                <th>Player 2</th>
+                <th>Score</th>
+            </tr>
+            <?php
+            while($row = mysqli_fetch_assoc($matchResults)) {
+                $player1 = mysqli_fetch_assoc(getUsernameByID($row['sender_id']));
+                $player2 = mysqli_fetch_assoc(getUsernameByID($row['receiver_id']));
+                $score = $row['sender_score'] . "-" . $row['receiver_score'];
+
+                ?>
+                <tr>
+                    <td><?=$row['date']?></td>
+                    <td><a href="user.php?userid=<?=$row['sender_id']?>"><?=$player1['name']?></a></td>
+                    <td><a href="user.php?userid=<?=$row['receiver_id']?>"><?=$player2['name']?></a></td>
+                    <td><?=$score?></td>
+                </tr>
+                <?php
+                $count++;
+                if($count > 9)
+                    break;
+            } ?>
+        </table>
+    <?php }
+    else
+    {
+        echo "<h2>No matches yet!</h2>";
+    }
+    ?>
+</div>
+
+
 <script src="/js/utilityFunctions.js"></script>
 <script>
     var modal = document.getElementById('submitModal');
