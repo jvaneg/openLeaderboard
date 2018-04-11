@@ -924,7 +924,8 @@ function lbNameTaken($lbName)
 {
     $connection = connectToDB();
 
-    $sql = "SELECT FROM Leaderboard
+    $sql = "SELECT *
+            FROM Leaderboard
             WHERE name = '$lbName'";
 
     $result = mysqli_query($connection,$sql);
@@ -938,7 +939,8 @@ function categoryNameTaken($categoryName)
 {
     $connection = connectToDB();
 
-    $sql = "SELECT FROM Category
+    $sql = "SELECT *
+            FROM Category
             WHERE name = '$categoryName'";
 
     $result = mysqli_query($connection,$sql);
