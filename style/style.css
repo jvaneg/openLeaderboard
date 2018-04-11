@@ -605,7 +605,27 @@ input[name="submitResultButton"]:hover{
     background-color: #a0d3e8;
 }
 
-input[name="submitResultButton"]:active{
+input[name="submitResultButton"]:active {
+    background-color: #0a3d62;
+}
+
+
+/*removeCategory*/
+input[name="removeCategory"]{
+    height: 35px;
+    font-size: 20px;
+    vertical-align: middle;
+    /*border: 1px solid #079992;*/
+    border: none;
+    background-color: #82ccdd;
+    cursor: pointer;
+}
+
+input[name="removeCategory"]:hover{
+    background-color: #a0d3e8;
+}
+
+input[name="removeCategory"]:active{
     background-color: #0a3d62;
 }
 /***************INPUTS & BUTTONS******END******************************/
