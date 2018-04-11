@@ -695,6 +695,12 @@ button[name="createLeaderboard"]{
     margin: 0px auto 50px auto;
 }
 
+button[name="createCategory"]{
+    display: block;
+    /*margin: 0 auto;*/
+    margin: 0px auto 50px auto;
+}
+
 #lbMembers{
     margin-top: 30px;
 }
@@ -736,6 +742,38 @@ input[name="submitNewLeaderboard"]:active{
     background-color: #0a3d62;
 }
 /***************NEW LEADERBOARD******END******************************/
+
+/***************NEW CATEGORY******START****************************/
+#newCategoryForm{
+    position: absolute;
+    display: inline-block;
+    margin: 0 45%;
+}
+
+
+input[name="newCategoryName"]{
+    margin-bottom: 20px;
+    width: 300px;
+}
+
+/*submitNewLeaderboard*/
+input[name="submitNewCategory"]{
+    height: 35px;
+    font-size: 20px;
+    vertical-align: middle;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+input[name="submitNewCategory"]:hover{
+    background-color: #a0d3e8;
+}
+
+input[name="submitNewCategory"]:active{
+    background-color: #0a3d62;
+}
+/***************NEW Category******END******************************/
 
 /***************USER******START***************************************/
 #nameBio{
