@@ -127,5 +127,3 @@ $resultCheck = mysqli_num_rows($result);
     $footerPath .= "/footer/footer.php";
     include_once($footerPath);
 ?>
-
-

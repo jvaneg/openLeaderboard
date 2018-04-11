@@ -61,4 +61,3 @@ $footerPath = $_SERVER['DOCUMENT_ROOT'];
 $footerPath .= "/footer/footer.php";
 include_once($footerPath);
 ?>
-

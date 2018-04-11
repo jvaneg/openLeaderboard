@@ -1223,5 +1223,3 @@ function addCategory($userID, $name, $description)
 }
 
 ?>
-
-
