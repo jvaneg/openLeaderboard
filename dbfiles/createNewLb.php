@@ -34,13 +34,13 @@ if(isset($_POST['submitNewLeaderboard']) && isset($_SESSION['user_id']))
     }
     else
     {
-        header("Location: /pages/createLeaderboard.php&success=false");
+        header("Location: /pages/createLeaderboard.php?success=false");
         exit();
     }
 }
 else
 {
-    header("Location: /pages/createLeaderboard.php&success=false");
+    header("Location: /pages/createLeaderboard.php?success=false");
     exit();
 }
 ?>

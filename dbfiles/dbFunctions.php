@@ -175,7 +175,7 @@ function viewMemberLbs($userID)
             (SELECT DISTINCT C2.board_id
             FROM Competes_in AS C2
             WHERE C2.user_id = $userID)) AS UB
-            ORDER BY UB.board_id, UB.rating_num DESC)AS UB2) AS UB3
+            ORDER BY UB.board_id, UB.rating_num DESC) AS UB2) AS UB3
             WHERE user_id = $userID";
 
     $result = mysqli_query($connection,$sql);
@@ -313,7 +313,7 @@ function viewLbMembers($boardID)
             WHERE U.user_id = C.user_id AND C.board_id = L.board_id AND
             R.board_id = L.board_id AND R.division_id = SD.division_id AND
             R.user_id = U.user_id AND L.board_id = $boardID) AS UB
-            ORDER BY UB.rating_num DESC)AS UB2) AS UB3";
+            ORDER BY UB.rating_num DESC) AS UB2) AS UB3";
 
     $result = mysqli_query($connection,$sql);
 

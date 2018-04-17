@@ -36,13 +36,13 @@ if(isset($_POST['submitNewCategory']) && isset($_SESSION['user_id']) && isSiteAd
     }
     else
     {
-        header("Location: /pages/createCategory.php&success=false");
+        header("Location: /pages/createCategory.php?success=false");
         exit();
     }
 }
 else
 {
-    header("Location: /pages/createCategory.php&success=false");
+    header("Location: /pages/createCategory.php?success=false");
     exit();
 }
 ?>
