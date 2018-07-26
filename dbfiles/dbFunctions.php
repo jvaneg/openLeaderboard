@@ -523,51 +523,13 @@ function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderSc
 
 
     //calculate new sndr and rcvr wins and losses //TODO should probably just put who won in the submission and avoid this mess lol
-    if(($sndrRatChange == $rcvrRatChange) && ($sndrRatChange == 0))
+    if($sndrRatChange == 0)
     {
-        //both win
-        $sndrNewWins = intval($senderRatResult['wins']) + 1;
+        //draw
+        $sndrNewWins = intval($senderRatResult['wins']);
         $sndrNewLosses = intval($senderRatResult['losses']);
-        $rcvrNewWins = intval($receiverRatResult['wins']) + 1;
+        $rcvrNewWins = intval($receiverRatResult['wins']);
         $rcvrNewLosses = intval($receiverRatResult['losses']);
-    }
-    else if($sndrRatChange == 0)
-    {
-        if($rcvrRatChange > 0)
-        {
-            //receiver wins
-            $sndrNewLosses = intval($senderRatResult['losses']) + 1;
-            $sndrNewWins = intval($senderRatResult['wins']);
-            $rcvrNewLosses = intval($receiverRatResult['losses']);
-            $rcvrNewWins = intval($receiverRatResult['losses']) + 1;
-        }
-        else
-        {
-            //sender wins
-            $sndrNewWins = intval($senderRatResult['wins']) + 1;
-            $sndrNewLosses = intval($senderRatResult['losses']);
-            $rcvrNewWins = intval($receiverRatResult['wins']);
-            $rcvrNewLosses = intval($receiverRatResult['losses']) + 1;
-        }
-    }
-    else if($rcvrRatChange == 0)
-    {
-        if($sndrRatChange > 0)
-        {
-            //sender wins
-            $sndrNewWins = intval($senderRatResult['wins']) + 1;
-            $sndrNewLosses = intval($senderRatResult['losses']);
-            $rcvrNewWins = intval($receiverRatResult['wins']);
-            $rcvrNewLosses = intval($receiverRatResult['losses']) + 1;
-        }
-        else
-        {
-            //receiver wins
-            $sndrNewLosses = intval($senderRatResult['losses']) + 1;
-            $sndrNewWins = intval($senderRatResult['wins']);
-            $rcvrNewLosses = intval($receiverRatResult['losses']);
-            $rcvrNewWins = intval($receiverRatResult['losses']) + 1;
-        }
     }
     else if($sndrRatChange > 0)
     {
@@ -583,7 +545,7 @@ function verifyResult($submissionID, $senderID, $receiverID, $boardID, $senderSc
         $sndrNewLosses = intval($senderRatResult['losses']) + 1;
         $sndrNewWins = intval($senderRatResult['wins']);
         $rcvrNewLosses = intval($receiverRatResult['losses']);
-        $rcvrNewWins = intval($receiverRatResult['losses']) + 1;
+        $rcvrNewWins = intval($receiverRatResult['wins']) + 1;
     }
 
 
